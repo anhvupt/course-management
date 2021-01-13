@@ -28,9 +28,16 @@ namespace CourseData
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Enrollment>().HasKey(e => new { e.StudentID, e.CourseID });
-        }
+            modelBuilder.Entity<Enrollment>()
+                .HasKey(e => new { e.StudentID, e.CourseID });
+            modelBuilder.Entity<Enrollment>()
+                .Property(e => e.Grade).HasConversion(
+                    v => v.ToString(),
+                    v => (EnrollmentGrade)Enum.Parse(typeof(EnrollmentGrade), v)
+                );
 
+
+        }
 
     }
 }
