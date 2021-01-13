@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseData.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20210113014751_init")]
-    partial class init
+    [Migration("20210113140224_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,21 @@ namespace CourseData.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("CourseDomain.CourseAssignment", b =>
+                {
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InstructorID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseID", "InstructorID");
+
+                    b.HasIndex("InstructorID");
+
+                    b.ToTable("CourseAssignments");
+                });
+
             modelBuilder.Entity("CourseDomain.Department", b =>
                 {
                     b.Property<int>("DepartmentID")
@@ -70,21 +85,26 @@ namespace CourseData.Migrations
 
             modelBuilder.Entity("CourseDomain.Enrollment", b =>
                 {
-                    b.Property<int>("StudentID")
-                        .HasColumnType("int");
+                    b.Property<int>("EnrollmentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
 
-                    b.Property<int>("EnrollmentID")
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
-
-                    b.HasKey("StudentID", "CourseID");
+                    b.HasKey("EnrollmentID");
 
                     b.HasIndex("CourseID");
+
+                    b.HasIndex("StudentID");
 
                     b.ToTable("Enrollments");
                 });
@@ -110,6 +130,19 @@ namespace CourseData.Migrations
                     b.ToTable("Instructors");
                 });
 
+            modelBuilder.Entity("CourseDomain.OfficeAssignment", b =>
+                {
+                    b.Property<int>("InstructorID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("InstructorID");
+
+                    b.ToTable("OfficeAssignments");
+                });
+
             modelBuilder.Entity("CourseDomain.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -129,6 +162,62 @@ namespace CourseData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EnrollmentDate = new DateTime(2016, 2, 5, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Rosamond",
+                            LastName = "Morissette"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EnrollmentDate = new DateTime(1960, 2, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Jonathon",
+                            LastName = "Schulist"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EnrollmentDate = new DateTime(1951, 4, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Amya",
+                            LastName = "Brakus"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EnrollmentDate = new DateTime(1922, 11, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Lempi",
+                            LastName = "Orn"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            EnrollmentDate = new DateTime(1968, 3, 28, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Robyn",
+                            LastName = "Marks"
+                        });
+                });
+
+            modelBuilder.Entity("CourseDomain.CourseAssignment", b =>
+                {
+                    b.HasOne("CourseDomain.Course", "Course")
+                        .WithMany("CourseAssignments")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CourseDomain.Instructor", "Instructor")
+                        .WithMany("CourseAssignments")
+                        .HasForeignKey("InstructorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Instructor");
                 });
 
             modelBuilder.Entity("CourseDomain.Department", b =>
@@ -161,9 +250,29 @@ namespace CourseData.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("CourseDomain.OfficeAssignment", b =>
+                {
+                    b.HasOne("CourseDomain.Instructor", "Instructor")
+                        .WithOne("OfficeAssignment")
+                        .HasForeignKey("CourseDomain.OfficeAssignment", "InstructorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Instructor");
+                });
+
             modelBuilder.Entity("CourseDomain.Course", b =>
                 {
+                    b.Navigation("CourseAssignments");
+
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("CourseDomain.Instructor", b =>
+                {
+                    b.Navigation("CourseAssignments");
+
+                    b.Navigation("OfficeAssignment");
                 });
 
             modelBuilder.Entity("CourseDomain.Student", b =>

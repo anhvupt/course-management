@@ -10,7 +10,7 @@ namespace CourseDomain
         public string Title { get; set; }
         public int CourseCredit { get; set; }
         public int DepartmentID { get; set; }
-        public List<Enrollment> Enrollments { get; set; }
-        //public List<CourseAssignment> CourseAssignments { get; set; }
+        public virtual IList<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        public virtual List<CourseAssignment> CourseAssignments { get; set; }
     }
 }

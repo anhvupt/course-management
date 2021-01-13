@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CourseData.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,6 +53,30 @@ namespace CourseData.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CourseAssignments",
+                columns: table => new
+                {
+                    CourseID = table.Column<int>(type: "int", nullable: false),
+                    InstructorID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseAssignments", x => new { x.CourseID, x.InstructorID });
+                    table.ForeignKey(
+                        name: "FK_CourseAssignments_Courses_CourseID",
+                        column: x => x.CourseID,
+                        principalTable: "Courses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseAssignments_Instructors_InstructorID",
+                        column: x => x.InstructorID,
+                        principalTable: "Instructors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
@@ -75,17 +99,36 @@ namespace CourseData.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enrollments",
+                name: "OfficeAssignments",
                 columns: table => new
                 {
-                    CourseID = table.Column<int>(type: "int", nullable: false),
-                    StudentID = table.Column<int>(type: "int", nullable: false),
-                    EnrollmentID = table.Column<int>(type: "int", nullable: false),
-                    Grade = table.Column<int>(type: "int", nullable: false)
+                    InstructorID = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrollments", x => new { x.StudentID, x.CourseID });
+                    table.PrimaryKey("PK_OfficeAssignments", x => x.InstructorID);
+                    table.ForeignKey(
+                        name: "FK_OfficeAssignments_Instructors_InstructorID",
+                        column: x => x.InstructorID,
+                        principalTable: "Instructors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Enrollments",
+                columns: table => new
+                {
+                    EnrollmentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseID = table.Column<int>(type: "int", nullable: false),
+                    StudentID = table.Column<int>(type: "int", nullable: false),
+                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enrollments", x => x.EnrollmentID);
                     table.ForeignKey(
                         name: "FK_Enrollments_Courses_CourseID",
                         column: x => x.CourseID,
@@ -100,6 +143,23 @@ namespace CourseData.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Students",
+                columns: new[] { "Id", "EnrollmentDate", "FirstMidName", "LastName" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2016, 2, 5, 0, 0, 0, 0, DateTimeKind.Utc), "Rosamond", "Morissette" },
+                    { 2, new DateTime(1960, 2, 16, 0, 0, 0, 0, DateTimeKind.Utc), "Jonathon", "Schulist" },
+                    { 3, new DateTime(1951, 4, 24, 0, 0, 0, 0, DateTimeKind.Utc), "Amya", "Brakus" },
+                    { 4, new DateTime(1922, 11, 3, 0, 0, 0, 0, DateTimeKind.Utc), "Lempi", "Orn" },
+                    { 5, new DateTime(1968, 3, 28, 0, 0, 0, 0, DateTimeKind.Utc), "Robyn", "Marks" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseAssignments_InstructorID",
+                table: "CourseAssignments",
+                column: "InstructorID");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_InstructorID",
                 table: "Departments",
@@ -109,10 +169,18 @@ namespace CourseData.Migrations
                 name: "IX_Enrollments_CourseID",
                 table: "Enrollments",
                 column: "CourseID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_StudentID",
+                table: "Enrollments",
+                column: "StudentID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CourseAssignments");
+
             migrationBuilder.DropTable(
                 name: "Departments");
 
@@ -120,13 +188,16 @@ namespace CourseData.Migrations
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
-                name: "Instructors");
+                name: "OfficeAssignments");
 
             migrationBuilder.DropTable(
                 name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Instructors");
         }
     }
 }
