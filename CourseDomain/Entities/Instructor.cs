@@ -10,7 +10,7 @@ namespace CourseDomain
         public string LastName { get; set; }
         public string FistMidName { get; set; }
         public DateTime HireDate { get; set; }
-        public List<CourseAssignment> CourseAssignments { get; set; }
+        public IList<CourseAssignment> CourseAssignments { get; set; } = new List<CourseAssignment>();
         public OfficeAssignment OfficeAssignment { get; set; }
 
     }
