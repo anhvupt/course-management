@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static CourseWebAPI.Infrastuctures.Helpers.DateTimeHandler;
 
-namespace CourseWebAPI.Infrastuctures.Helpers
+namespace CourseWebAPI.Extentions
 {
     public static class DateTimeExtention
     {
         public static string GetDurationToNow(this DateTime date)
-        => TimeDiff(date, DateTime.Now);
+        => DateTimeHandler.TimeDiff(date, DateTime.Now);
+
     }
     public class DateTimeHandler
     {

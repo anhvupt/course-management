@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
-using CourseData.Infrastructures.Services;
-using CourseDomain;
-using CourseDomain.Models;
-using CourseDomain.ResourceParamerters;
+using CourseWebAPI.Entities;
+using CourseWebAPI.Models;
+using CourseWebAPI.ResourceParamerters;
+using CourseWebAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,80 +18,57 @@ namespace CourseWebAPI.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IStudentRespository _studentRespository;
-        private readonly IMapper _mapper;
-        public StudentsController(IStudentRespository studentRespository, IMapper mapper)
+        private readonly IStudentService _studentService;
+        private readonly ILogger<StudentsController> _logger;
+        public StudentsController(IStudentService studentService, 
+            ILogger<StudentsController> logger)
         {
-            _studentRespository = studentRespository ?? 
-                throw new ArgumentNullException(nameof(studentRespository));
-            _mapper = mapper ?? 
-                throw new ArgumentNullException(nameof(mapper));
-        }
-        [HttpGet()]
-        [HttpHead]
-        public ActionResult<IEnumerable<StudentDto>> GetStudent([
-            FromQuery]StudentResourceParamerter param)
-        {
-            var students = _studentRespository.Get(param);
-            return Ok(_mapper.Map<IEnumerable<StudentDto>>(students));
+            _studentService = studentService ??
+                throw new ArgumentNullException(nameof(studentService));
+            _logger = logger;
         }
 
+        [HttpGet()]
+        public async Task<IActionResult> GetStudents(
+            [FromQuery] StudentQueryParamerter param)
+            => Ok(await _studentService.GetStudents(param));
+
         [HttpGet("{studentId}", Name = "GetStudent")]
-        public ActionResult<StudentDto> GetStudent(int studentId)
+        public async Task<IActionResult> GetStudent(int studentId)
         {
-            var studentFromRespo = _studentRespository.Get(studentId);
-            if (studentFromRespo == null)
+            var student = await _studentService.GetStudent(studentId);
+            if (student == null)
                 return NotFound();
             else
-                return Ok(_mapper.Map<StudentDto>(studentFromRespo));
+                return Ok(student);
         }
 
         [HttpPost]
-        public ActionResult<StudentDto> CreateStudent(
+        public async Task<ActionResult<StudentDto>> CreateStudent(
             StudentForManipulationDto newStudent)
         {
-            var studentEntity = _mapper.Map<Student>(newStudent);
-            _studentRespository.Add(studentEntity);
-            _studentRespository.Save();
-
-            var studentToReturn = _mapper.Map<StudentDto>(studentEntity);
-            return CreatedAtRoute("GetStudent",
-                new { studentId = studentToReturn.Id },
-                studentToReturn);
+            await _studentService.Add(newStudent);
+            return NoContent();
         }
 
         [HttpPut("{studentId}")]
-        public ActionResult<StudentDto> UpdateStudent(int studentId,
+        public async Task<ActionResult<StudentDto>> UpdateStudent(int studentId,
             [FromBody] StudentForManipulationDto student)
         {
-            var studentFromRespo = _studentRespository.Get(studentId);
-            if(studentFromRespo == null)
-            {
-                var studentToAdd = _mapper.Map<Student>(student);
-                studentToAdd.Id = studentId;
-
-                _studentRespository.Add(studentToAdd);
-                _studentRespository.Save();
-
-                var studentToReturn = _mapper.Map<StudentDto>(studentToAdd);
-                return CreatedAtRoute("GetStudent",
-                    new { studentId = studentToReturn.Id },
-                    studentToReturn);
-            }
-            _mapper.Map(student, studentFromRespo);
-            _studentRespository.Update(studentFromRespo);
-            _studentRespository.Save();
+            var studentFromRespo = await _studentService.GetStudent(studentId);
+            if (studentFromRespo == null)
+                return NotFound();
+            await _studentService.Update(studentId, student);
             return NoContent();
         }
 
         [HttpDelete("{studentId}")]
-        public ActionResult<StudentDto> DeleteStudent(int studentId)
+        public async Task<ActionResult<StudentDto>> DeleteStudent(int studentId)
         {
-            var studentFromRespo = _studentRespository.Get(studentId);
+            var studentFromRespo = await _studentService.GetStudent(studentId);
             if (studentFromRespo == null)
                 return NotFound();
-            _studentRespository.Delete(studentFromRespo);
-            _studentRespository.Save();
+            await _studentService.Delete(studentId);
             return NoContent();
         }
     }

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using CourseDomain;
-using CourseDomain.Models;
-using CourseWebAPI.Infrastuctures.Helpers;
+using CourseWebAPI.Entities;
+using CourseWebAPI.Extentions;
+using CourseWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CourseWebAPI.Infrastuctures.Profiles
+namespace CourseWebAPI.Profiles
 {
     public class StudentProfile : Profile
     {
