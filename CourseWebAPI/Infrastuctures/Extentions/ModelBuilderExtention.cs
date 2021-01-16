@@ -67,35 +67,35 @@ namespace CourseWebAPI.Extentions
                 {
                     ID = 1,
                     LastName = Faker.Name.Last(),
-                    FistMidName = Faker.Name.First(),
+                    FirstMidName = Faker.Name.First(),
                     HireDate = DateTime.Now,
                 },
                 new Instructor
                 {
                     ID = 2,
                     LastName = Faker.Name.Last(),
-                    FistMidName = Faker.Name.First(),
+                    FirstMidName = Faker.Name.First(),
                     HireDate = DateTime.Now,
                 },
                 new Instructor
                 {
                     ID = 3,
                     LastName = Faker.Name.Last(),
-                    FistMidName = Faker.Name.First(),
+                    FirstMidName = Faker.Name.First(),
                     HireDate = DateTime.Now,
                 },
                 new Instructor
                 {
                     ID = 4,
                     LastName = Faker.Name.Last(),
-                    FistMidName = Faker.Name.First(),
+                    FirstMidName = Faker.Name.First(),
                     HireDate = DateTime.Now,
                 },
                 new Instructor
                 {
                     ID = 5,
                     LastName = Faker.Name.Last(),
-                    FistMidName = Faker.Name.First(),
+                    FirstMidName = Faker.Name.First(),
                     HireDate = DateTime.Now,
                 }
             );

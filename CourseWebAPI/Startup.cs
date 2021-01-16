@@ -80,10 +80,16 @@ namespace CourseWebAPI
                 };
             });
 
+            services.AddSwaggerGen();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
             services.AddDbContext<CourseContext>(option => 
                 option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddScoped<IStudentService, StudentService>();
+            
+            services.AddScoped<IInstructorService, InstructorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,8 +109,13 @@ namespace CourseWebAPI
                         await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
                     });
                 });
-
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 

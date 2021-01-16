@@ -8,7 +8,7 @@ namespace CourseWebAPI.Entities
     {
         public int ID { get; set; }
         public string LastName { get; set; }
-        public string FistMidName { get; set; }
+        public string FirstMidName { get; set; }
         public DateTime HireDate { get; set; }
         public IList<CourseAssignment> CourseAssignments { get; set; } = new List<CourseAssignment>();
         public OfficeAssignment OfficeAssignment { get; set; }
