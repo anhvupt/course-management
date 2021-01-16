@@ -10,6 +10,6 @@ namespace CourseWebAPI.Models
     public class InstructorForManipulationDto : PersonForManipulationDto
     {
         public virtual DateTime HireDate { get; set; }
-        public virtual string Location {get; set;}
+        public virtual string Office {get; set;}
     }
 }

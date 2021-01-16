@@ -1,4 +1,5 @@
 ﻿using CourseWebAPI.Infrastuctures.Models;
+using CourseWebAPI.Infrastuctures.Services;
 using CourseWebAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,12 @@ namespace CourseWebAPI.Controllers
     public class InstructorController : ControllerBase
     {
         private IInstructorService _instructorService;
-        public InstructorController(IInstructorService instructorService)
+        private ICourseService _courseService;
+        public InstructorController(IInstructorService instructorService,
+            ICourseService courseService)
         {
             _instructorService = instructorService;
+            _courseService = courseService;
         }
 
         [HttpGet()]
@@ -37,6 +41,16 @@ namespace CourseWebAPI.Controllers
             return Ok(instructor);
         }
 
+        [HttpGet("{instructorId}/courses")]
+        public async Task<IActionResult> GetTaughtCourses(int instructorId)
+        {
+            var coursesCollection = 
+                await _courseService.GetCoursesByInstructor(instructorId);
+            if (coursesCollection == null)
+                return NotFound();
+            return Ok(coursesCollection);
+        }
+
         [HttpPost()]
         public async Task<IActionResult> CreateInstructor(
             [FromBody] InstructorForCreationDto instructor)
@@ -45,6 +59,13 @@ namespace CourseWebAPI.Controllers
             if (createSucceed)
                 return NoContent();
             return BadRequest();
+        }
+
+        [HttpPost("{instructorId}/courseAssignments")]
+        public async Task<IActionResult> AssignCourses(int instructorId, 
+            [FromBody] params int[] courseIds)
+        {
+            return NotFound();
         }
 
         [HttpPut("{instructorId}")]

@@ -6,10 +6,11 @@ namespace CourseWebAPI.Entities
 {
     public class Student
     {
-        public int Id { get; set; }
-        public string LastName { get; set; }
-        public string FirstMidName { get; set; }
-        public DateTime EnrollmentDate { get; set; }
-        public IList<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        public virtual int Id { get; set; }
+        public virtual string LastName { get; set; }
+        public virtual string FirstMidName { get; set; }
+        public virtual DateTime EnrollmentDate { get; set; }
+        public virtual IList<Enrollment> Enrollments { get; set; } 
+            = new List<Enrollment>();
     }
 }

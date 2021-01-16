@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CourseWebAPI.Entities;
+using CourseWebAPI.Infrastuctures.Models;
 using CourseWebAPI.Models;
 using CourseWebAPI.ResourceParamerters;
 using CourseWebAPI.Services;
@@ -49,6 +50,13 @@ namespace CourseWebAPI.Controllers
         {
             await _studentService.Add(newStudent);
             return NoContent();
+        }
+
+        [HttpPost("{studentId}/enrollments")]
+        public async Task<IActionResult> CreateEnrollment(int studentId,
+            [FromBody] params int[] enrollmentId)
+        {
+            return NotFound();
         }
 
         [HttpPut("{studentId}")]

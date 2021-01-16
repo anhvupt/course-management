@@ -34,11 +34,13 @@ namespace CourseWebAPI.Data
             modelBuilder.Entity<CourseAssignment>()
                 .HasOne(ca => ca.Course)
                 .WithMany(c => c.CourseAssignments)
-                .HasForeignKey(ca => ca.CourseID);
+                .HasForeignKey(ca => ca.CourseID)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<CourseAssignment>()
                 .HasOne(ca => ca.Instructor)
                 .WithMany(i => i.CourseAssignments)
-                .HasForeignKey(ca => ca.InstructorID);
+                .HasForeignKey(ca => ca.InstructorID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<OfficeAssignment>()
                 .HasKey(oa => new { oa.InstructorID });

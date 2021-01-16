@@ -12,6 +12,7 @@ namespace CourseWebAPI.Infrastuctures.Models
         public string FirstMidName { get; set; }
         public DateTime HireDate { get; set; }
         public List<string> Departments { get; set; } = new List<string>();
-        public string OfficeLocation { get; set; }
+        public string Office { get; set; }
+        public List<string> Courses {get; set;}
     }
 }

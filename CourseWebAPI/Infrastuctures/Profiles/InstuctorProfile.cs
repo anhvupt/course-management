@@ -15,7 +15,7 @@ namespace CourseWebAPI.Infrastuctures.Profiles
         {
             CreateMap<Instructor, InstructorDto>()
                 .ForMember(
-                    dest => dest.OfficeLocation,
+                    dest => dest.Office,
                     opt => opt.MapFrom(x => x.OfficeAssignment.Location)
                     );
             CreateMap<InstructorForManipulationDto, Instructor>();

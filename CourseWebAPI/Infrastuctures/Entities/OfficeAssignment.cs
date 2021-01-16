@@ -6,9 +6,9 @@ namespace CourseWebAPI.Entities
 {
     public class OfficeAssignment
     {
-        public int InstructorID { get; set; }
-        public string Location { get; set; }
-        public Instructor Instructor { get; set; }
+        public virtual int InstructorID { get; set; }
+        public virtual string Location { get; set; }
+        public virtual Instructor Instructor { get; set; }
     }
 
 }

@@ -8,28 +8,13 @@ namespace CourseWebAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CourseCredit = table.Column<int>(type: "int", nullable: false),
-                    DepartmentID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Courses", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Instructors",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FistMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -50,30 +35,6 @@ namespace CourseWebAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CourseAssignments",
-                columns: table => new
-                {
-                    CourseID = table.Column<int>(type: "int", nullable: false),
-                    InstructorID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CourseAssignments", x => new { x.CourseID, x.InstructorID });
-                    table.ForeignKey(
-                        name: "FK_CourseAssignments_Courses_CourseID",
-                        column: x => x.CourseID,
-                        principalTable: "Courses",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CourseAssignments_Instructors_InstructorID",
-                        column: x => x.InstructorID,
-                        principalTable: "Instructors",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -117,6 +78,51 @@ namespace CourseWebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourseCredit = table.Column<int>(type: "int", nullable: false),
+                    DepartmentID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Courses_Departments_DepartmentID",
+                        column: x => x.DepartmentID,
+                        principalTable: "Departments",
+                        principalColumn: "DepartmentID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseAssignments",
+                columns: table => new
+                {
+                    CourseID = table.Column<int>(type: "int", nullable: false),
+                    InstructorID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseAssignments", x => new { x.CourseID, x.InstructorID });
+                    table.ForeignKey(
+                        name: "FK_CourseAssignments_Courses_CourseID",
+                        column: x => x.CourseID,
+                        principalTable: "Courses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CourseAssignments_Instructors_InstructorID",
+                        column: x => x.InstructorID,
+                        principalTable: "Instructors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrollments",
                 columns: table => new
                 {
@@ -144,32 +150,15 @@ namespace CourseWebAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Courses",
-                columns: new[] { "ID", "CourseCredit", "DepartmentID", "Title" },
-                values: new object[,]
-                {
-                    { 1, 1879190428, 5, "Modi explicabo esse deserunt." },
-                    { 9, -1872343641, 1, "Laudantium sit cum perspiciatis." },
-                    { 8, 1594434981, 2, "Qui qui officia aperiam doloremque facilis rerum dolores." },
-                    { 7, -115095350, 2, "Blanditiis ea iste reiciendis sequi cum ipsam." },
-                    { 6, -2870778, 3, "Est dolorem ipsam illum." },
-                    { 10, 186760381, 1, "Nesciunt architecto quia asperiores." },
-                    { 4, 1730633285, 4, "Explicabo et magni vel consequatur." },
-                    { 3, -230306062, 4, "Sunt eos suscipit qui rerum delectus dolores." },
-                    { 2, 330453738, 5, "Voluptatum magnam perspiciatis aliquam consequatur." },
-                    { 5, 1372973033, 3, "Cupiditate facere tenetur voluptatem vero quis officia illum delectus." }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Instructors",
-                columns: new[] { "ID", "FistMidName", "HireDate", "LastName" },
+                columns: new[] { "ID", "FirstMidName", "HireDate", "LastName" },
                 values: new object[,]
                 {
-                    { 1, "Trey", new DateTime(2021, 1, 15, 1, 30, 21, 780, DateTimeKind.Local).AddTicks(2597), "Renner" },
-                    { 2, "Irving", new DateTime(2021, 1, 15, 1, 30, 21, 781, DateTimeKind.Local).AddTicks(4628), "Von" },
-                    { 3, "Marshall", new DateTime(2021, 1, 15, 1, 30, 21, 781, DateTimeKind.Local).AddTicks(6352), "Cormier" },
-                    { 4, "Norma", new DateTime(2021, 1, 15, 1, 30, 21, 781, DateTimeKind.Local).AddTicks(8614), "Bernhard" },
-                    { 5, "Zachary", new DateTime(2021, 1, 15, 1, 30, 21, 782, DateTimeKind.Local).AddTicks(577), "Nienow" }
+                    { 1, "Bertrand", new DateTime(2021, 1, 16, 19, 32, 19, 213, DateTimeKind.Local).AddTicks(6354), "Cartwright" },
+                    { 2, "Dock", new DateTime(2021, 1, 16, 19, 32, 19, 215, DateTimeKind.Local).AddTicks(9674), "Gutkowski" },
+                    { 3, "Kelly", new DateTime(2021, 1, 16, 19, 32, 19, 216, DateTimeKind.Local).AddTicks(1506), "Powlowski" },
+                    { 4, "Bradford", new DateTime(2021, 1, 16, 19, 32, 19, 216, DateTimeKind.Local).AddTicks(2800), "Hoeger" },
+                    { 5, "Lula", new DateTime(2021, 1, 16, 19, 32, 19, 216, DateTimeKind.Local).AddTicks(4198), "Williamson" }
                 });
 
             migrationBuilder.InsertData(
@@ -177,28 +166,11 @@ namespace CourseWebAPI.Migrations
                 columns: new[] { "Id", "EnrollmentDate", "FirstMidName", "LastName" },
                 values: new object[,]
                 {
-                    { 4, new DateTime(2007, 4, 28, 0, 0, 0, 0, DateTimeKind.Utc), "Jackeline", "Hodkiewicz" },
-                    { 1, new DateTime(1952, 2, 23, 0, 0, 0, 0, DateTimeKind.Utc), "Rhoda", "Renner" },
-                    { 2, new DateTime(1992, 8, 15, 0, 0, 0, 0, DateTimeKind.Utc), "Winfield", "Boyer" },
-                    { 3, new DateTime(1959, 5, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Brisa", "Reinger" },
-                    { 5, new DateTime(2017, 8, 6, 0, 0, 0, 0, DateTimeKind.Utc), "Ashley", "Bergnaum" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "CourseAssignments",
-                columns: new[] { "CourseID", "InstructorID" },
-                values: new object[,]
-                {
-                    { 1, 1 },
-                    { 10, 5 },
-                    { 8, 4 },
-                    { 7, 4 },
-                    { 6, 3 },
-                    { 5, 3 },
-                    { 9, 5 },
-                    { 4, 2 },
-                    { 3, 2 },
-                    { 2, 1 }
+                    { 1, new DateTime(2007, 10, 21, 0, 0, 0, 0, DateTimeKind.Utc), "Erika", "Crooks" },
+                    { 2, new DateTime(1906, 3, 9, 0, 0, 0, 0, DateTimeKind.Utc), "Kailee", "Haley" },
+                    { 3, new DateTime(1988, 8, 14, 0, 0, 0, 0, DateTimeKind.Utc), "Marc", "Goldner" },
+                    { 4, new DateTime(1959, 7, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Emie", "Kertzmann" },
+                    { 5, new DateTime(1951, 3, 11, 0, 0, 0, 0, DateTimeKind.Utc), "Abner", "Moore" }
                 });
 
             migrationBuilder.InsertData(
@@ -206,11 +178,45 @@ namespace CourseWebAPI.Migrations
                 columns: new[] { "DepartmentID", "Budget", "InstructorID", "Name", "StartDate" },
                 values: new object[,]
                 {
-                    { 3, -597151893.0, 3, "Louie Brekke", new DateTime(2021, 1, 15, 1, 30, 21, 792, DateTimeKind.Local).AddTicks(4995) },
-                    { 1, 2011064282.0, 1, "Mrs. Mellie Labadie", new DateTime(2021, 1, 15, 1, 30, 21, 790, DateTimeKind.Local).AddTicks(9309) },
-                    { 4, 1083842602.0, 4, "Margie Connelly", new DateTime(2021, 1, 15, 1, 30, 21, 792, DateTimeKind.Local).AddTicks(7606) },
-                    { 5, -619048428.0, 5, "Florence Weimann", new DateTime(2021, 1, 15, 1, 30, 21, 793, DateTimeKind.Local).AddTicks(39) },
-                    { 2, -543478924.0, 2, "Bertha Schiller", new DateTime(2021, 1, 15, 1, 30, 21, 792, DateTimeKind.Local).AddTicks(1037) }
+                    { 1, -1762195451.0, 1, "Elliot Fay I", new DateTime(2021, 1, 16, 19, 32, 19, 225, DateTimeKind.Local).AddTicks(3783) },
+                    { 2, 629826614.0, 2, "Ahmed Torp", new DateTime(2021, 1, 16, 19, 32, 19, 225, DateTimeKind.Local).AddTicks(7725) },
+                    { 3, 1157944999.0, 3, "Ari Bayer", new DateTime(2021, 1, 16, 19, 32, 19, 225, DateTimeKind.Local).AddTicks(9246) },
+                    { 4, -1256002872.0, 4, "Ted Skiles", new DateTime(2021, 1, 16, 19, 32, 19, 226, DateTimeKind.Local).AddTicks(513) },
+                    { 5, -1469120133.0, 5, "Grace Stroman", new DateTime(2021, 1, 16, 19, 32, 19, 226, DateTimeKind.Local).AddTicks(2518) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Courses",
+                columns: new[] { "ID", "CourseCredit", "DepartmentID", "Title" },
+                values: new object[,]
+                {
+                    { 9, -1526750892, 1, "Id at laudantium maxime ut delectus in autem quae." },
+                    { 10, 2003657334, 1, "Commodi molestiae quia similique dolores." },
+                    { 7, 412734277, 2, "Voluptates sint repellendus eos eum excepturi voluptas." },
+                    { 8, 1886547216, 2, "Impedit incidunt ut perspiciatis reprehenderit." },
+                    { 5, -105182209, 3, "Natus illum ipsum est." },
+                    { 6, -366597290, 3, "Libero ipsum voluptates rerum vel ratione." },
+                    { 3, -823397902, 4, "Dolorum rerum adipisci alias odit." },
+                    { 4, -2057239761, 4, "Ipsam velit quis maxime porro praesentium cum." },
+                    { 1, 862109254, 5, "Doloremque eligendi quas quod ducimus neque neque quia ab sit." },
+                    { 2, -2043066793, 5, "Accusamus rem nihil aperiam labore." }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CourseAssignments",
+                columns: new[] { "CourseID", "InstructorID" },
+                values: new object[,]
+                {
+                    { 9, 5 },
+                    { 10, 5 },
+                    { 1, 1 },
+                    { 7, 4 },
+                    { 8, 4 },
+                    { 4, 2 },
+                    { 5, 3 },
+                    { 2, 1 },
+                    { 6, 3 },
+                    { 3, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -218,22 +224,27 @@ namespace CourseWebAPI.Migrations
                 columns: new[] { "EnrollmentID", "CourseID", "Grade", "StudentID" },
                 values: new object[,]
                 {
+                    { 1, 1, "None", 1 },
+                    { 4, 4, "A", 2 },
+                    { 3, 3, "C", 2 },
+                    { 5, 5, "A", 3 },
                     { 8, 8, "C", 4 },
                     { 7, 7, "D", 4 },
-                    { 6, 6, "None", 3 },
-                    { 5, 5, "A", 3 },
-                    { 1, 1, "None", 1 },
-                    { 3, 3, "C", 2 },
-                    { 2, 2, "None", 1 },
+                    { 10, 10, "A", 5 },
                     { 9, 9, "B", 5 },
-                    { 4, 4, "A", 2 },
-                    { 10, 10, "A", 5 }
+                    { 6, 6, "None", 3 },
+                    { 2, 2, "None", 1 }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseAssignments_InstructorID",
                 table: "CourseAssignments",
                 column: "InstructorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_DepartmentID",
+                table: "Courses",
+                column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_InstructorID",
@@ -257,9 +268,6 @@ namespace CourseWebAPI.Migrations
                 name: "CourseAssignments");
 
             migrationBuilder.DropTable(
-                name: "Departments");
-
-            migrationBuilder.DropTable(
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
@@ -270,6 +278,9 @@ namespace CourseWebAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Instructors");

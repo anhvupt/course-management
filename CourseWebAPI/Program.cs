@@ -18,9 +18,7 @@ namespace CourseWebAPI
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
-            CreateHostBuilder(args).Build().Run();
-            var host = CreateHostBuilder(args).Build();
-            host.Run(); 
+            CreateHostBuilder(args).Build().Run(); 
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -1,5 +1,6 @@
 using AutoMapper;
 using CourseWebAPI.Data;
+using CourseWebAPI.Infrastuctures.Services;
 using CourseWebAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -88,8 +89,10 @@ namespace CourseWebAPI
                 option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<IStudentService, StudentService>();
-            
             services.AddScoped<IInstructorService, InstructorService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ICourseAssignmentService, CourseAssignmentService>();
+            services.AddScoped<IEnrollmentService, EnrollmentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
