@@ -11,6 +11,7 @@ namespace CourseWebAPI.Services
         Task<bool> Delete(int id);
         Task<StudentDto> GetStudent(int id);
         Task<IEnumerable<StudentDto>> GetStudents(StudentQueryParamerter param);
+        bool IsExist(params int[] ids);
         Task<bool> Update(int studentId, StudentForManipulationDto item);
     }
 }

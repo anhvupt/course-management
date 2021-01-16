@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CourseWebAPI.Data;
+using CourseWebAPI.Entities;
 using CourseWebAPI.Infrastuctures.Models;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,14 @@ namespace CourseWebAPI.Infrastuctures.Services
         public async Task<bool> CreateCourseAssignment(
             int instructorId, params int[] courseIds)
         {
-            return false;
+            foreach (var courseId in courseIds)
+                _context.CourseAssignments.Add(
+                    new CourseAssignment()
+                    {
+                        CourseID = courseId,
+                        InstructorID = instructorId
+                    });
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

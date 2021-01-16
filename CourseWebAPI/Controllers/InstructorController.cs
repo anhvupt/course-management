@@ -16,11 +16,14 @@ namespace CourseWebAPI.Controllers
     {
         private IInstructorService _instructorService;
         private ICourseService _courseService;
+        private ICourseAssignmentService _courseAssignmentService;
         public InstructorController(IInstructorService instructorService,
-            ICourseService courseService)
+            ICourseService courseService,
+            ICourseAssignmentService courseAssignmentService)
         {
             _instructorService = instructorService;
             _courseService = courseService;
+            _courseAssignmentService = courseAssignmentService;
         }
 
         [HttpGet()]
@@ -65,7 +68,18 @@ namespace CourseWebAPI.Controllers
         public async Task<IActionResult> AssignCourses(int instructorId, 
             [FromBody] params int[] courseIds)
         {
-            return NotFound();
+            if (!IsExistId(instructorId, courseIds))
+                return NotFound();
+
+            var assignCusseed = await
+                _courseAssignmentService.CreateCourseAssignment(instructorId, courseIds);
+            if (assignCusseed)
+                return NoContent();
+            return BadRequest();
+
+            bool IsExistId(int instructorId, params int[] courseIds)
+                => _courseService.IsExist(courseIds) &&
+                _instructorService.IsExist(instructorId);
         }
 
         [HttpPut("{instructorId}")]

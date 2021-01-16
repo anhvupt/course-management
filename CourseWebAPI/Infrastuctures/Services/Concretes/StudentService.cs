@@ -109,5 +109,12 @@ namespace CourseWebAPI.Services
             return totalChanges > 0;
         }
 
+        public bool IsExist(params int[] ids)
+        {
+            foreach (int id in ids)
+                if (!_context.Students.Any(s => s.Id == id))
+                    return false;
+            return true;
+        }
     }
 }

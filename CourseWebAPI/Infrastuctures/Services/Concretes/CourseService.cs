@@ -40,5 +40,13 @@ namespace CourseWebAPI.Infrastuctures.Services
             }
             return result;
         }
+
+        public bool IsExist(params int[] ids)
+        {
+            foreach (var id in ids)
+                if (!_context.Courses.Any(c => c.ID == id))
+                    return false;
+            return true;
+        }
     }
 }

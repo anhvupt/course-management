@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CourseWebAPI.Data;
+using CourseWebAPI.Entities;
 using CourseWebAPI.Infrastuctures.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,7 +32,14 @@ namespace CourseWebAPI.Infrastuctures.Services
         public async Task<bool> CreateEnrollmentsByStudentId(int studentId,
             params int[] courseIds)
         {
-            return false;
+            foreach (var courseId in courseIds)
+                _context.Enrollments.Add(new Enrollment()
+                {
+                    StudentID = studentId,
+                    CourseID = courseId,
+                    Grade = EnrollmentGrade.None
+                });
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

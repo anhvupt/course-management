@@ -103,6 +103,14 @@ namespace CourseWebAPI.Services
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public bool IsExist(params int[] ids)
+        {
+            foreach (var id in ids)
+                if (!_context.Instructors.Any(i => i.ID == id))
+                    return false;
+            return true;
+        }
+
         private async Task<List<string>> GetDepartmentNames(int instructorId)
         {
             List<string> result = new List<string>();
@@ -126,5 +134,7 @@ namespace CourseWebAPI.Services
             }
             return result;
         }
+
+
     }
 }

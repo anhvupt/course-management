@@ -8,5 +8,6 @@ namespace CourseWebAPI.Infrastuctures.Services
     {
         Task<List<CourseDto>> GetCourses();
         Task<List<CourseDto>> GetCoursesByInstructor(int instructorId);
+        bool IsExist(params int[] ids);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CourseWebAPI.Entities;
 using CourseWebAPI.Infrastuctures.Models;
+using CourseWebAPI.Infrastuctures.Services;
 using CourseWebAPI.Models;
 using CourseWebAPI.ResourceParamerters;
 using CourseWebAPI.Services;
@@ -21,12 +22,14 @@ namespace CourseWebAPI.Controllers
     {
         private readonly IStudentService _studentService;
         private readonly ILogger<StudentsController> _logger;
+        private readonly ICourseService _courseService;
         public StudentsController(IStudentService studentService, 
-            ILogger<StudentsController> logger)
+            ILogger<StudentsController> logger, ICourseService courseService)
         {
             _studentService = studentService ??
                 throw new ArgumentNullException(nameof(studentService));
             _logger = logger;
+            _courseService = courseService;
         }
 
         [HttpGet()]
@@ -54,9 +57,13 @@ namespace CourseWebAPI.Controllers
 
         [HttpPost("{studentId}/enrollments")]
         public async Task<IActionResult> CreateEnrollment(int studentId,
-            [FromBody] params int[] enrollmentId)
+            [FromBody] params int[] courseIds)
         {
-            return NotFound();
+            if(is)
+
+            bool IsExsit(int studentId, params int[] courseIds)
+                => _studentService.IsExist(studentId) &&
+                _courseService.IsExist(courseIds);
         }
 
         [HttpPut("{studentId}")]
