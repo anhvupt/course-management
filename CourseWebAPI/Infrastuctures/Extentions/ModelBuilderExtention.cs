@@ -102,33 +102,33 @@ namespace CourseWebAPI.Extentions
         }
         private static void SeedOfficeAssignment(this ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<OfficeAssignment>().HasData(
-            //    new OfficeAssignment
-            //    {
-            //        InstructorID = 1,
-            //        Location = Faker.Address.StreetAddress()
-            //    },
-            //    new OfficeAssignment
-            //    {
-            //        InstructorID = 2,
-            //        Location = Faker.Address.StreetAddress()
-            //    },
-            //    new OfficeAssignment
-            //    {
-            //        InstructorID = 3,
-            //        Location = Faker.Address.StreetAddress()
-            //    },
-            //    new OfficeAssignment
-            //    {
-            //        InstructorID = 4,
-            //        Location = Faker.Address.StreetAddress()
-            //    },
-            //    new OfficeAssignment
-            //    {
-            //        InstructorID = 5,
-            //        Location = Faker.Address.StreetAddress()
-            //    }
-            //);
+            modelBuilder.Entity<OfficeAssignment>().HasData(
+                new OfficeAssignment
+                {
+                    InstructorID = 1,
+                    Location = Faker.Address.StreetAddress()
+                },
+                new OfficeAssignment
+                {
+                    InstructorID = 2,
+                    Location = Faker.Address.StreetAddress()
+                },
+                new OfficeAssignment
+                {
+                    InstructorID = 3,
+                    Location = Faker.Address.StreetAddress()
+                },
+                new OfficeAssignment
+                {
+                    InstructorID = 4,
+                    Location = Faker.Address.StreetAddress()
+                },
+                new OfficeAssignment
+                {
+                    InstructorID = 5,
+                    Location = Faker.Address.StreetAddress()
+                }
+            );
         }
         private static void SeedDepartment(this ModelBuilder modelBuilder)
         {

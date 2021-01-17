@@ -21,15 +21,16 @@ namespace CourseWebAPI.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
-        private readonly ILogger<StudentsController> _logger;
         private readonly ICourseService _courseService;
+        IEnrollmentService _enrollmentService;
         public StudentsController(IStudentService studentService, 
-            ILogger<StudentsController> logger, ICourseService courseService)
+            ICourseService courseService, 
+            IEnrollmentService enrollmentService)
         {
             _studentService = studentService ??
                 throw new ArgumentNullException(nameof(studentService));
-            _logger = logger;
             _courseService = courseService;
+            _enrollmentService = enrollmentService;
         }
 
         [HttpGet()]
@@ -59,7 +60,14 @@ namespace CourseWebAPI.Controllers
         public async Task<IActionResult> CreateEnrollment(int studentId,
             [FromBody] params int[] courseIds)
         {
-            if(is)
+            if (IsExsit(studentId, courseIds))
+                return NotFound();
+
+            var createSucceed = await
+                _enrollmentService.CreateEnrollmentsByStudentId(studentId, courseIds);
+            if (createSucceed)
+                return NoContent();
+            return BadRequest();
 
             bool IsExsit(int studentId, params int[] courseIds)
                 => _studentService.IsExist(studentId) &&

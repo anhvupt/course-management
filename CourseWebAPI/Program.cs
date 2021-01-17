@@ -7,18 +7,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CourseWebAPI.Infrastuctures.Extentions;
 
 namespace CourseWebAPI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
-            CreateHostBuilder(args).Build().Run(); 
+            IHost host = CreateHostBuilder(args).Build();
+            await host.Initialize();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
