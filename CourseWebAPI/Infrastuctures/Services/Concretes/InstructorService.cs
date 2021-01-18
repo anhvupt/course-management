@@ -20,96 +20,60 @@ namespace CourseWebAPI.Services
             _context = context;
             _mapper = mapper;
         }
-        public async Task<List<InstructorDto>> GetInstructors()
+        public async Task<List<InstructorListModel>> GetList()
         {
-            List<InstructorDto> dtoCollection = new List<InstructorDto>();
-            var instructorsInDb = await
+            List<InstructorListModel> models = new List<InstructorListModel>();
+            var entities = await
                 _context.Instructors.Include(i => i.OfficeAssignment).ToListAsync();
-            foreach (var instuctor in instructorsInDb)
+            foreach (var entity in entities)
             {
-                var instructorDto = _mapper.Map<InstructorDto>(instuctor);
-                instructorDto.Departments = await GetDepartmentNames(instructorDto.Id);
-                instructorDto.Courses = await GetCourseTitles(instuctor);
-                dtoCollection.Add(instructorDto);
+                var model = _mapper.Map<InstructorListModel>(entity);
+                model.Departments = await GetDepartmentNames(model.Id);
+                model.Courses = await GetCourseTitles(entity);
+                models.Add(model);
             }
-            return dtoCollection;
+            return models;
         }
 
-        public async Task<InstructorDto> GetInstructor(int instructorId)
+        public async Task<InstructorListModel> Get(int instructorId)
         {
-            InstructorDto instructorDto = null;
-            var instructorInDb = await
+            var entity = await
                 _context.Instructors.Include(i => i.OfficeAssignment)
                 .FirstOrDefaultAsync(i => i.ID == instructorId);
-            if (instructorInDb != null)
-            {
-                instructorDto = _mapper.Map<InstructorDto>(instructorInDb);
-                instructorDto.Departments = await GetDepartmentNames(instructorDto.Id);
-                instructorDto.Courses = await GetCourseTitles(instructorInDb);
-            }
+            if (entity == null)
+                return null;
+
+                var instructorDto = _mapper.Map<InstructorListModel>(entity);
+                //instructorDto.Departments = await GetDepartmentNames(instructorDto.Id);
+                instructorDto.Courses = await GetCourseTitles(entity);
             return instructorDto;
         }
 
-        public async Task<bool> CreateInstructor(InstructorForCreationDto instructor)
+        public async Task<bool> Create(InstructorCreateModel model)
         {
-            var newInstructor = _mapper.Map<Instructor>(instructor);
-            _context.Instructors.Add(newInstructor);
-            bool creationSucceed = await _context.SaveChangesAsync() > 0;
-            if (creationSucceed)
-            {
-                if (!string.IsNullOrWhiteSpace(instructor.Office))
-                {
-                    OfficeAssignment newOfficeAssignment = new OfficeAssignment()
-                    {
-                        InstructorID = newInstructor.ID,
-                        Location = instructor.Office
-                    };
-                    _context.OfficeAssignments.Add(newOfficeAssignment);
-                    creationSucceed &= await _context.SaveChangesAsync() > 0;
-                }
-                return creationSucceed;
-            }
-            return false;
+            var entity = _mapper.Map<Instructor>(model);
+            _context.Instructors.Add(entity);
+            return  await _context.SaveChangesAsync() > 0;
         }
-        public async Task<bool> UpdateInstructor(int instructorId,
-            InstructorForUpdateDto instructor)
+        public async Task<bool> Edit(int instructorId,
+            InstructorEditModel model)
         {
-            var instructorInDb = await
+            var entity = await
                 _context.Instructors.Include(i => i.OfficeAssignment)
                 .FirstOrDefaultAsync(i => i.ID == instructorId);
-
-            var newInstructor = _mapper.Map<Instructor>(instructor);
-            instructorInDb.FirstMidName = newInstructor.FirstMidName;
-            instructorInDb.LastName = newInstructor.LastName;
-            instructorInDb.HireDate = newInstructor.HireDate;
-            instructorInDb.OfficeAssignment.Location = instructor.Office;
-
+            _mapper.Map<InstructorEditModel, Instructor>(model, entity);
+                
             return await _context.SaveChangesAsync() > 0;
         }
-        public async Task<bool> DeleteInstructor(int instructorId)
+        public async Task<bool> Delete(int instructorId)
         {
-            var officeAssignment = await _context.OfficeAssignments
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.InstructorID == instructorId);
-            var instructor = await _context.Instructors
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.ID == instructorId);
-
-            if (officeAssignment != null)
-                _context.OfficeAssignments.Remove(officeAssignment);
-            if (instructor != null)
-                _context.Instructors.Remove(instructor);
-
+            var entity = _context.Instructors
+                .Include(x => x.CourseAssignments)
+                .FirstOrDefault(x => x.ID == instructorId);
+            _context.Instructors.Remove(entity);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public bool IsExist(params int[] ids)
-        {
-            foreach (var id in ids)
-                if (!_context.Instructors.Any(i => i.ID == id))
-                    return false;
-            return true;
-        }
 
         private async Task<List<string>> GetDepartmentNames(int instructorId)
         {

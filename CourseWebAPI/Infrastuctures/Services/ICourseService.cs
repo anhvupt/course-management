@@ -6,8 +6,7 @@ namespace CourseWebAPI.Infrastuctures.Services
 {
     public interface ICourseService
     {
-        Task<List<CourseDto>> GetCourses();
-        Task<List<CourseDto>> GetCoursesByInstructor(int instructorId);
-        bool IsExist(params int[] ids);
+        Task<List<CourselistModel>> GetList();
+        Task<List<CourselistModel>> GetTaughtCourses(int instructorId);
     }
 }

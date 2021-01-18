@@ -12,7 +12,7 @@ namespace CourseWebAPI.Infrastuctures.Profiles
     {
         public CourseProfile()
         {
-            CreateMap<Course, CourseDto>()
+            CreateMap<Course, CourselistModel>()
                 .ForMember(
                 dest => dest.Department,
                 opt => opt.MapFrom(c => c.Department!.Name)

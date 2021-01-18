@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CourseWebAPI.Entities;
-using CourseWebAPI.Extentions;
+using CourseWebAPI.Infrastuctures.Extensions;
 using CourseWebAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace CourseWebAPI.Profiles
     {
         public StudentProfile()
         {
-            CreateMap<Student, StudentDto>()
+            CreateMap<Student, StudentListModel>()
                 .ForMember(
                     dest => dest.Name,
                     opt => opt.MapFrom(scr => $"{scr.FirstMidName} {scr.LastName}")
@@ -22,7 +22,7 @@ namespace CourseWebAPI.Profiles
                     dest => dest.EnrollmentDuration,
                     opt => opt.MapFrom(scr => scr.EnrollmentDate.GetDurationToNow())
                 );
-            CreateMap<StudentForManipulationDto, Student>();
+            CreateMap<StudentModel, Student>();
         }
     }
 }

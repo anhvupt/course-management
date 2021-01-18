@@ -12,7 +12,7 @@ namespace CourseWebAPI.Infrastuctures.Profiles
     {
         public EnrollmentProfile()
         {
-            CreateMap<Enrollment, EnrollmentDto>()
+            CreateMap<Enrollment, EnrollmentListModel>()
                 .ForMember(
                     dest => dest.Student,
                     opt => opt.MapFrom(e => $"{e.Student.FirstMidName} {e.Student.LastName}")

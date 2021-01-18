@@ -27,18 +27,15 @@ namespace CourseWebAPI.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetInstructors()
+        public async Task<IActionResult> GetList()
         {
-            var instructorCollection = await _instructorService.GetInstructors();
-            if (instructorCollection == null || instructorCollection.Count == 0)
-                return NotFound();
-            return Ok(instructorCollection);
+            return Ok(await _instructorService.GetList());
         }
 
         [HttpGet("{instructorId}")]
-        public async Task<IActionResult> GetInstructor(int instructorId)
+        public async Task<IActionResult> Get(int instructorId)
         {
-            var instructor = await _instructorService.GetInstructor(instructorId);
+            var instructor = await _instructorService.Get(instructorId);
             if (instructor == null)
                 return NotFound();
             return Ok(instructor);
@@ -47,62 +44,44 @@ namespace CourseWebAPI.Controllers
         [HttpGet("{instructorId}/courses")]
         public async Task<IActionResult> GetTaughtCourses(int instructorId)
         {
-            var coursesCollection = 
-                await _courseService.GetCoursesByInstructor(instructorId);
-            if (coursesCollection == null)
-                return NotFound();
+            var coursesCollection =
+                await _courseService.GetTaughtCourses(instructorId);
             return Ok(coursesCollection);
         }
 
         [HttpPost()]
-        public async Task<IActionResult> CreateInstructor(
-            [FromBody] InstructorForCreationDto instructor)
+        public async Task<IActionResult> Create(
+            [FromBody] InstructorCreateModel instructor)
         {
-            bool createSucceed = await _instructorService.CreateInstructor(instructor);
-            if (createSucceed)
-                return NoContent();
-            return BadRequest();
+            await _instructorService.Create(instructor);
+            return NoContent();
         }
 
-        [HttpPost("{instructorId}/courseAssignments")]
-        public async Task<IActionResult> AssignCourses(int instructorId, 
+        [HttpPost("{instructorId}/assignCourses")]
+        public async Task<IActionResult> AssignCourses(int instructorId,
             [FromBody] params int[] courseIds)
         {
-            if (!IsExistId(instructorId, courseIds))
-                return NotFound();
-
-            var assignCusseed = await
-                _courseAssignmentService.CreateCourseAssignment(instructorId, courseIds);
-            if (assignCusseed)
-                return NoContent();
-            return BadRequest();
-
-            bool IsExistId(int instructorId, params int[] courseIds)
-                => _courseService.IsExist(courseIds) &&
-                _instructorService.IsExist(instructorId);
+            await _courseAssignmentService
+                .AssignCourses(instructorId, courseIds);
+            return NoContent();
         }
 
         [HttpPut("{instructorId}")]
-        public async Task<IActionResult> UpdateInstructor(int instructorId,
-            [FromBody] InstructorForUpdateDto instructor)
+        public async Task<IActionResult> Edit(int instructorId,
+            [FromBody] InstructorEditModel instructor)
         {
-            if(await _instructorService.GetInstructor(instructorId) == null)
+            var existedModel = await _instructorService.Get(instructorId);
+            if (existedModel == null)
                 return NotFound();
-
-            bool updateSucceed = await
-                _instructorService.UpdateInstructor(instructorId, instructor);
-            if (updateSucceed)
-                return NoContent();
-            return BadRequest();
+            await _instructorService.Edit(instructorId, instructor);
+            return NoContent();
         }
 
         [HttpDelete("{instructorId}")]
-        public async Task<IActionResult> DeleteInstructor(int instructorId)
+        public async Task<IActionResult> Delete(int instructorId)
         {
-            bool deleteSucceed = await _instructorService.DeleteInstructor(instructorId);
-            if (deleteSucceed)
-                return NoContent();
-            return NotFound();
+            await _instructorService.Delete(instructorId);
+            return NoContent();
         }
     }
 }

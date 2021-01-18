@@ -1,5 +1,6 @@
 ﻿using CourseWebAPI.Data;
 using CourseWebAPI.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -7,29 +8,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CourseWebAPI.Infrastuctures.Extentions
+namespace CourseWebAPI.Infrastuctures.Extensions
 {
-    public static class HostBuilderExtention
+    public static class HostBuilderExtension
     {
-        public async static Task Initialize(this IHost host)
+        public static void Initialize(this IHost host)
         {
             using var scope = host.Services.CreateScope();
             var serviceProvider = scope.ServiceProvider;
-            await InitializeDatabase(serviceProvider);
+            InitializeDatabase(serviceProvider);
         }
 
-        private static async Task InitializeDatabase(IServiceProvider serviceProvider)
+        private static void InitializeDatabase(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetRequiredService<CourseContext>();
-            await context.SeedStudent();
-            await context.SeedInstuctor();
-            await context.SeedOfficeAssignment();
-            await context.SeedDepartment();
-            await context.SeedCourse();
-            await context.SeedCourseAssignment();
-            await context.SeedEnrollment();
-         }
-        private static async Task SeedStudent(this CourseContext context)
+            context.SeedStudent();
+            context.SeedInstuctor();
+            context.SeedOfficeAssignment();
+            context.SeedDepartment();
+            context.SeedCourse();
+            context.SeedCourseAssignment();
+            context.SeedEnrollment();
+            try
+            {
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students ON");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors ON");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses ON");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments ON");
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students OFF");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors OFF");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses OFF");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments OFF");
+            }
+            finally
+            {
+                context.Database.CloseConnection();
+            }
+        }
+        private static void SeedStudent(this CourseContext context)
         {
             if (!context.Students.Any())
             {
@@ -71,10 +90,10 @@ namespace CourseWebAPI.Infrastuctures.Extentions
                         EnrollmentDate = Faker.Identification.DateOfBirth()
                     }
                 });
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
-        private static async Task SeedInstuctor(this CourseContext context)
+        private static void SeedInstuctor(this CourseContext context)
         {
             if (!context.Instructors.Any())
             {
@@ -116,10 +135,10 @@ namespace CourseWebAPI.Infrastuctures.Extentions
                         HireDate = DateTime.Now,
                     }
                 });
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
-        private static async Task SeedOfficeAssignment(this CourseContext context)
+        private static void SeedOfficeAssignment(this CourseContext context)
         {
             if (!context.OfficeAssignments.Any())
             {
@@ -150,10 +169,10 @@ namespace CourseWebAPI.Infrastuctures.Extentions
                         Location = Faker.Address.StreetAddress()
                     }
                 });
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
-        private static async Task SeedDepartment(this CourseContext context)
+        private static void SeedDepartment(this CourseContext context)
         {
             if (!context.Departments.Any())
             {
@@ -199,10 +218,10 @@ namespace CourseWebAPI.Infrastuctures.Extentions
                         InstructorID = 5,
                     }
                 });
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
-        private static async Task SeedCourse(this CourseContext context)
+        private static void SeedCourse(this CourseContext context)
         {
             if (!context.Courses.Any())
             {
@@ -278,10 +297,10 @@ namespace CourseWebAPI.Infrastuctures.Extentions
                         DepartmentID = 1
                     }
                 });
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
-        private static async Task SeedCourseAssignment(this CourseContext context)
+        private static void SeedCourseAssignment(this CourseContext context)
         {
             if (!context.CourseAssignments.Any())
             {
@@ -297,10 +316,10 @@ namespace CourseWebAPI.Infrastuctures.Extentions
                     new CourseAssignment { CourseID = 9, InstructorID = 5 },
                     new CourseAssignment { CourseID = 10, InstructorID = 5 }
                 });
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
-        private static async Task SeedEnrollment(this CourseContext context)
+        private static void SeedEnrollment(this CourseContext context)
         {
             if (!context.Enrollments.Any())
             {
@@ -376,7 +395,7 @@ namespace CourseWebAPI.Infrastuctures.Extentions
                         Grade = EnrollmentGrade.A
                     }
                 });
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
 

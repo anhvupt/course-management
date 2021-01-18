@@ -20,25 +20,25 @@ namespace CourseWebAPI.Infrastuctures.Services
             _mapper = mapper;
         }
 
-        public async Task<List<EnrollmentDto>> GetEnrollmentByCourse(int courseId)
+        public async Task<List<EnrollmentListModel>> GetEnrolledStudents(int courseId)
         {
-            var enrollmentInDb = await _context.Enrollments
+            var entities = await _context.Enrollments
                 .Include(e => e.Course)
                 .Include(e => e.Student)
                 .Where(e => e.CourseID == courseId)
                 .ToListAsync();
-            return _mapper.Map<List<EnrollmentDto>>(enrollmentInDb);
+            return _mapper.Map<List<EnrollmentListModel>>(entities);
         }
-        public async Task<bool> CreateEnrollmentsByStudentId(int studentId,
+        public async Task<bool> EnrollCourses(int studentId,
             params int[] courseIds)
         {
-            foreach (var courseId in courseIds)
-                _context.Enrollments.Add(new Enrollment()
-                {
-                    StudentID = studentId,
-                    CourseID = courseId,
-                    Grade = EnrollmentGrade.None
-                });
+            var enrollments = courseIds.Select(courseId => new Enrollment()
+            {
+                StudentID = studentId,
+                CourseID = courseId,
+                Grade = EnrollmentGrade.None
+            });
+            _context.Enrollments.AddRange(enrollments);
             return await _context.SaveChangesAsync() > 0;
         }
     }

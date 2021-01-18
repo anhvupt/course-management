@@ -6,11 +6,10 @@ namespace CourseWebAPI.Services
 {
     public interface IInstructorService
     {
-        Task<bool> CreateInstructor(InstructorForCreationDto instructor);
-        Task<bool> DeleteInstructor(int instructorId);
-        Task<InstructorDto> GetInstructor(int instructorId);
-        Task<List<InstructorDto>> GetInstructors();
-        Task<bool> UpdateInstructor(int instructorId, InstructorForUpdateDto instructor);
-        bool IsExist(params int[] ids);
+        Task<bool> Create(InstructorCreateModel instructor);
+        Task<bool> Delete(int instructorId);
+        Task<InstructorListModel> Get(int instructorId);
+        Task<List<InstructorListModel>> GetList();
+        Task<bool> Edit(int instructorId, InstructorEditModel instructor);
     }
 }

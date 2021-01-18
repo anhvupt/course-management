@@ -6,7 +6,7 @@ namespace CourseWebAPI.Infrastuctures.Services
 {
     public interface IEnrollmentService
     {
-        Task<bool> CreateEnrollmentsByStudentId(int studentId, params int[] courseIds);
-        Task<List<EnrollmentDto>> GetEnrollmentByCourse(int courseId);
+        Task<bool> EnrollCourses(int studentId, params int[] courseIds);
+        Task<List<EnrollmentListModel>> GetEnrolledStudents(int courseId);
     }
 }

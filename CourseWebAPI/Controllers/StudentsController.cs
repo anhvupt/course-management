@@ -34,62 +34,54 @@ namespace CourseWebAPI.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetStudents(
+        public async Task<IActionResult> GetList(
             [FromQuery] StudentQueryParamerter param)
-            => Ok(await _studentService.GetStudents(param));
+        {
+            return Ok(await _studentService.GetList(param));
+        }
 
         [HttpGet("{studentId}", Name = "GetStudent")]
-        public async Task<IActionResult> GetStudent(int studentId)
+        public async Task<IActionResult> Get(int studentId)
         {
-            var student = await _studentService.GetStudent(studentId);
-            if (student == null)
+            var model = await _studentService.Get(studentId);
+            if (model == null)
                 return NotFound();
             else
-                return Ok(student);
+                return Ok(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult<StudentDto>> CreateStudent(
-            StudentForManipulationDto newStudent)
+        public async Task<ActionResult<StudentListModel>> Create(
+            StudentModel newStudent)
         {
-            await _studentService.Add(newStudent);
+            await _studentService.Create(newStudent);
             return NoContent();
         }
 
-        [HttpPost("{studentId}/enrollments")]
-        public async Task<IActionResult> CreateEnrollment(int studentId,
+        [HttpPost("{studentId}/enrollCourses")]
+        public async Task<IActionResult> EnrollCourses(int studentId,
             [FromBody] params int[] courseIds)
         {
-            if (IsExsit(studentId, courseIds))
-                return NotFound();
-
-            var createSucceed = await
-                _enrollmentService.CreateEnrollmentsByStudentId(studentId, courseIds);
-            if (createSucceed)
-                return NoContent();
-            return BadRequest();
-
-            bool IsExsit(int studentId, params int[] courseIds)
-                => _studentService.IsExist(studentId) &&
-                _courseService.IsExist(courseIds);
+            await _enrollmentService.EnrollCourses(studentId, courseIds);
+            return NoContent();
         }
 
         [HttpPut("{studentId}")]
-        public async Task<ActionResult<StudentDto>> UpdateStudent(int studentId,
-            [FromBody] StudentForManipulationDto student)
+        public async Task<ActionResult<StudentListModel>> Edit(int studentId,
+            [FromBody] StudentModel student)
         {
-            var studentFromRespo = await _studentService.GetStudent(studentId);
-            if (studentFromRespo == null)
+            var existedModel = await _studentService.Get(studentId);
+            if (existedModel == null)
                 return NotFound();
             await _studentService.Update(studentId, student);
             return NoContent();
         }
 
         [HttpDelete("{studentId}")]
-        public async Task<ActionResult<StudentDto>> DeleteStudent(int studentId)
+        public async Task<ActionResult<StudentListModel>> Delete(int studentId)
         {
-            var studentFromRespo = await _studentService.GetStudent(studentId);
-            if (studentFromRespo == null)
+            var existedModel = await _studentService.Get(studentId);
+            if (existedModel == null)
                 return NotFound();
             await _studentService.Delete(studentId);
             return NoContent();

@@ -19,34 +19,26 @@ namespace CourseWebAPI.Infrastuctures.Services
             _mapper = mapper;
         }
 
-        public async Task<List<CourseDto>> GetCourses()
+        public async Task<List<CourselistModel>> GetList()
         {
-            var coursesInDb = await
+            var entities = await
                 _context.Courses.Include(c => c.Department).ToListAsync();
-            return _mapper.Map<List<CourseDto>>(coursesInDb);
+            return _mapper.Map<List<CourselistModel>>(entities);
         }
 
-        public async Task<List<CourseDto>> GetCoursesByInstructor(int instructorId)
+        public async Task<List<CourselistModel>> GetTaughtCourses(int instructorId)
         {
-            List<CourseDto> result = new List<CourseDto>();
-            var instructorInDb = await _context.Instructors
+            List<CourselistModel> result = new List<CourselistModel>();
+            var entities = await _context.Instructors
                 .Include(i => i.CourseAssignments)
                 .FirstOrDefaultAsync(i => i.ID == instructorId);
 
-            foreach (var ca in instructorInDb.CourseAssignments)
+            foreach (var ca in entities.CourseAssignments)
             {
                 await _context.Entry(ca).Reference(ca => ca.Course).LoadAsync();
-                result.Add(_mapper.Map<CourseDto>(ca.Course));
+                result.Add(_mapper.Map<CourselistModel>(ca.Course));
             }
             return result;
-        }
-
-        public bool IsExist(params int[] ids)
-        {
-            foreach (var id in ids)
-                if (!_context.Courses.Any(c => c.ID == id))
-                    return false;
-            return true;
         }
     }
 }

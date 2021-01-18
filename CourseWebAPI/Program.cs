@@ -1,3 +1,4 @@
+using CourseWebAPI.Infrastuctures.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -7,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CourseWebAPI.Infrastuctures.Extentions;
 
 namespace CourseWebAPI
 {
@@ -20,7 +20,7 @@ namespace CourseWebAPI
                 .WriteTo.Console()
                 .CreateLogger();
             IHost host = CreateHostBuilder(args).Build();
-            await host.Initialize();
+            host.Initialize();
             host.Run();
         }
 

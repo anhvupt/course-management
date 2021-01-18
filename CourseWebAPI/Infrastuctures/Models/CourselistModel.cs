@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace CourseWebAPI.Infrastuctures.Models
 {
-    public class CourseDto
+
+    public class CourselistModel
     {
         public int ID { get; set; }
         public string Title { get; set; }

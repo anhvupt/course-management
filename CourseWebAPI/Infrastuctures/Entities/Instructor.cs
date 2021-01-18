@@ -10,8 +10,11 @@ namespace CourseWebAPI.Entities
         public virtual string LastName { get; set; }
         public virtual string FirstMidName { get; set; }
         public virtual DateTime HireDate { get; set; }
-        public virtual IList<CourseAssignment> CourseAssignments { get; set; } = new List<CourseAssignment>();
+        public virtual IList<CourseAssignment> CourseAssignments { get; set; }
+            = new List<CourseAssignment>();
         public virtual OfficeAssignment OfficeAssignment { get; set; }
+        public virtual IList<Department> Departments { get; set; }
+            = new List<Department>();
 
     }
 }

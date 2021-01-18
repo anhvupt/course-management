@@ -12,23 +12,20 @@ namespace CourseWebAPI.Infrastuctures.Services
     public class CourseAssignmentService : ICourseAssignmentService
     {
         private CourseContext _context;
-        private IMapper _mapper;
-        public CourseAssignmentService(CourseContext context, IMapper mapper)
+        public CourseAssignmentService(CourseContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<bool> CreateCourseAssignment(
+        public async Task<bool> AssignCourses(
             int instructorId, params int[] courseIds)
         {
-            foreach (var courseId in courseIds)
-                _context.CourseAssignments.Add(
-                    new CourseAssignment()
-                    {
-                        CourseID = courseId,
-                        InstructorID = instructorId
-                    });
+            var courseAssignments = courseIds.Select(id => new CourseAssignment()
+            {
+                CourseID = id,
+                InstructorID = instructorId
+            });
+            _context.CourseAssignments.AddRange(courseAssignments);
             return await _context.SaveChangesAsync() > 0;
         }
     }

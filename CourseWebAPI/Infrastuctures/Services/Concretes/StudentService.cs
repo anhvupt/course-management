@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CourseWebAPI.Data;
 using CourseWebAPI.Entities;
+using CourseWebAPI.Infrastuctures.Extensions;
 using CourseWebAPI.Models;
 using CourseWebAPI.ResourceParamerters;
 using Microsoft.EntityFrameworkCore;
@@ -21,84 +22,56 @@ namespace CourseWebAPI.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<bool> Add(StudentForManipulationDto item)
+        public async Task<bool> Create(StudentModel model)
         {
-            var newStudent = _mapper.Map<Student>(item);
-            _context.Students.Add(newStudent);
-            var totalChanges = await _context.SaveChangesAsync();
-            return totalChanges > 0;
+            var entity = _mapper.Map<Student>(model);
+            _context.Students.Add(entity);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> Update(int studentId, StudentForManipulationDto item)
+        public async Task<bool> Update(int studentId, StudentModel model)
         {
-            var studentToUpdate = _mapper.Map<Student>(item);
-            Student itemInDB = _context.Students.Find(studentId);
-            itemInDB.LastName = studentToUpdate.LastName;
-            itemInDB.FirstMidName = studentToUpdate.FirstMidName;
-            itemInDB.EnrollmentDate = studentToUpdate.EnrollmentDate;
-            var totalChanges = await _context.SaveChangesAsync();
-            return totalChanges > 0;
+            Student entity = _context.Students.Find(studentId);
+            _mapper.Map<StudentModel, Student>(model, entity);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<IEnumerable<StudentDto>> GetStudents(
+        public async Task<IEnumerable<StudentListModel>> GetList(
             StudentQueryParamerter param)
         {
-            var studentInDB = _context.Students.AsNoTracking();
+            int previous = (param.PageIndex == 1) ? 0 :
+                            param.PageSize * (param.PageIndex - 1);
 
-            if (param != null)
+            var entities = await _context.Students.AsNoTracking().ToListAsync();
+            entities.WhereIf(
+                    condition: !string.IsNullOrWhiteSpace(param.SearchQuery),
+                    (x => x.FirstMidName.Contains(param.SearchQuery) ||
+                          x.LastName.Contains(param.SearchQuery))
+                ).Skip(previous).Take(param.PageSize);
+            switch (param.OrderBy.ToLower())
             {
-                if (!string.IsNullOrWhiteSpace(param.SearchQuery))
-                    studentInDB = GetStudentsByName(studentInDB, param.SearchQuery);
-
-                if (param.PageIndex > 0 && param.PageSize > 0)
-                    studentInDB = GetPagingStudents(studentInDB,
-                        param.PageIndex, param.PageSize);
-
-                if (!string.IsNullOrWhiteSpace(param.OrderBy))
-                    studentInDB = GetOrderedStudents(studentInDB, param.OrderBy);
+                case "date-desc":
+                    entities.OrderByDescending(x => x.EnrollmentDate);
+                    break;
+                case "date":
+                    entities.OrderBy(x => x.EnrollmentDate);
+                    break;
+                case "name-desc":
+                    entities.OrderByDescending(x => x.LastName);
+                    break;
+                default:
+                    entities.OrderBy(x => x.LastName);
+                    break;
             }
 
-            List<Student> studentCollection = await studentInDB.ToListAsync();
-            return _mapper.Map<List<StudentDto>>(studentCollection);
-
-            IQueryable<Student> GetPagingStudents(IQueryable<Student> collection,
-                int pageIndex, int pageSize)
-            {
-                int previous = (pageIndex == 1) ? 0 :
-                pageSize * (pageIndex - 1);
-                return studentInDB.Skip(previous).Take(pageSize);
-            }
-            IQueryable<Student> GetStudentsByName(IQueryable<Student> collection,
-                string name)
-            {
-                return studentInDB.Where(i => i.FirstMidName.Contains(name)
-                                            || i.LastName.Contains(name));
-            }
-            IQueryable<Student> GetOrderedStudents(IQueryable<Student> collection,
-                string orderBy)
-            {
-                switch (orderBy.ToLower())
-                {
-                    case "date-desc":
-                        return collection.OrderByDescending(x => x.EnrollmentDate);
-                    case "date":
-                        return collection.OrderBy(x => x.EnrollmentDate);
-                    case "name-desc":
-                        return collection.OrderByDescending(x => x.LastName);
-                    case "name":
-                        return collection.OrderBy(x => x.LastName);
-                    default:
-                        return collection;
-                }
-            }
+            return _mapper.Map<List<StudentListModel>>(entities);
         }
 
-        public async Task<StudentDto> GetStudent(int id)
+        public async Task<StudentListModel> Get(int id)
         {
-            if (id <= 0) throw new ArgumentException(nameof(id));
-            var studentInDB = await _context.Students.AsNoTracking()
-                                    .FirstOrDefaultAsync(i => i.Id == id);
-            return _mapper.Map<StudentDto>(studentInDB);
+            var entity = await
+                _context.Students.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+            return _mapper.Map<StudentListModel>(entity);
         }
 
         public async Task<bool> Delete(int id)
@@ -107,14 +80,6 @@ namespace CourseWebAPI.Services
             _context.Students.Remove(student);
             var totalChanges = await _context.SaveChangesAsync();
             return totalChanges > 0;
-        }
-
-        public bool IsExist(params int[] ids)
-        {
-            foreach (int id in ids)
-                if (!_context.Students.Any(s => s.Id == id))
-                    return false;
-            return true;
         }
     }
 }

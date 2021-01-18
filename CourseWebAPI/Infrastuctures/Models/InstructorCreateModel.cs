@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseWebAPI.Infrastuctures.Models
 {
-    public class InstructorForCreationDto : InstructorForManipulationDto 
+    public class InstructorCreateModel : InstructorModel 
     {
         public override DateTime HireDate { get; set; } = DateTime.Now;
     }

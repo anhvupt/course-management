@@ -7,11 +7,10 @@ namespace CourseWebAPI.Services
 {
     public interface IStudentService
     {
-        Task<bool> Add(StudentForManipulationDto item);
+        Task<bool> Create(StudentModel item);
         Task<bool> Delete(int id);
-        Task<StudentDto> GetStudent(int id);
-        Task<IEnumerable<StudentDto>> GetStudents(StudentQueryParamerter param);
-        bool IsExist(params int[] ids);
-        Task<bool> Update(int studentId, StudentForManipulationDto item);
+        Task<StudentListModel> Get(int id);
+        Task<IEnumerable<StudentListModel>> GetList(StudentQueryParamerter param);
+        Task<bool> Update(int studentId, StudentModel item);
     }
 }

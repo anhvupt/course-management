@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using System;
 using CourseWebAPI.Entities;
-using CourseWebAPI.Extentions;
 using Microsoft.Extensions.Configuration;
+using CourseWebAPI.Extensions;
 
 namespace CourseWebAPI.Data
 {
@@ -46,9 +46,6 @@ namespace CourseWebAPI.Data
                 .HasKey(oa => new { oa.InstructorID });
             modelBuilder.Entity<OfficeAssignment>()
                 .Property(p => p.InstructorID).ValueGeneratedNever();
-
-            modelBuilder.Seed();
-
         }
     }
 }

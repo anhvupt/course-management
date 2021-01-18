@@ -1,15 +1,13 @@
-﻿using CourseWebAPI.ValidationAttributes;
+﻿using CourseWebAPI.Infrastuctures.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace CourseWebAPI.Infrastuctures.Models
+namespace CourseWebAPI.Models
 {
-    [NameOnlyContainsLetters(
-        ErrorMessage = "Both FirstMidName and LastName must only contain letters")]
-    public class PersonForManipulationDto
+    
+    public class StudentModel
     {
         [Required]
         [MaxLength(50)]
@@ -18,5 +16,6 @@ namespace CourseWebAPI.Infrastuctures.Models
         [Required]
         [MaxLength(500)]
         public virtual string FirstMidName { get; set; }
+        public virtual DateTime EnrollmentDate { get; set; }
     }
 }

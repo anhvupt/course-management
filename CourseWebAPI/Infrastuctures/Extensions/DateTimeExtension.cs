@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CourseWebAPI.Extentions
+namespace CourseWebAPI.Infrastuctures.Extensions
 {
-    public static class DateTimeExtention
+    public static class DateTimeExtension
     {
         public static string GetDurationToNow(this DateTime date)
         => DateTimeHandler.TimeDiff(date, DateTime.Now);
@@ -100,7 +100,7 @@ namespace CourseWebAPI.Extentions
             /// <returns>string</returns>
             public string GetUnits(int numOfUnit)
             {
-                if (NumberOfUnit <= 0 || numOfUnit > DateStringFormater.NumberOfUnit)
+                if (NumberOfUnit <= 0 || numOfUnit > NumberOfUnit)
                     throw new ArgumentOutOfRangeException(nameof(numOfUnit));
                 string result = "";
                 int counter = 1;

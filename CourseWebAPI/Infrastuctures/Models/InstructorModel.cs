@@ -7,9 +7,16 @@ using System.Threading.Tasks;
 
 namespace CourseWebAPI.Models
 {
-    public class InstructorForManipulationDto : PersonForManipulationDto
+    public class InstructorModel 
     {
+        [Required]
+        [MaxLength(50)]
+        public virtual string LastName { get; set; }
+
+        [Required]
+        [MaxLength(500)]
+        public virtual string FirstMidName { get; set; }
         public virtual DateTime HireDate { get; set; }
-        public virtual string Office {get; set;}
+        public virtual string OfficeLocation {get; set;}
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CourseWebAPI.Models
 {
-    public class StudentDto
+    public class StudentListModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
