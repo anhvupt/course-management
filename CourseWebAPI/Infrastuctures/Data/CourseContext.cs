@@ -19,8 +19,20 @@ namespace CourseWebAPI.Data
         public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
         public DbSet<Student> Students { get; set; }
 
+        public static readonly ILoggerFactory ConsoleLoggerFactory
+          = LoggerFactory.Create(builder =>
+          {
+              builder
+               .AddFilter((category, level) =>
+                   category == DbLoggerCategory.Database.Command.Name
+                   && level == LogLevel.Information)
+               .AddConsole();
+          });
+
         public CourseContext() { }
-        public CourseContext(DbContextOptions option) : base(option) { }
+        public CourseContext(DbContextOptions option) : base(option)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,17 +47,22 @@ namespace CourseWebAPI.Data
                 .HasOne(ca => ca.Course)
                 .WithMany(c => c.CourseAssignments)
                 .HasForeignKey(ca => ca.CourseID)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<CourseAssignment>()
                 .HasOne(ca => ca.Instructor)
                 .WithMany(i => i.CourseAssignments)
                 .HasForeignKey(ca => ca.InstructorID)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<OfficeAssignment>()
                 .HasKey(oa => new { oa.InstructorID });
             modelBuilder.Entity<OfficeAssignment>()
                 .Property(p => p.InstructorID).ValueGeneratedNever();
+
+            modelBuilder.Seed();
+
         }
     }
 }

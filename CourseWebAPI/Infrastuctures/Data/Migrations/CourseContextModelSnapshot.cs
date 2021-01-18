@@ -45,81 +45,81 @@ namespace CourseWebAPI.Migrations
                         new
                         {
                             ID = 1,
-                            CourseCredit = -1935164867,
+                            CourseCredit = -1286339738,
                             DepartmentID = 5,
-                            Title = "Laborum in deleniti blanditiis eaque pariatur."
+                            Title = "Deserunt voluptatem et nulla autem iste consequatur nobis incidunt est."
                         },
                         new
                         {
                             ID = 2,
-                            CourseCredit = -45201723,
+                            CourseCredit = -1784026459,
                             DepartmentID = 5,
-                            Title = "In qui enim ratione et iusto."
+                            Title = "Accusamus incidunt atque doloribus et quam ex eius ut."
                         },
                         new
                         {
                             ID = 3,
-                            CourseCredit = 1540690968,
+                            CourseCredit = 110192235,
                             DepartmentID = 4,
-                            Title = "Eaque vero velit placeat ab veritatis ea assumenda."
+                            Title = "Illo quisquam rerum enim perferendis."
                         },
                         new
                         {
                             ID = 4,
-                            CourseCredit = 1530852990,
+                            CourseCredit = 1751106530,
                             DepartmentID = 4,
-                            Title = "Qui accusamus aliquid quibusdam dolorem nihil et ipsa reiciendis exercitationem."
+                            Title = "Qui accusantium voluptatum beatae consequatur voluptatem."
                         },
                         new
                         {
                             ID = 5,
-                            CourseCredit = -1537799666,
+                            CourseCredit = -100512498,
                             DepartmentID = 3,
-                            Title = "Consectetur nam nulla alias assumenda ut nihil beatae quae laborum."
+                            Title = "Ipsa debitis blanditiis quam enim autem voluptate."
                         },
                         new
                         {
                             ID = 6,
-                            CourseCredit = -1048257844,
+                            CourseCredit = 917262729,
                             DepartmentID = 3,
-                            Title = "Vero necessitatibus natus et dolor odio labore vero quia."
+                            Title = "Veritatis et esse et."
                         },
                         new
                         {
                             ID = 7,
-                            CourseCredit = 1265853722,
+                            CourseCredit = 286977444,
                             DepartmentID = 2,
-                            Title = "Voluptas minus nihil ipsa facere doloremque commodi modi."
+                            Title = "Rem veniam voluptatem soluta occaecati facilis."
                         },
                         new
                         {
                             ID = 8,
-                            CourseCredit = 152681762,
+                            CourseCredit = -1549734845,
                             DepartmentID = 2,
-                            Title = "Earum tempora cum atque error ut illo."
+                            Title = "Mollitia cumque recusandae quas qui quibusdam necessitatibus rem corporis nam."
                         },
                         new
                         {
                             ID = 9,
-                            CourseCredit = -674229058,
+                            CourseCredit = 1486764502,
                             DepartmentID = 1,
-                            Title = "Et et sed qui nesciunt labore."
+                            Title = "Odit quo eum dolorem debitis nam atque."
                         },
                         new
                         {
                             ID = 10,
-                            CourseCredit = 396911523,
+                            CourseCredit = -427272987,
                             DepartmentID = 1,
-                            Title = "Molestiae necessitatibus magnam aut voluptatem dolorem."
+                            Title = "Officia voluptate asperiores placeat rem non soluta aut repudiandae."
                         });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.CourseAssignment", b =>
                 {
-                    b.Property<int>("CourseID")
+                    b.Property<int?>("CourseID")
                         .HasColumnType("int");
 
-                    b.Property<int>("InstructorID")
+                    b.Property<int?>("InstructorID")
                         .HasColumnType("int");
 
                     b.HasKey("CourseID", "InstructorID");
@@ -210,42 +210,42 @@ namespace CourseWebAPI.Migrations
                         new
                         {
                             DepartmentID = 1,
-                            Budget = 1486748974.0,
+                            Budget = 1873374993.0,
                             InstructorID = 1,
-                            Name = "Alanis Lynch",
-                            StartDate = new DateTime(2021, 1, 18, 15, 26, 44, 40, DateTimeKind.Local).AddTicks(8978)
+                            Name = "Reva Cruickshank",
+                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(389)
                         },
                         new
                         {
                             DepartmentID = 2,
-                            Budget = -654048269.0,
+                            Budget = -860282795.0,
                             InstructorID = 2,
-                            Name = "Maia Bednar II",
-                            StartDate = new DateTime(2021, 1, 18, 15, 26, 44, 41, DateTimeKind.Local).AddTicks(5562)
+                            Name = "Vicente Pagac",
+                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(5460)
                         },
                         new
                         {
                             DepartmentID = 3,
-                            Budget = -957636820.0,
+                            Budget = -815455100.0,
                             InstructorID = 3,
-                            Name = "Miss Glennie Deckow",
-                            StartDate = new DateTime(2021, 1, 18, 15, 26, 44, 42, DateTimeKind.Local).AddTicks(247)
+                            Name = "Tristin Hessel",
+                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(7507)
                         },
                         new
                         {
                             DepartmentID = 4,
-                            Budget = 1626203794.0,
+                            Budget = -583580046.0,
                             InstructorID = 4,
-                            Name = "Dudley Connelly",
-                            StartDate = new DateTime(2021, 1, 18, 15, 26, 44, 42, DateTimeKind.Local).AddTicks(2523)
+                            Name = "Kristy Little",
+                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(9326)
                         },
                         new
                         {
                             DepartmentID = 5,
-                            Budget = 1121808219.0,
+                            Budget = 288007267.0,
                             InstructorID = 5,
-                            Name = "Kiel Tillman",
-                            StartDate = new DateTime(2021, 1, 18, 15, 26, 44, 42, DateTimeKind.Local).AddTicks(4796)
+                            Name = "Ephraim Gislason",
+                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 981, DateTimeKind.Local).AddTicks(1310)
                         });
                 });
 
@@ -371,37 +371,37 @@ namespace CourseWebAPI.Migrations
                         new
                         {
                             ID = 1,
-                            FirstMidName = "Laurie",
-                            HireDate = new DateTime(2021, 1, 18, 15, 26, 44, 18, DateTimeKind.Local).AddTicks(7902),
-                            LastName = "Maggio"
+                            FirstMidName = "Joelle",
+                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 937, DateTimeKind.Local).AddTicks(7130),
+                            LastName = "Braun"
                         },
                         new
                         {
                             ID = 2,
-                            FirstMidName = "Gage",
-                            HireDate = new DateTime(2021, 1, 18, 15, 26, 44, 20, DateTimeKind.Local).AddTicks(3817),
-                            LastName = "Swaniawski"
+                            FirstMidName = "Fletcher",
+                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 939, DateTimeKind.Local).AddTicks(7581),
+                            LastName = "Reichel"
                         },
                         new
                         {
                             ID = 3,
-                            FirstMidName = "Dorothy",
-                            HireDate = new DateTime(2021, 1, 18, 15, 26, 44, 20, DateTimeKind.Local).AddTicks(6770),
-                            LastName = "Spinka"
+                            FirstMidName = "Wilfred",
+                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 940, DateTimeKind.Local).AddTicks(1243),
+                            LastName = "Bosco"
                         },
                         new
                         {
                             ID = 4,
-                            FirstMidName = "Palma",
-                            HireDate = new DateTime(2021, 1, 18, 15, 26, 44, 20, DateTimeKind.Local).AddTicks(9106),
-                            LastName = "Keeling"
+                            FirstMidName = "Delta",
+                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 940, DateTimeKind.Local).AddTicks(4912),
+                            LastName = "Fisher"
                         },
                         new
                         {
                             ID = 5,
-                            FirstMidName = "Jerrold",
-                            HireDate = new DateTime(2021, 1, 18, 15, 26, 44, 21, DateTimeKind.Local).AddTicks(1758),
-                            LastName = "Jacobson"
+                            FirstMidName = "Otis",
+                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 941, DateTimeKind.Local).AddTicks(440),
+                            LastName = "Bogan"
                         });
                 });
 
@@ -421,27 +421,27 @@ namespace CourseWebAPI.Migrations
                         new
                         {
                             InstructorID = 1,
-                            Location = "271 Metz Roads"
+                            Location = "9846 Ebert Plaza"
                         },
                         new
                         {
                             InstructorID = 2,
-                            Location = "261 Fleta Summit"
+                            Location = "47310 Stehr Pines"
                         },
                         new
                         {
                             InstructorID = 3,
-                            Location = "19785 Waelchi Gateway"
+                            Location = "70219 Bogan Passage"
                         },
                         new
                         {
                             InstructorID = 4,
-                            Location = "73906 Parker "
+                            Location = "56342 Armstrong Vista"
                         },
                         new
                         {
                             InstructorID = 5,
-                            Location = "46552 Yost Radial"
+                            Location = "36048 Benton Point"
                         });
                 });
 
@@ -469,37 +469,37 @@ namespace CourseWebAPI.Migrations
                         new
                         {
                             Id = 1,
-                            EnrollmentDate = new DateTime(1926, 6, 11, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Herman",
-                            LastName = "Eichmann"
+                            EnrollmentDate = new DateTime(1993, 8, 2, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Earline",
+                            LastName = "Reynolds"
                         },
                         new
                         {
                             Id = 2,
-                            EnrollmentDate = new DateTime(1942, 7, 4, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Ebba",
-                            LastName = "Rau"
+                            EnrollmentDate = new DateTime(1962, 10, 27, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Brando",
+                            LastName = "Satterfield"
                         },
                         new
                         {
                             Id = 3,
-                            EnrollmentDate = new DateTime(1922, 5, 2, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Annette",
-                            LastName = "Grady"
+                            EnrollmentDate = new DateTime(1959, 12, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Dulce",
+                            LastName = "Gulgowski"
                         },
                         new
                         {
                             Id = 4,
-                            EnrollmentDate = new DateTime(1965, 7, 17, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Megane",
-                            LastName = "Wuckert"
+                            EnrollmentDate = new DateTime(2001, 3, 5, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Duncan",
+                            LastName = "Russel"
                         },
                         new
                         {
                             Id = 5,
-                            EnrollmentDate = new DateTime(1959, 4, 14, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Rubye",
-                            LastName = "Wunsch"
+                            EnrollmentDate = new DateTime(1978, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FirstMidName = "Providenci",
+                            LastName = "Powlowski"
                         });
                 });
 
@@ -519,14 +519,12 @@ namespace CourseWebAPI.Migrations
                     b.HasOne("CourseWebAPI.Entities.Course", "Course")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CourseWebAPI.Entities.Instructor", "Instructor")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Course");
 
