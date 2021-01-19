@@ -60,9 +60,6 @@ namespace CourseWebAPI.Data
                 .HasKey(oa => new { oa.InstructorID });
             modelBuilder.Entity<OfficeAssignment>()
                 .Property(p => p.InstructorID).ValueGeneratedNever();
-
-            modelBuilder.Seed();
-
         }
     }
 }

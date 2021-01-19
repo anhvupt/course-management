@@ -29,30 +29,16 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             context.SeedCourse();
             context.SeedCourseAssignment();
             context.SeedEnrollment();
-            try
-            {
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students ON");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors ON");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses ON");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments ON");
-                context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students OFF");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors OFF");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses OFF");
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments OFF");
-            }
-            finally
-            {
-                context.Database.CloseConnection();
-            }
         }
         private static void SeedStudent(this CourseContext context)
         {
             if (!context.Students.Any())
             {
-                context.Students.AddRange(new List<Student>
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students ON");
+                    context.Students.AddRange(new List<Student>
                 {
                     new Student
                     {
@@ -90,14 +76,21 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                         EnrollmentDate = Faker.Identification.DateOfBirth()
                     }
                 });
-                //await context.SaveChangesAsync();
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students OFF");
+                }
+                finally { context.Database.CloseConnection(); }
             }
         }
         private static void SeedInstuctor(this CourseContext context)
         {
             if (!context.Instructors.Any())
             {
-                context.Instructors.AddRange(new List<Instructor>
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors ON");
+                    context.Instructors.AddRange(new List<Instructor>
                 {
                     new Instructor
                     {
@@ -135,14 +128,20 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                         HireDate = DateTime.Now,
                     }
                 });
-                //await context.SaveChangesAsync();
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors OFF");
+                }
+                finally { context.Database.CloseConnection(); }
             }
         }
         private static void SeedOfficeAssignment(this CourseContext context)
         {
             if (!context.OfficeAssignments.Any())
             {
-                context.OfficeAssignments.AddRange(new List<OfficeAssignment> {
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.OfficeAssignments.AddRange(new List<OfficeAssignment> {
                     new OfficeAssignment
                     {
                         InstructorID = 1,
@@ -169,14 +168,19 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                         Location = Faker.Address.StreetAddress()
                     }
                 });
-                //await context.SaveChangesAsync();
+                }
+                finally { context.Database.CloseConnection(); }
             }
         }
         private static void SeedDepartment(this CourseContext context)
         {
             if (!context.Departments.Any())
             {
-                context.Departments.AddRange(new List<Department> {
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON");
+                    context.Departments.AddRange(new List<Department> {
                     new Department
                     {
                         DepartmentID = 1,
@@ -218,14 +222,21 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                         InstructorID = 5,
                     }
                 });
-                //await context.SaveChangesAsync();
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF");
+                }
+                finally { context.Database.CloseConnection(); }
             }
         }
         private static void SeedCourse(this CourseContext context)
         {
             if (!context.Courses.Any())
             {
-                context.Courses.AddRange(new List<Course> {
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses ON");
+                    context.Courses.AddRange(new List<Course> {
                     new Course
                     {
                         ID = 1,
@@ -297,7 +308,10 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                         DepartmentID = 1
                     }
                 });
-                //await context.SaveChangesAsync();
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses OFF");
+                }
+                finally { context.Database.CloseConnection(); }
             }
         }
         private static void SeedCourseAssignment(this CourseContext context)
@@ -323,7 +337,11 @@ namespace CourseWebAPI.Infrastuctures.Extensions
         {
             if (!context.Enrollments.Any())
             {
-                context.Enrollments.AddRange(new List<Enrollment> {
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments ON");
+                    context.Enrollments.AddRange(new List<Enrollment> {
                     new Enrollment
                     {
                         EnrollmentID = 1,
@@ -395,7 +413,13 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                         Grade = EnrollmentGrade.A
                     }
                 });
-                //await context.SaveChangesAsync();
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments OFF");
+                }
+                finally
+                {
+                    context.Database.CloseConnection();
+                }
             }
         }
 
