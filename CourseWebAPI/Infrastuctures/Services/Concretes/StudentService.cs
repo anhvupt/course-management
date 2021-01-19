@@ -42,28 +42,29 @@ namespace CourseWebAPI.Services
             int previous = (param.PageIndex == 1) ? 0 :
                             param.PageSize * (param.PageIndex - 1);
 
-            var entities = _context.Students.AsNoTracking();
-            entities.WhereIf(
+            var entities = _context.Students.AsNoTracking()
+                .WhereIf(
                     condition: !string.IsNullOrWhiteSpace(param.SearchQuery),
                     (x => x.FirstMidName.Contains(param.SearchQuery) ||
                           x.LastName.Contains(param.SearchQuery))
-                ).Skip(previous).Take(param.PageSize);
+                ).Skip(previous).Take(param.PageSize)
+                .DynamicSort(param.OrderBy, param.Revert);
 
-            switch (param.OrderBy.ToLower())
-            {
-                case "date-desc":
-                    entities.OrderByDescending(x => x.EnrollmentDate);
-                    break;
-                case "date":
-                    entities.OrderBy(x => x.EnrollmentDate);
-                    break;
-                case "name-desc":
-                    entities.OrderByDescending(x => x.LastName);
-                    break;
-                default:
-                    entities.OrderBy(x => x.LastName);
-                    break;
-            }
+            //switch (param.OrderBy.ToLower())
+            //{
+            //    case "date-desc":
+            //        entities.OrderByDescending(x => x.EnrollmentDate);
+            //        break;
+            //    case "date":
+            //        entities.OrderBy(x => x.EnrollmentDate);
+            //        break;
+            //    case "name-desc":
+            //        entities.OrderByDescending(x => x.LastName);
+            //        break;
+            //    default:
+            //        entities.OrderBy(x => x.LastName);
+            //        break;
+            //}
 
             return _mapper.Map<List<StudentListModel>>(
                 await entities.ToListAsync()

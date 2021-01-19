@@ -13,7 +13,7 @@ namespace CourseWebAPI
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()

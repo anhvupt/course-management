@@ -13,5 +13,6 @@ namespace CourseWebAPI.ResourceParamerters
         [Range(0, int.MaxValue)]
         public int PageIndex { get; set; } = 1;
         public string OrderBy { get; set; } = "name";
+        public bool Revert { get; set; } = false;
     }
 }
