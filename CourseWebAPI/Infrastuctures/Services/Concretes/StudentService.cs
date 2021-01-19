@@ -76,7 +76,8 @@ namespace CourseWebAPI.Services
 
         public async Task<bool> Delete(int id)
         {
-            var student = _context.Students.Find(id);
+            var student = _context.Students.Include(x=>x.Enrollments)
+                .FirstOrDefault(x=>x.Id == id);
             _context.Students.Remove(student);
             var totalChanges = await _context.SaveChangesAsync();
             return totalChanges > 0;
