@@ -42,12 +42,13 @@ namespace CourseWebAPI.Services
             int previous = (param.PageIndex == 1) ? 0 :
                             param.PageSize * (param.PageIndex - 1);
 
-            var entities = await _context.Students.AsNoTracking().ToListAsync();
+            var entities = _context.Students.AsNoTracking();
             entities.WhereIf(
                     condition: !string.IsNullOrWhiteSpace(param.SearchQuery),
                     (x => x.FirstMidName.Contains(param.SearchQuery) ||
                           x.LastName.Contains(param.SearchQuery))
                 ).Skip(previous).Take(param.PageSize);
+
             switch (param.OrderBy.ToLower())
             {
                 case "date-desc":
@@ -64,7 +65,9 @@ namespace CourseWebAPI.Services
                     break;
             }
 
-            return _mapper.Map<List<StudentListModel>>(entities);
+            return _mapper.Map<List<StudentListModel>>(
+                await entities.ToListAsync()
+                );
         }
 
         public async Task<StudentListModel> Get(int id)
