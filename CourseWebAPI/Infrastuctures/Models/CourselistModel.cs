@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace CourseWebAPI.Infrastuctures.Models
 {
 
-    public class CourselistModel
+    public class CourseListModel
     {
         public int ID { get; set; }
         public string Title { get; set; }

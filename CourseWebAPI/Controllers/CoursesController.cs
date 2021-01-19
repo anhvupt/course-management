@@ -24,13 +24,15 @@ namespace CourseWebAPI.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetList()
         {
-            return Ok(await _courseService.GetList());
+            var collection = await _courseService.GetList();
+            return Ok(collection);
         }
 
-        [HttpGet("{courseId}/enrollments")]
+        [HttpGet("{courseId}/Enrollments")]
         public async Task<IActionResult> GetEnrolledStudents(int courseId)
         {
-            return Ok(await _enrollmentService.GetEnrolledStudents(courseId));
+            var collection = await _enrollmentService.GetEnrolledStudents(courseId);
+            return Ok(collection);
         }
     }
 }

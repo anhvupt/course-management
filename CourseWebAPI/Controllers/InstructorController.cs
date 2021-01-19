@@ -1,5 +1,6 @@
 ﻿using CourseWebAPI.Infrastuctures.Models;
 using CourseWebAPI.Infrastuctures.Services;
+using CourseWebAPI.Models;
 using CourseWebAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,8 @@ namespace CourseWebAPI.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetList()
         {
-            return Ok(await _instructorService.GetList());
+            var collection = await _instructorService.GetList();
+            return Ok(collection);
         }
 
         [HttpGet("{instructorId}")]
@@ -37,21 +39,22 @@ namespace CourseWebAPI.Controllers
         {
             var instructor = await _instructorService.Get(instructorId);
             if (instructor == null)
+            {
                 return NotFound();
+            }
             return Ok(instructor);
         }
 
         [HttpGet("{instructorId}/courses")]
         public async Task<IActionResult> GetTaughtCourses(int instructorId)
         {
-            var coursesCollection =
-                await _courseService.GetTaughtCourses(instructorId);
-            return Ok(coursesCollection);
+            var collection = await _courseService.GetTaughtCourses(instructorId);
+            return Ok(collection);
         }
 
         [HttpPost()]
         public async Task<IActionResult> Create(
-            [FromBody] InstructorCreateModel instructor)
+            [FromBody] InstructorModel instructor)
         {
             await _instructorService.Create(instructor);
             return NoContent();
@@ -61,18 +64,19 @@ namespace CourseWebAPI.Controllers
         public async Task<IActionResult> AssignCourses(int instructorId,
             [FromBody] params int[] courseIds)
         {
-            await _courseAssignmentService
-                .AssignCourses(instructorId, courseIds);
+            await _courseAssignmentService.AssignCourses(instructorId, courseIds);
             return NoContent();
         }
 
         [HttpPut("{instructorId}")]
         public async Task<IActionResult> Edit(int instructorId,
-            [FromBody] InstructorEditModel instructor)
+            [FromBody] InstructorModel instructor)
         {
             var existedModel = await _instructorService.Get(instructorId);
             if (existedModel == null)
+            {
                 return NotFound();
+            }
             await _instructorService.Edit(instructorId, instructor);
             return NoContent();
         }

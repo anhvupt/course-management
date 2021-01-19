@@ -1,4 +1,5 @@
 ﻿using CourseWebAPI.Entities;
+using CourseWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace CourseWebAPI.Infrastuctures.Models
 {
     public class EnrollmentListModel
     {
-        public string Student { get; set; }
-        public string Course { get; set; }
+        public StudentListModel Student { get; set; }
+        public CourseListModel Course { get; set; }
         public EnrollmentGrade Grade { get; set; }
     }
 }

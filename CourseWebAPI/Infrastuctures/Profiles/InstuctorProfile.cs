@@ -17,24 +17,15 @@ namespace CourseWebAPI.Infrastuctures.Profiles
                 .ForMember(
                     dest => dest.OfficeLocation,
                     opt => opt.MapFrom(x => x.OfficeAssignment.Location)
-                    )
-                .ForMember(
+                ).ForMember(
                     dest => dest.Departments,
                     opt => opt.MapFrom(x => x.Departments.Select(d=>d.Name))
-                );
-            CreateMap<InstructorCreateModel, Instructor>()
-                .ForMember(
-                    dest => dest.OfficeAssignment,
-                    opt =>
-                    {
-                        opt.Condition(x => !string.IsNullOrWhiteSpace(x.OfficeLocation));
-                        opt.MapFrom(x => new OfficeAssignment()
-                        {
-                            Location = x.OfficeLocation
-                        });
-                    }
-                );
-            CreateMap<InstructorEditModel, Instructor>()
+                ).ForMember(
+                    dest => dest.Courses,
+                    opt => opt.MapFrom(x => x.CourseAssignments.Select(d=>d.Course.Title))
+                )
+                ;
+            CreateMap<InstructorModel, Instructor>()
                 .ForMember(
                     dest => dest.OfficeAssignment,
                     opt =>
@@ -44,7 +35,12 @@ namespace CourseWebAPI.Infrastuctures.Profiles
                         {
                             Location = x.OfficeLocation
                         });
-                    });
+                    }
+                ).ForMember(
+                    dest => dest.HireDate,
+                    opt => opt.MapFrom(x => (x.Id > 0) ? x.HireDate : DateTime.Now)
+                )
+                ;
         }
 
     }

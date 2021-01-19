@@ -22,14 +22,14 @@ namespace CourseWebAPI.Infrastuctures.Services
 
         public async Task<List<EnrollmentListModel>> GetEnrolledStudents(int courseId)
         {
-            var entities = await _context.Enrollments
+            var entities = await _context.Enrollments.AsNoTracking()
                 .Include(e => e.Course)
                 .Include(e => e.Student)
                 .Where(e => e.CourseID == courseId)
                 .ToListAsync();
             return _mapper.Map<List<EnrollmentListModel>>(entities);
         }
-        public async Task<bool> EnrollCourses(int studentId,
+        public async Task EnrollCourses(int studentId,
             params int[] courseIds)
         {
             var enrollments = courseIds.Select(courseId => new Enrollment()
@@ -39,7 +39,7 @@ namespace CourseWebAPI.Infrastuctures.Services
                 Grade = EnrollmentGrade.None
             });
             _context.Enrollments.AddRange(enrollments);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
         }
     }
 }

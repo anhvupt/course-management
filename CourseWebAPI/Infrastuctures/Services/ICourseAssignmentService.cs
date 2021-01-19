@@ -4,6 +4,6 @@ namespace CourseWebAPI.Infrastuctures.Services
 {
     public interface ICourseAssignmentService
     {
-        Task<bool> AssignCourses(int instructorId, params int[] courseIds);
+        Task AssignCourses(int instructorId, params int[] courseIds);
     }
 }

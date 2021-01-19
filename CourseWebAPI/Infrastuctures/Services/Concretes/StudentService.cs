@@ -22,37 +22,34 @@ namespace CourseWebAPI.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<bool> Create(StudentModel model)
+        public async Task Create(StudentModel model)
         {
             var entity = _mapper.Map<Student>(model);
             _context.Students.Add(entity);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Update(int studentId, StudentModel model)
+        public async Task Update(int studentId, StudentModel model)
         {
             Student entity = _context.Students.Find(studentId);
             _mapper.Map<StudentModel, Student>(model, entity);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<StudentListModel>> GetList(
             StudentQueryParamerter param)
         {
-            int previous = (param.PageIndex == 1) ? 0 :
-                            param.PageSize * (param.PageIndex - 1);
-
+            int previous = (param.PageIndex == 1) ? 0 : param.PageSize * (param.PageIndex - 1);
             var entities = _context.Students.AsNoTracking()
                 .WhereIf(
-                    condition: !string.IsNullOrWhiteSpace(param.SearchQuery),
-                    (x => x.FirstMidName.Contains(param.SearchQuery) ||
-                          x.LastName.Contains(param.SearchQuery))
+                    !string.IsNullOrWhiteSpace(param.SearchQuery),
+                    (
+                        x => x.FirstMidName.Contains(param.SearchQuery) ||
+                             x.LastName.Contains(param.SearchQuery)
+                    )
                 ).Skip(previous).Take(param.PageSize)
                 .DynamicSort(param.OrderBy, param.Revert);
-
-            return _mapper.Map<List<StudentListModel>>(
-                await entities.ToListAsync()
-                );
+            return _mapper.Map<List<StudentListModel>>(await entities.ToListAsync());
         }
 
         public async Task<StudentListModel> Get(int id)
@@ -62,13 +59,13 @@ namespace CourseWebAPI.Services
             return _mapper.Map<StudentListModel>(entity);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
-            var student = _context.Students.Include(x=>x.Enrollments)
-                .FirstOrDefault(x=>x.Id == id);
+            var student = _context.Students
+                .Include(x => x.Enrollments)
+                .FirstOrDefault(x => x.Id == id);
             _context.Students.Remove(student);
-            var totalChanges = await _context.SaveChangesAsync();
-            return totalChanges > 0;
+            await _context.SaveChangesAsync();
         }
     }
 }

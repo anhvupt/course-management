@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using CourseWebAPI.Entities;
 using Microsoft.Extensions.Configuration;
-using CourseWebAPI.Extensions;
 
 namespace CourseWebAPI.Data
 {

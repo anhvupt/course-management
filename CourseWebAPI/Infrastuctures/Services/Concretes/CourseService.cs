@@ -19,16 +19,19 @@ namespace CourseWebAPI.Infrastuctures.Services
             _mapper = mapper;
         }
 
-        public async Task<List<CourselistModel>> GetList()
+        public async Task<List<CourseListModel>> GetList()
         {
             var entities = await
-                _context.Courses.Include(c => c.Department).ToListAsync();
-            return _mapper.Map<List<CourselistModel>>(entities);
+                _context.Courses.AsNoTracking()
+                .Include(c => c.Department)
+                .ToListAsync();
+            return _mapper.Map<List<CourseListModel>>(entities);
         }
 
-        public async Task<List<CourselistModel>> GetTaughtCourses(int instructorId)
+        public async Task<List<CourseListModel>> GetTaughtCourses(int instructorId)
         {
-            List<CourselistModel> result = new List<CourselistModel>();
+            List<CourseListModel> result = new List<CourseListModel>();
+            //track entity to load reference
             var entities = await _context.Instructors
                 .Include(i => i.CourseAssignments)
                 .FirstOrDefaultAsync(i => i.ID == instructorId);
@@ -36,7 +39,7 @@ namespace CourseWebAPI.Infrastuctures.Services
             foreach (var ca in entities.CourseAssignments)
             {
                 await _context.Entry(ca).Reference(ca => ca.Course).LoadAsync();
-                result.Add(_mapper.Map<CourselistModel>(ca.Course));
+                result.Add(_mapper.Map<CourseListModel>(ca.Course));
             }
             return result;
         }

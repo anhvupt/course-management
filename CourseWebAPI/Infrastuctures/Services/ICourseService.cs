@@ -6,7 +6,7 @@ namespace CourseWebAPI.Infrastuctures.Services
 {
     public interface ICourseService
     {
-        Task<List<CourselistModel>> GetList();
-        Task<List<CourselistModel>> GetTaughtCourses(int instructorId);
+        Task<List<CourseListModel>> GetList();
+        Task<List<CourseListModel>> GetTaughtCourses(int instructorId);
     }
 }

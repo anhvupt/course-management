@@ -23,8 +23,8 @@ namespace CourseWebAPI.Controllers
         private readonly IStudentService _studentService;
         private readonly ICourseService _courseService;
         IEnrollmentService _enrollmentService;
-        public StudentsController(IStudentService studentService, 
-            ICourseService courseService, 
+        public StudentsController(IStudentService studentService,
+            ICourseService courseService,
             IEnrollmentService enrollmentService)
         {
             _studentService = studentService ??
@@ -37,7 +37,8 @@ namespace CourseWebAPI.Controllers
         public async Task<IActionResult> GetList(
             [FromQuery] StudentQueryParamerter param)
         {
-            return Ok(await _studentService.GetList(param));
+            var collection = await _studentService.GetList(param);
+            return Ok(collection);
         }
 
         [HttpGet("{studentId}", Name = "GetStudent")]
@@ -45,9 +46,10 @@ namespace CourseWebAPI.Controllers
         {
             var model = await _studentService.Get(studentId);
             if (model == null)
+            {
                 return NotFound();
-            else
-                return Ok(model);
+            }
+            return Ok(model);
         }
 
         [HttpPost]
@@ -72,7 +74,9 @@ namespace CourseWebAPI.Controllers
         {
             var existedModel = await _studentService.Get(studentId);
             if (existedModel == null)
+            {
                 return NotFound();
+            }
             await _studentService.Update(studentId, student);
             return NoContent();
         }
@@ -82,7 +86,9 @@ namespace CourseWebAPI.Controllers
         {
             var existedModel = await _studentService.Get(studentId);
             if (existedModel == null)
+            {
                 return NotFound();
+            }
             await _studentService.Delete(studentId);
             return NoContent();
         }

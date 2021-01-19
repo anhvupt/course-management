@@ -17,7 +17,7 @@ namespace CourseWebAPI.Infrastuctures.Services
             _context = context;
         }
 
-        public async Task<bool> AssignCourses(
+        public async Task AssignCourses(
             int instructorId, params int[] courseIds)
         {
             var courseAssignments = courseIds.Select(id => new CourseAssignment()
@@ -26,7 +26,7 @@ namespace CourseWebAPI.Infrastuctures.Services
                 InstructorID = instructorId
             });
             _context.CourseAssignments.AddRange(courseAssignments);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
         }
     }
 }

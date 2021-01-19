@@ -12,19 +12,7 @@ namespace CourseWebAPI.Infrastuctures.Profiles
     {
         public EnrollmentProfile()
         {
-            CreateMap<Enrollment, EnrollmentListModel>()
-                .ForMember(
-                    dest => dest.Student,
-                    opt => opt.MapFrom(e => $"{e.Student.FirstMidName} {e.Student.LastName}")
-                )
-                .ForMember(
-                    dest => dest.Course,
-                    opt => opt.MapFrom(e => e.Course.Title)
-                )
-                .ForMember(
-                    dest => dest.Grade,
-                    opt => opt.MapFrom(e => e.Grade.ToString())
-                );
+            CreateMap<Enrollment, EnrollmentListModel>();
         }
     }
 }
