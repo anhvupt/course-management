@@ -28,7 +28,6 @@ namespace CourseWebAPI.Services
             foreach (var entity in entities)
             {
                 var model = _mapper.Map<InstructorListModel>(entity);
-                model.Departments = await GetDepartmentNames(model.Id);
                 model.Courses = await GetCourseTitles(entity);
                 models.Add(model);
             }
@@ -44,7 +43,6 @@ namespace CourseWebAPI.Services
                 return null;
 
                 var instructorDto = _mapper.Map<InstructorListModel>(entity);
-                //instructorDto.Departments = await GetDepartmentNames(instructorDto.Id);
                 instructorDto.Courses = await GetCourseTitles(entity);
             return instructorDto;
         }
