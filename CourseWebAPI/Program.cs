@@ -18,6 +18,7 @@ namespace CourseWebAPI
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
+                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
             IHost host = CreateHostBuilder(args).Build();
             host.Initialize();

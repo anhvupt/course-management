@@ -44,8 +44,8 @@ namespace CourseWebAPI
                     var problemDetailsFactory = context.HttpContext.RequestServices
                         .GetRequiredService<ProblemDetailsFactory>();
                     var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(
-                            context.HttpContext, 
-                            context.ModelState); 
+                            context.HttpContext,
+                            context.ModelState);
 
                     // add additional info not added by default
                     problemDetails.Detail = "See the errors field for details.";
@@ -58,7 +58,7 @@ namespace CourseWebAPI
                     // if there are modelstate errors & all keys were correctly
                     // found/parsed we're dealing with validation errors
                     if ((context.ModelState.ErrorCount > 0) &&
-                        (actionExecutingContext?.ActionArguments.Count 
+                        (actionExecutingContext?.ActionArguments.Count
                         == context.ActionDescriptor.Parameters.Count))
                     {
                         problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
@@ -84,10 +84,10 @@ namespace CourseWebAPI
             services.AddSwaggerGen();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
-            services.AddDbContext<CourseContext>(option => 
+
+            services.AddDbContext<CourseContext>(option =>
                 option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IInstructorService, InstructorService>();
             services.AddScoped<ICourseService, CourseService>();
@@ -98,24 +98,25 @@ namespace CourseWebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            app.UseExceptionHandler(appBuilder =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler(appBuilder =>
+                appBuilder.Run(async context =>
                 {
-                    appBuilder.Run(async context =>
-                    {
-                        context.Response.StatusCode = 500;
-                        await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
-                    });
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
                 });
-            }
+            });
+            //}
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });

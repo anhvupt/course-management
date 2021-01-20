@@ -32,7 +32,11 @@ namespace CourseWebAPI.Data
         public CourseContext(DbContextOptions option) : base(option)
         {
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLoggerFactory(ConsoleLoggerFactory).EnableSensitiveDataLogging();
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Enrollment>()
