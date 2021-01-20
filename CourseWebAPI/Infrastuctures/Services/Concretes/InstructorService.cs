@@ -64,9 +64,9 @@ namespace CourseWebAPI.Services
         public async Task Delete(int instructorId)
         {
             var entity = _context.Instructors
-                .Include(x => x.CourseAssignments)
+                //.Include(x => x.CourseAssignments)
                 .FirstOrDefault(x => x.ID == instructorId);
-            _context.CourseAssignments.RemoveRange(entity.CourseAssignments);
+           // _context.CourseAssignments.RemoveRange(entity.CourseAssignments);
             _context.Instructors.Remove(entity);
             await _context.SaveChangesAsync();
         }

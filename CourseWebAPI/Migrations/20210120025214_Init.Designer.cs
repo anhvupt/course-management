@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseWebAPI.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20210118075445_Init")]
+    [Migration("20210120025214_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,10 +46,10 @@ namespace CourseWebAPI.Migrations
 
             modelBuilder.Entity("CourseWebAPI.Entities.CourseAssignment", b =>
                 {
-                    b.Property<int>("CourseID")
+                    b.Property<int?>("CourseID")
                         .HasColumnType("int");
 
-                    b.Property<int>("InstructorID")
+                    b.Property<int?>("InstructorID")
                         .HasColumnType("int");
 
                     b.HasKey("CourseID", "InstructorID");
@@ -69,7 +69,7 @@ namespace CourseWebAPI.Migrations
                     b.Property<double>("Budget")
                         .HasColumnType("float");
 
-                    b.Property<int>("InstructorID")
+                    b.Property<int?>("InstructorID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -182,13 +182,13 @@ namespace CourseWebAPI.Migrations
                     b.HasOne("CourseWebAPI.Entities.Course", "Course")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CourseWebAPI.Entities.Instructor", "Instructor")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -201,8 +201,7 @@ namespace CourseWebAPI.Migrations
                     b.HasOne("CourseWebAPI.Entities.Instructor", "Administator")
                         .WithMany("Departments")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Administator");
                 });

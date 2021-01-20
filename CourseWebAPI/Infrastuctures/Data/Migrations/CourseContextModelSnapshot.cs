@@ -40,78 +40,6 @@ namespace CourseWebAPI.Migrations
                     b.HasIndex("DepartmentID");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            CourseCredit = -1286339738,
-                            DepartmentID = 5,
-                            Title = "Deserunt voluptatem et nulla autem iste consequatur nobis incidunt est."
-                        },
-                        new
-                        {
-                            ID = 2,
-                            CourseCredit = -1784026459,
-                            DepartmentID = 5,
-                            Title = "Accusamus incidunt atque doloribus et quam ex eius ut."
-                        },
-                        new
-                        {
-                            ID = 3,
-                            CourseCredit = 110192235,
-                            DepartmentID = 4,
-                            Title = "Illo quisquam rerum enim perferendis."
-                        },
-                        new
-                        {
-                            ID = 4,
-                            CourseCredit = 1751106530,
-                            DepartmentID = 4,
-                            Title = "Qui accusantium voluptatum beatae consequatur voluptatem."
-                        },
-                        new
-                        {
-                            ID = 5,
-                            CourseCredit = -100512498,
-                            DepartmentID = 3,
-                            Title = "Ipsa debitis blanditiis quam enim autem voluptate."
-                        },
-                        new
-                        {
-                            ID = 6,
-                            CourseCredit = 917262729,
-                            DepartmentID = 3,
-                            Title = "Veritatis et esse et."
-                        },
-                        new
-                        {
-                            ID = 7,
-                            CourseCredit = 286977444,
-                            DepartmentID = 2,
-                            Title = "Rem veniam voluptatem soluta occaecati facilis."
-                        },
-                        new
-                        {
-                            ID = 8,
-                            CourseCredit = -1549734845,
-                            DepartmentID = 2,
-                            Title = "Mollitia cumque recusandae quas qui quibusdam necessitatibus rem corporis nam."
-                        },
-                        new
-                        {
-                            ID = 9,
-                            CourseCredit = 1486764502,
-                            DepartmentID = 1,
-                            Title = "Odit quo eum dolorem debitis nam atque."
-                        },
-                        new
-                        {
-                            ID = 10,
-                            CourseCredit = -427272987,
-                            DepartmentID = 1,
-                            Title = "Officia voluptate asperiores placeat rem non soluta aut repudiandae."
-                        });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.CourseAssignment", b =>
@@ -127,58 +55,6 @@ namespace CourseWebAPI.Migrations
                     b.HasIndex("InstructorID");
 
                     b.ToTable("CourseAssignments");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseID = 1,
-                            InstructorID = 1
-                        },
-                        new
-                        {
-                            CourseID = 2,
-                            InstructorID = 1
-                        },
-                        new
-                        {
-                            CourseID = 3,
-                            InstructorID = 2
-                        },
-                        new
-                        {
-                            CourseID = 4,
-                            InstructorID = 2
-                        },
-                        new
-                        {
-                            CourseID = 5,
-                            InstructorID = 3
-                        },
-                        new
-                        {
-                            CourseID = 6,
-                            InstructorID = 3
-                        },
-                        new
-                        {
-                            CourseID = 7,
-                            InstructorID = 4
-                        },
-                        new
-                        {
-                            CourseID = 8,
-                            InstructorID = 4
-                        },
-                        new
-                        {
-                            CourseID = 9,
-                            InstructorID = 5
-                        },
-                        new
-                        {
-                            CourseID = 10,
-                            InstructorID = 5
-                        });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.Department", b =>
@@ -191,7 +67,7 @@ namespace CourseWebAPI.Migrations
                     b.Property<double>("Budget")
                         .HasColumnType("float");
 
-                    b.Property<int>("InstructorID")
+                    b.Property<int?>("InstructorID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -205,48 +81,6 @@ namespace CourseWebAPI.Migrations
                     b.HasIndex("InstructorID");
 
                     b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            DepartmentID = 1,
-                            Budget = 1873374993.0,
-                            InstructorID = 1,
-                            Name = "Reva Cruickshank",
-                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(389)
-                        },
-                        new
-                        {
-                            DepartmentID = 2,
-                            Budget = -860282795.0,
-                            InstructorID = 2,
-                            Name = "Vicente Pagac",
-                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(5460)
-                        },
-                        new
-                        {
-                            DepartmentID = 3,
-                            Budget = -815455100.0,
-                            InstructorID = 3,
-                            Name = "Tristin Hessel",
-                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(7507)
-                        },
-                        new
-                        {
-                            DepartmentID = 4,
-                            Budget = -583580046.0,
-                            InstructorID = 4,
-                            Name = "Kristy Little",
-                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 980, DateTimeKind.Local).AddTicks(9326)
-                        },
-                        new
-                        {
-                            DepartmentID = 5,
-                            Budget = 288007267.0,
-                            InstructorID = 5,
-                            Name = "Ephraim Gislason",
-                            StartDate = new DateTime(2021, 1, 18, 17, 18, 22, 981, DateTimeKind.Local).AddTicks(1310)
-                        });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.Enrollment", b =>
@@ -273,78 +107,6 @@ namespace CourseWebAPI.Migrations
                     b.HasIndex("StudentID");
 
                     b.ToTable("Enrollments");
-
-                    b.HasData(
-                        new
-                        {
-                            EnrollmentID = 1,
-                            CourseID = 1,
-                            Grade = "None",
-                            StudentID = 1
-                        },
-                        new
-                        {
-                            EnrollmentID = 2,
-                            CourseID = 2,
-                            Grade = "None",
-                            StudentID = 1
-                        },
-                        new
-                        {
-                            EnrollmentID = 3,
-                            CourseID = 3,
-                            Grade = "C",
-                            StudentID = 2
-                        },
-                        new
-                        {
-                            EnrollmentID = 4,
-                            CourseID = 4,
-                            Grade = "A",
-                            StudentID = 2
-                        },
-                        new
-                        {
-                            EnrollmentID = 5,
-                            CourseID = 5,
-                            Grade = "A",
-                            StudentID = 3
-                        },
-                        new
-                        {
-                            EnrollmentID = 6,
-                            CourseID = 6,
-                            Grade = "None",
-                            StudentID = 3
-                        },
-                        new
-                        {
-                            EnrollmentID = 7,
-                            CourseID = 7,
-                            Grade = "D",
-                            StudentID = 4
-                        },
-                        new
-                        {
-                            EnrollmentID = 8,
-                            CourseID = 8,
-                            Grade = "C",
-                            StudentID = 4
-                        },
-                        new
-                        {
-                            EnrollmentID = 9,
-                            CourseID = 9,
-                            Grade = "B",
-                            StudentID = 5
-                        },
-                        new
-                        {
-                            EnrollmentID = 10,
-                            CourseID = 10,
-                            Grade = "A",
-                            StudentID = 5
-                        });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.Instructor", b =>
@@ -366,43 +128,6 @@ namespace CourseWebAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Instructors");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            FirstMidName = "Joelle",
-                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 937, DateTimeKind.Local).AddTicks(7130),
-                            LastName = "Braun"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            FirstMidName = "Fletcher",
-                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 939, DateTimeKind.Local).AddTicks(7581),
-                            LastName = "Reichel"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            FirstMidName = "Wilfred",
-                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 940, DateTimeKind.Local).AddTicks(1243),
-                            LastName = "Bosco"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            FirstMidName = "Delta",
-                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 940, DateTimeKind.Local).AddTicks(4912),
-                            LastName = "Fisher"
-                        },
-                        new
-                        {
-                            ID = 5,
-                            FirstMidName = "Otis",
-                            HireDate = new DateTime(2021, 1, 18, 17, 18, 22, 941, DateTimeKind.Local).AddTicks(440),
-                            LastName = "Bogan"
-                        });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.OfficeAssignment", b =>
@@ -416,33 +141,6 @@ namespace CourseWebAPI.Migrations
                     b.HasKey("InstructorID");
 
                     b.ToTable("OfficeAssignments");
-
-                    b.HasData(
-                        new
-                        {
-                            InstructorID = 1,
-                            Location = "9846 Ebert Plaza"
-                        },
-                        new
-                        {
-                            InstructorID = 2,
-                            Location = "47310 Stehr Pines"
-                        },
-                        new
-                        {
-                            InstructorID = 3,
-                            Location = "70219 Bogan Passage"
-                        },
-                        new
-                        {
-                            InstructorID = 4,
-                            Location = "56342 Armstrong Vista"
-                        },
-                        new
-                        {
-                            InstructorID = 5,
-                            Location = "36048 Benton Point"
-                        });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.Student", b =>
@@ -464,43 +162,6 @@ namespace CourseWebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EnrollmentDate = new DateTime(1993, 8, 2, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Earline",
-                            LastName = "Reynolds"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            EnrollmentDate = new DateTime(1962, 10, 27, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Brando",
-                            LastName = "Satterfield"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            EnrollmentDate = new DateTime(1959, 12, 23, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Dulce",
-                            LastName = "Gulgowski"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            EnrollmentDate = new DateTime(2001, 3, 5, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Duncan",
-                            LastName = "Russel"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            EnrollmentDate = new DateTime(1978, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FirstMidName = "Providenci",
-                            LastName = "Powlowski"
-                        });
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.Course", b =>
@@ -519,12 +180,14 @@ namespace CourseWebAPI.Migrations
                     b.HasOne("CourseWebAPI.Entities.Course", "Course")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CourseWebAPI.Entities.Instructor", "Instructor")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
 
@@ -536,8 +199,7 @@ namespace CourseWebAPI.Migrations
                     b.HasOne("CourseWebAPI.Entities.Instructor", "Administator")
                         .WithMany("Departments")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Administator");
                 });

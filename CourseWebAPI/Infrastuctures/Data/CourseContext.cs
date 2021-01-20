@@ -39,30 +39,52 @@ namespace CourseWebAPI.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Enrollment>()
-                .Property(e => e.Grade).HasConversion(
+            modelBuilder.Entity<Enrollment>(builder =>
+            {
+                builder.Property(e => e.Grade).HasConversion(
                     new EnumToStringConverter<EnrollmentGrade>()
                 );
+            });
 
-            modelBuilder.Entity<CourseAssignment>()
-                .HasKey(ca => new { ca.CourseID, ca.InstructorID });
-            modelBuilder.Entity<CourseAssignment>()
-                .HasOne(ca => ca.Course)
-                .WithMany(c => c.CourseAssignments)
-                .HasForeignKey(ca => ca.CourseID)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<CourseAssignment>()
-                .HasOne(ca => ca.Instructor)
+            modelBuilder.Entity<CourseAssignment>(builder =>
+           {
+               builder.HasKey(ca => new { ca.CourseID, ca.InstructorID });
+
+               builder.HasOne(ca => ca.Course)
+               .WithMany(c => c.CourseAssignments)
+               .HasForeignKey(ca => ca.CourseID);
+
+               builder.HasOne(ca => ca.Instructor)
                 .WithMany(i => i.CourseAssignments)
                 .HasForeignKey(ca => ca.InstructorID)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
+           });
 
-            modelBuilder.Entity<OfficeAssignment>()
-                .HasKey(oa => new { oa.InstructorID });
-            modelBuilder.Entity<OfficeAssignment>()
-                .Property(p => p.InstructorID).ValueGeneratedNever();
+            modelBuilder.Entity<OfficeAssignment>(builder =>
+            {
+                builder.HasKey(oa => new { oa.InstructorID });
+                builder.Property(p => p.InstructorID).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<Instructor>(builder =>
+            {
+                builder.HasOne(i => i.OfficeAssignment)
+                .WithOne(oa => oa.Instructor)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                builder.HasMany(i => i.Departments)
+                .WithOne(d => d.Administator)
+                .HasForeignKey(i => i.DepartmentID)
+                .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<Department>(builder =>
+            {
+                builder.HasOne(d => d.Administator)
+                .WithMany(i => i.Departments)
+                .HasForeignKey(d => d.InstructorID)
+                .IsRequired(false);
+            });
         }
     }
 }
