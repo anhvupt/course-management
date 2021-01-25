@@ -4,5 +4,12 @@
 <label class="form-control mb-4">Last Name: {{student.lastName}}</label>
 <label class="form-control mb-4">Enrollment Date: {{student.enrollmentDate}}</label>
 
-<a [routerLink]="['/students', studentId, 'edit']" class="btn btn-outline-success my-2 my-sm-0 col-2">Edit</a>
-<a (click) = "onRemoveStudent(studentId)" class="btn btn-outline-success my-2 my-sm-0 col-2">Remove</a>
+<div class="row">
+    <div class="col-2">
+        <a [routerLink]="['/students']" queryParamsHandling="preserve">Back</a> 
+    </div>
+    <div class="col-10 d-flex justify-content-end">
+        <a [routerLink]="['/students', studentId, 'edit']" class="btn btn-outline-success my-2 my-sm-0 col-2">Edit</a>
+        <a (click)="onRemoveStudent(studentId)" class="btn btn-outline-success my-2 my-sm-0 col-2">Remove</a>
+    </div>
+</div>

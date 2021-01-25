@@ -19,7 +19,8 @@
     <tbody>
         <tr *ngFor='let student of students'>
             <th scope="row">
-                <a [routerLink]="['/students', student.id]">
+                <a [routerLink]="['/students', student.id]"
+                [queryParams] = "params">
                     {{student.name}}
                 </a>
             </th>
