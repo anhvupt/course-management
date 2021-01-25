@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { StudentsModule } from './students/students.module';
-import { StudentService } from './services/student.service';
+import { StudentService } from '../services/student.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InstructorsModule } from './instructors/instructors.module';
 

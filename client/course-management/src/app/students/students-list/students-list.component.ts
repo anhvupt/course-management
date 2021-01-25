@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IStudentDisplay } from 'src/app/models/student-display';
 import { StudentParams } from 'src/app/models/student-params';
-import { StudentService } from 'src/app/services/student.service';
+import { StudentService } from 'src/services/student.service';
 
 @Component({
   selector: 'app-students-list',
