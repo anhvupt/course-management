@@ -1,0 +1,28 @@
+<div class="mb-3 row">
+    <button class="btn btn-outline-success my-2 my-sm-0 col-2" type="submit">Add Student</button>
+    <div class="col-9 mr-0">
+        <form class="form-inline my-2 my-lg-0 float-right">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Enrollment Duration</th>
+            <th scope="col">Manipulate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let student of students'>
+            <th scope="row"><a>{{student.name}}</a></th>
+            <td>{{student.enrollmentDuration}}</td>
+            <td>
+                <a class="mr-1">Edit</a>
+                <a class="mr-1">Remove</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -12,7 +12,7 @@ namespace CourseWebAPI.ResourceParamerters
         public int PageSize { get; set; } = 10;
         [Range(0, int.MaxValue)]
         public int PageIndex { get; set; } = 1;
-        public string OrderBy { get; set; } = "name";
+        public string OrderBy { get; set; } = "LastName";
         public bool Revert { get; set; } = false;
     }
 }
