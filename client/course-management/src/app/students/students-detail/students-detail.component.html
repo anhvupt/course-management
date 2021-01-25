@@ -1,0 +1,8 @@
+<h2>Student detail</h2>
+
+<label class="form-control mb-4">First Name: {{student.firstMidName}}</label>
+<label class="form-control mb-4">Last Name: {{student.lastName}}</label>
+<label class="form-control mb-4">Enrollment Date: {{student.enrollmentDate}}</label>
+
+<a [routerLink]="['/students', studentId, 'edit']" class="btn btn-outline-success my-2 my-sm-0 col-2">Edit</a>
+<a (click) = "onRemoveStudent(studentId)" class="btn btn-outline-success my-2 my-sm-0 col-2">Remove</a>

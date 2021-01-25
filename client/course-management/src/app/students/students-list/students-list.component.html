@@ -18,11 +18,15 @@
     </thead>
     <tbody>
         <tr *ngFor='let student of students'>
-            <th scope="row"><a>{{student.name}}</a></th>
+            <th scope="row">
+                <a [routerLink]="['/students', student.id]">
+                    {{student.name}}
+                </a>
+            </th>
             <td>{{student.enrollmentDuration}}</td>
             <td>
-                <a class="mr-1">Edit</a>
-                <a class="mr-1">Remove</a>
+                <a [routerLink]="['/students', student.id, 'edit']" class="mr-1">Edit</a>
+                <a (click) = "onRemoveStudent(student.id)" class="mr-1">Remove</a>
             </td>
         </tr>
     </tbody>

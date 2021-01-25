@@ -24,7 +24,7 @@ export class StudentService {
 
     return this.http.get<IStudentDisplay[]>(ApiUrl.student, { params: queryParams })
       .pipe(
-        tap(data => console.log('Student list: ' + JSON.stringify(data))),
+        //tap(data => console.log('Student list: ' + JSON.stringify(data))),
         catchError(this.handleError)
       )
   }
@@ -48,9 +48,16 @@ export class StudentService {
     let url = `${ApiUrl.student}/${id}`
     return this.http.put(url, student)
       .pipe(
-        tap(data => console.log('Student: ' + JSON.stringify(data))),
         catchError(this.handleError)
       )
+  }
+
+  removeStudent(id:number){
+    let url = `${ApiUrl.student}/${id}`
+    return this.http.delete(url)
+    .pipe(
+      catchError(this.handleError)
+    )
   }
 
   handleError(err: HttpErrorResponse): Observable<never> {
