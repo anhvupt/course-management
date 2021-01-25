@@ -1,1 +1,4 @@
-<p>students-edit works!</p>
+<p class="h4 mb-4">Edit Student</p>
+<app-student-create-or-edit [student] = 'student'
+    (studentSubmitted) = 'onStudentSubmitted($event)'>
+</app-student-create-or-edit>

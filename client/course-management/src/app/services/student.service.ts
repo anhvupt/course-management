@@ -29,6 +29,14 @@ export class StudentService {
       )
   }
 
+  getStudent(id: number) : Observable<IStudentDisplay>{
+    let url = `${ApiUrl.student}/${id}`
+    return this.http.get<IStudentDisplay>(url)
+    .pipe(
+      catchError(this.handleError)
+    )
+  }
+
   createStudent(student:IStudent){
     return this.http.post(ApiUrl.student, student)
     .pipe(
