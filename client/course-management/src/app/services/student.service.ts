@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators'
-import { ApiUrl } from '../app/models/api-url';
-import { StudentParams } from '../app/models/student-params';
-import { IStudentDisplay } from '../app/models/student-display';
-import { IStudent } from '../app/models/student';
+import { ApiUrl } from '../models/api-url';
+import { StudentParams } from '../models/student-params';
+import { IStudentDisplay } from '../models/student-display';
+import { IStudent } from '../models/student';
 
 @Injectable({
   providedIn: 'root'
