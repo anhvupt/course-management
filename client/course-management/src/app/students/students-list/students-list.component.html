@@ -1,10 +1,10 @@
 <div class="mb-3 row">
-    <a [routerLink] = "['/students/create']"
-     class="btn btn-outline-success my-2 my-sm-0 col-2">Add Student</a>
+    <a [routerLink]="['/students/create']" class="btn btn-outline-success my-2 my-sm-0 col-2">Add Student</a>
     <div class="col-9 mr-0">
         <form class="form-inline my-2 my-lg-0 float-right">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input [(ngModel)] = "params.searchQuery"
+             class="form-control mr-sm-2" name="search" placeholder="Search" aria-label="Search">
+            <button (click) = "onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </div>
@@ -26,8 +26,18 @@
             <td>{{student.enrollmentDuration}}</td>
             <td>
                 <a [routerLink]="['/students', student.id, 'edit']" class="mr-1">Edit</a>
-                <a (click) = "onRemoveStudent(student.id)" class="mr-1">Remove</a>
+                <a (click)="onRemoveStudent(student.id)" class="mr-1">Remove</a>
             </td>
         </tr>
     </tbody>
 </table>
+
+<nav >
+    <ul class="pagination d-flex justify-content-center">
+        <li (click) = "onPageChange('prev')" class="page-item d-block border border-primary py-1 px-2">Previous</li>
+        <li (click) = "onPageChange('1')" class="page-item d-block border border-primary py-1 px-2">1</li>
+        <li (click) = "onPageChange('2')" class="page-item d-block border border-primary py-1 px-2">2</li>
+        <li (click) = "onPageChange('3')" class="page-item d-block border border-primary py-1 px-2">3</li>
+        <li (click) = "onPageChange('next')" class="page-item d-block border border-primary py-1 px-2">Next</li>
+    </ul>
+</nav>

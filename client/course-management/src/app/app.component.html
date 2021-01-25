@@ -1,9 +1,14 @@
 <nav class='navbar navbar-expand navbar-light bg-light'>
   <a class='navbar-brand'>Course management</a>
-  <ul class='nav nav-pills'>
-    <li><a [routerLink] = "['/students']"
-       class='nav-link'>Students</a></li>
-    <li><a class='nav-link'>Instructors List</a></li>
+  <ul class='nav nav-pills wizard'>
+    <li>
+      <a [routerLink]="['/students']" routerLinkActive = "active" class='nav-link'>
+        Students
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/instructors']" routerLinkActive = "active" class='nav-link'>Instructors</a>
+    </li>
   </ul>
 </nav>
 <div class='container mt-3'>
