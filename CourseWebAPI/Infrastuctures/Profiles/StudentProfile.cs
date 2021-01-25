@@ -21,7 +21,8 @@ namespace CourseWebAPI.Profiles
                 .ForMember(
                     dest => dest.EnrollmentDuration,
                     opt => opt.MapFrom(scr => scr.EnrollmentDate.GetDurationToNow())
-                );
+                )
+                ;
             CreateMap<StudentModel, Student>();
         }
     }
