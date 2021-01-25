@@ -1,0 +1,12 @@
+<!-- Default form register -->
+<form class="text-center border border-light p-5">
+
+    <input [(ngModel)]="student.firstMidName" name="firstMidName"
+     type="text" id="ip-firstName" class="form-control mb-4"
+        placeholder="First name">
+    <input [(ngModel)]="student.lastName" name="lastName"
+     type="text" id="ip-lastName" class="form-control mb-4"
+        placeholder="Last name">
+
+    <button (click)="onSubmit()" block="true" class="my-4 btn btn-info" type="submit">submit</button>
+</form>

@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StudentEditOrUpdateComponent } from './student-edit-or-update/student-edit-or-update.component';
+import { StudentCreateOrEditComponent } from './student-create-or-edit/student-create-or-edit.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    StudentEditOrUpdateComponent
+    StudentCreateOrEditComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports:[
-    StudentEditOrUpdateComponent
+    StudentCreateOrEditComponent,
+    FormsModule
   ]
 })
 export class SharedModule { }
