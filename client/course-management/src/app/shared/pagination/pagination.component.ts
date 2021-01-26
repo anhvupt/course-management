@@ -13,12 +13,14 @@ export class PaginationComponent implements OnInit {
     return this._currentpage
   }
   set currentPage(value: number){
-    this._currentpage = (value >= 1) ? value : 1
-    console.log('curr page: ', this.currentPage)
-    this.displayPages = (this.currentPage === 1) ?
-     [this.currentPage, this.currentPage+1, this.currentPage+2] : 
-     [this.currentPage-1, this.currentPage, this.currentPage+1]
-    console.log('pages: ', this.displayPages)
+    if (value) {
+      this._currentpage = (value >= 1) ? +value : 1
+      console.log('curr page: ', this.currentPage)
+      this.displayPages = (this.currentPage === 1) ?
+        [this.currentPage, this.currentPage + 1, this.currentPage + 2] :
+        [this.currentPage - 1, this.currentPage, this.currentPage + 1]
+      console.log('pages: ', this.displayPages)
+    }
   }
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>() 
 

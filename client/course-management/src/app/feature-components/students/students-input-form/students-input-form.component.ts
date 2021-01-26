@@ -5,7 +5,6 @@ import { IStudent } from 'src/app/shared/models/student';
   selector: 'app-students-input-form',
   templateUrl: './students-input-form.component.html',
   styleUrls: ['./students-input-form.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentsInputFormComponent implements OnInit {
 
