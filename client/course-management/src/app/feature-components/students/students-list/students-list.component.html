@@ -33,7 +33,7 @@
     </tbody>
 </table>
 
-<nav >
+<!-- <nav >
     <ul class="pagination d-flex justify-content-center">
         <li (click) = "onPageChange('prev')" class="page-item d-block border border-primary py-1 px-2">Previous</li>
         <li (click) = "onPageChange('1')" class="page-item d-block border border-primary py-1 px-2">1</li>
@@ -41,4 +41,7 @@
         <li (click) = "onPageChange('3')" class="page-item d-block border border-primary py-1 px-2">3</li>
         <li (click) = "onPageChange('next')" class="page-item d-block border border-primary py-1 px-2">Next</li>
     </ul>
-</nav>
+</nav> -->
+<app-pagination [currentPage] = "params.pageIndex"
+                (pageChanged) = "onPageChange($event)">
+</app-pagination>

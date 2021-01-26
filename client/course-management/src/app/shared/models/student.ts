@@ -1,3 +1,9 @@
+export interface IStudent{
+    firstMidName: string;
+    lastName: string;
+    enrollmentDate: Date;    
+}
+
 export class StudentParams{
     searchQuery: string;
     pageSize: number;
@@ -14,4 +20,13 @@ export class StudentParams{
         this.orderBy = ''
         this.revert = false
     }
+}
+
+export interface IStudentDisplay{
+    id: number,
+    firstMidName: string,
+    lastName: string,
+    name: string,
+    enrollmentDuration: string,
+    enrollmentDate: Date,
 }

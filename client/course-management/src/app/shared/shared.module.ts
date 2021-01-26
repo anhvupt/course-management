@@ -1,21 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StudentCreateOrEditComponent } from './student-create-or-edit/student-create-or-edit.component';
-import { FormsModule } from '@angular/forms';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
 @NgModule({
-  declarations: [
-    StudentCreateOrEditComponent
-  ],
+  declarations: [PaginationComponent],
   imports: [
-    CommonModule,
-    FormsModule
+    CommonModule
   ],
-  exports:[
-    StudentCreateOrEditComponent,
-    FormsModule
+  exports: [
+    CommonModule, 
+    PaginationComponent
   ]
 })
 export class SharedModule { }

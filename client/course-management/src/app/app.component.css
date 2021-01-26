@@ -1,3 +1,10 @@
 .wizard .active{
     color:#fff;
 }
+
+a{
+    cursor: pointer;
+}
+.pointer {
+    cursor: pointer;
+}

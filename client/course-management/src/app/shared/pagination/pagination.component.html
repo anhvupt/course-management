@@ -1,0 +1,10 @@
+<nav>
+    <ul class="pagination d-flex justify-content-center">
+        <li (click)="onPageClick('prev')" class="paging-item page-item d-block border border-primary py-1 px-2">Previous</li>
+        <li *ngFor="let page of displayPages" 
+            (click)="onPageClick(page.toString())"
+            [style.background-color] = "page === currentPage ? '#007BFF' : '#fff'"
+            class="paging-item page-item d-block border border-primary py-1 px-2">{{page}}</li>
+        <li (click)="onPageClick('next')" class="paging-item page-item d-block border border-primary py-1 px-2">Next</li>
+    </ul>
+</nav>

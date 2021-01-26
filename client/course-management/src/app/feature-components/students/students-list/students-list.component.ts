@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IStudentDisplay } from 'src/app/models/student-display';
-import { StudentParams } from 'src/app/models/student-params';
-import { StudentService } from 'src/app/services/student.service';
+import { StudentService } from 'src/app/core/services/student.service';
+import { IStudentDisplay, StudentParams } from 'src/app/shared/models/student';
 
 @Component({
   selector: 'app-students-list',
@@ -16,18 +15,12 @@ export class StudentsListComponent implements OnInit {
   errorMessage = ''
 
   constructor(private studentService: StudentService,
-              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.params.searchQuery = params.searchQuery || this.params.searchQuery
-      this.params.pageIndex = params.pageIndex || this.params.pageIndex
-      this.params.pageSize = params.pageSize || this.params.pageSize
-      this.params.orderBy = params.orderBy || this.params.orderBy
-      this.params.revert = params.revert || this.params.revert
+      this.params = JSON.parse(JSON.stringify(params))
     })
-    console.log(this.params)
     this.getStudents()
   }
 
@@ -52,13 +45,18 @@ export class StudentsListComponent implements OnInit {
     })
   }
 
-  onPageChange(pageIndex: string){
-    this.setPageIndex(pageIndex)
+  // onPageChange(pageIndex: string){
+  //   this.setPageIndex(pageIndex)
+  //   this.getStudents()
+  // }
+
+  onPageChange(pageIndex: number){
+    this.params.pageIndex = pageIndex
+    console.log('params after clicked: ',this.params)
     this.getStudents()
   }
 
   onSearch(){
-    console.log(this.params)
     this.getStudents()
   }
 
