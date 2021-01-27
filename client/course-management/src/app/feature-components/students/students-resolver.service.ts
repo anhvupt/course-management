@@ -26,7 +26,7 @@ export class StudentsResolver implements Resolve<StudentResolved>{
         }
         return this.studentService.getStudent(+id)
         .pipe(
-            map(student => ({student: student})),
+            map(student => ({id: +id, student: student})),
             catchError(err => {
                 const message = `Retrieval error: ${err}`
                 console.log(err)

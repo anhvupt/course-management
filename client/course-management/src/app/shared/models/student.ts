@@ -32,6 +32,7 @@ export interface IStudentDisplay{
 }
 
 export class StudentResolved{
+    id?: number
     student: IStudent
     error?: any
 }

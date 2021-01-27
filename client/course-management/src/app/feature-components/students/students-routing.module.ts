@@ -13,22 +13,25 @@ import { StudentsResolver } from './students-resolver.service';
   declarations: [],
   imports: [
     RouterModule.forChild([
-      {path: 'students', component: StudentsListComponent},
-      {path: 'students/create', component: StudentCreateComponent},
+      { path: 'students', component: StudentsListComponent },
+      { path: 'students/create', component: StudentCreateComponent },
       {
         path: 'students/:id',
         component: StudentsDetailComponent,
-        resolve: {resolvedData: StudentsResolver}
+        resolve: { resolvedData: StudentsResolver },
       },
-
-      {path: 'students/:id/edit', component: StudentsEditComponent},
+      {
+        path: 'students/:id/edit',
+        component: StudentsEditComponent,
+        resolve: { resolvedData: StudentsResolver },
+      },
     ])
   ],
   exports: [
     RouterModule
   ]
 })
-export class StudentsRoutingModule { 
+export class StudentsRoutingModule {
   static components = [
     StudentsInputFormComponent,
     StudentsListComponent,

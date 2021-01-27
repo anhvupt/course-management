@@ -33,9 +33,13 @@ export class StudentsDetailComponent implements OnInit {
     //   error: err => console.error(err)
     // })
     this.route.data.subscribe(data => {
-      let resolvedData : StudentResolved = data['resolvedData']
-      if(resolvedData.error) console.error(resolvedData.error)
-      this.student = resolvedData.student
+      let resolvedData = data['resolvedData']
+      if (resolvedData.student) {
+        this.student = resolvedData.student
+        this.studentId = resolvedData.id
+      }else{
+        console.error(resolvedData.error)
+      }
     })
   }
 
