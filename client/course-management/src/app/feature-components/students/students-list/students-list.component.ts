@@ -19,8 +19,12 @@ export class StudentsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.params = JSON.parse(JSON.stringify(params))
+      console.log(params)
+      if (params.pageIndex) {
+        this.params = JSON.parse(JSON.stringify(params)!)
+      }
     })
+    console.log(this.params)
     this.getStudents()
   }
 
@@ -44,11 +48,6 @@ export class StudentsListComponent implements OnInit {
       error: err => console.error(err)
     })
   }
-
-  // onPageChange(pageIndex: string){
-  //   this.setPageIndex(pageIndex)
-  //   this.getStudents()
-  // }
 
   onPageChange(pageIndex: number){
     this.params.pageIndex = pageIndex

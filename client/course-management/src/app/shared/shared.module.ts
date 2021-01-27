@@ -11,7 +11,7 @@ import { PaginationComponent } from './pagination/pagination.component';
   ],
   exports: [
     CommonModule, 
-    PaginationComponent
+    PaginationComponent, 
   ]
 })
 export class SharedModule { }

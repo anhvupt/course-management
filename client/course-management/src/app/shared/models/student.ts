@@ -30,3 +30,8 @@ export interface IStudentDisplay{
     enrollmentDuration: string,
     enrollmentDate: Date,
 }
+
+export class StudentResolved{
+    student: IStudent
+    error?: any
+}

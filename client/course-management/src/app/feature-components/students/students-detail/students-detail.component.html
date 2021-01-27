@@ -5,11 +5,11 @@
 <label class="form-control mb-4">Enrollment Date: {{student.enrollmentDate}}</label>
 
 <div class="row">
-    <div class="col-2">
-        <a [routerLink]="['/students']" queryParamsHandling="preserve">Back</a> 
+    <div class="col">
+        <a [routerLink] = "['/']" queryParamsHandling = "preserve" class="btn btn-outline-success my-2 my-sm-0 col-2">Back</a>
     </div>
-    <div class="col-10 d-flex justify-content-end">
-        <a [routerLink]="['/students', studentId, 'edit']" class="btn btn-outline-success my-2 my-sm-0 col-2">Edit</a>
-        <a (click)="onRemoveStudent(studentId)" class="btn btn-outline-success my-2 my-sm-0 col-2">Remove</a>
-    </div>
+<div class="col d-flex justify-content-end">
+    <a [routerLink]="['/students', studentId, 'edit']" class="btn btn-outline-success my-2 my-sm-0 col-2">Edit</a>
+    <a (click)="onRemoveStudent(studentId)" class="btn btn-outline-success mx-1 my-2 my-sm-0 col-2">Remove</a>
+</div>
 </div>

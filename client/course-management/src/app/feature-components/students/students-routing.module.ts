@@ -28,5 +28,6 @@ export class StudentsRoutingModule {
     StudentsListComponent,
     StudentCreateComponent,
     StudentsEditComponent,
-    StudentsDetailComponent,]
+    StudentsDetailComponent,
+  ]
 }
