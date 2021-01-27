@@ -5,6 +5,7 @@ import { StudentsDetailComponent } from './students-detail/students-detail.compo
 import { StudentsEditComponent } from './students-edit/students-edit.component';
 import { StudentsInputFormComponent } from './students-input-form/students-input-form.component';
 import { StudentsListComponent } from './students-list/students-list.component';
+import { StudentsResolver } from './students-resolver.service';
 
 
 
@@ -14,7 +15,12 @@ import { StudentsListComponent } from './students-list/students-list.component';
     RouterModule.forChild([
       {path: 'students', component: StudentsListComponent},
       {path: 'students/create', component: StudentCreateComponent},
-      {path: 'students/:id', component: StudentsDetailComponent},
+      {
+        path: 'students/:id',
+        component: StudentsDetailComponent,
+        resolve: {resolvedData: StudentsResolver}
+      },
+
       {path: 'students/:id/edit', component: StudentsEditComponent},
     ])
   ],
