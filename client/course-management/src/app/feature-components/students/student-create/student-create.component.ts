@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IStudent } from 'src/app/shared/models/student';
-import { StudentService } from 'src/app/core/services/student.service';
+import { StudentService } from 'src/app/feature-components/students/student.service';
+import { IStudent } from '../student';
 
 @Component({
   selector: 'app-student-create',

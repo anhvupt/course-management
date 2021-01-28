@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IStudent } from 'src/app/shared/models/student';
+import { IStudent } from '../student';
 
 @Component({
   selector: 'app-students-input-form',

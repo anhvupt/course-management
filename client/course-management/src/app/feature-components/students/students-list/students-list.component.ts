@@ -1,79 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StudentService } from 'src/app/core/services/student.service';
-import { IStudentDisplay, StudentParams } from 'src/app/shared/models/student';
+import { Observable } from 'rxjs';
+import { StudentService } from 'src/app/feature-components/students/student.service';
+import { IStudentDisplay, StudentParams, StudentState } from '../student';
 
 @Component({
   selector: 'app-students-list',
   templateUrl: './students-list.component.html',
-  styleUrls: ['./students-list.component.css']
+  styleUrls: ['./students-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentsListComponent implements OnInit {
+export class StudentsListComponent {
 
   params = new StudentParams()
-  students : IStudentDisplay[] = [] 
-  errorMessage = ''
+  students$ : Observable<IStudentDisplay[]> 
+  vm$ : Observable<StudentState> = this.studentService.vm$
 
-  constructor(private studentService: StudentService,
-              private route: ActivatedRoute) { }
+  constructor(private studentService: StudentService) { }
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      console.log(params)
-      if (params.pageIndex) {
-        this.params = JSON.parse(JSON.stringify(params)!)
-      }
-    })
-    console.log(this.params)
-    this.getStudents()
-  }
 
-  getStudents(): void{
-    this.studentService.getStudents(this.params).subscribe({
-      next: students => {
-        this.students = students
-        console.log(JSON.stringify(this.students))
-      },
-      error: err => this.errorMessage = err 
-    })
-  }
-
-  onRemoveStudent(id: number):void{
-    this.studentService.removeStudent(id).subscribe( {
-      next: ()=>{
-        if(confirm("successfully removed!")){
-          location.reload()
-        }
-      },
-      error: err => console.error(err)
-    })
+  onRemoveStudent(id: number): void {
+    if (confirm("Are you sure you want to remove this student!")) {
+      this.studentService.removeStudent(id)
+        .subscribe({
+          next: () => {
+            location.reload()
+          },
+          error: err => console.error(err)
+        })
+    }
   }
 
   onPageChange(pageIndex: number){
-    this.params.pageIndex = pageIndex
-    console.log('params after clicked: ',this.params)
-    this.getStudents()
+    this.studentService.updatePagination(pageIndex)
   }
 
-  onSearch(){
-    this.getStudents()
-  }
-
-  setPageIndex(pageIndex: string){
-    switch(pageIndex){
-      case 'prev': {
-        this.params.pageIndex--
-        break
-      }
-      case 'next':{
-        this.params.pageIndex++
-        break
-      }
-      default: {
-        this.params.pageIndex = +pageIndex
-        break;
-      }
-    }
+  onSearch(event:any){
+    console.log(event.target.value)
+    this.studentService.updateSearch(event.target.value)
   }
 
 }

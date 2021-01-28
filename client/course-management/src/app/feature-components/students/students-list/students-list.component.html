@@ -1,41 +1,38 @@
 <div class="mb-3 row">
-    <a [routerLink]="['/students/create']"
-    [queryParams] = "params"
-     class="btn btn-outline-success my-2 my-sm-0 col-2">Add Student</a>
+    <a [routerLink]="['/students/create']" [queryParams]="params" class="btn btn-outline-success my-2 my-sm-0 col-2">Add
+        Student</a>
     <div class="col-9 mr-0">
         <form class="form-inline my-2 my-lg-0 float-right">
-            <input [(ngModel)] = "params.searchQuery"
-             class="form-control mr-sm-2" name="search" placeholder="Search" aria-label="Search">
-            <button (click) = "onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input (keyup)="onSearch($event)" class="form-control mr-sm-2" name="search" placeholder="Search"
+                aria-label="Search">
         </form>
     </div>
 </div>
-<table class="table mt-3">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Enrollment Duration</th>
-            <th scope="col">Manipulate</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor='let student of students'>
-            <th scope="row">
-                <a [routerLink]="['/students', student.id]"
-                [queryParams] = "params">
-                    {{student.name}}
-                </a>
-            </th>
-            <td>{{student.enrollmentDuration}}</td>
-            <td>
-                <a [routerLink]="['/students', student.id, 'edit']"
-                [queryParams] = "params" class="mr-1">Edit</a>
-                <a (click)="onRemoveStudent(student.id)" class="mr-1">Remove</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div *ngIf="vm$ | async as vm">
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Enrollment Duration</th>
+                <th scope="col">Manipulate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let student of vm.students'>
+                <th scope="row">
+                    <a [routerLink]="['/students', student.id]" [queryParams]="params">
+                        {{student.name}}
+                    </a>
+                </th>
+                <td>{{student.enrollmentDuration}}</td>
+                <td>
+                    <a [routerLink]="['/students', student.id, 'edit']" [queryParams]="params" class="mr-1">Edit</a>
+                    <a (click)="onRemoveStudent(student.id)" class="mr-1">Remove</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<app-pagination [currentPage] = "params.pageIndex"
-                (pageChanged) = "onPageChange($event)">
-</app-pagination>
+    <app-pagination [currentPage]="vm.params.pageIndex" (pageChanged)="onPageChange($event)">
+    </app-pagination>
+</div>

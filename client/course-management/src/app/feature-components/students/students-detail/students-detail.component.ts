@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IStudent, StudentResolved } from 'src/app/shared/models/student';
-import { StudentService } from 'src/app/core/services/student.service';
+import { StudentService } from 'src/app/feature-components/students/student.service';
+import { IStudent } from '../student';
 
 @Component({
   selector: 'app-students-detail',
@@ -23,15 +23,6 @@ export class StudentsDetailComponent implements OnInit {
   studentId: number
 
   ngOnInit(): void {
-    // const id = +this.route.snapshot.paramMap.get('id')
-    // this.studentId = id
-    // this.studentService.getStudent(id).subscribe({
-    //   next: data => {
-    //     console.log('student: ', data)
-    //     this.student = data
-    //   },
-    //   error: err => console.error(err)
-    // })
     this.route.data.subscribe(data => {
       let resolvedData = data['resolvedData']
       if (resolvedData.student) {
@@ -43,15 +34,15 @@ export class StudentsDetailComponent implements OnInit {
     })
   }
 
-  onRemoveStudent(id: number):void{
-    this.studentService.removeStudent(id).subscribe( {
-      next: ()=>{
-        if(confirm("successfully removed!")){
+  onRemoveStudent(id: number): void {
+    if (confirm("Are you sure you want to remove this student!")) {
+      this.studentService.removeStudent(id).subscribe({
+        next: () => {
           history.back()
-        }
-      },
-      error: err => console.error(err)
-    })
+        },
+        error: err => console.error(err)
+      })
+    }
   }
 
 }

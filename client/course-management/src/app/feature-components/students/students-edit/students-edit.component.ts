@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IStudent } from 'src/app/shared/models/student';
-import { StudentService } from 'src/app/core/services/student.service';
+import { StudentService } from 'src/app/feature-components/students/student.service';
+import { IStudent } from '../student';
 
 @Component({
   selector: 'app-students-edit',
@@ -23,16 +23,6 @@ export class StudentsEditComponent implements OnInit {
   studentId: number
 
   ngOnInit(): void {
-
-    // this.studentId = +this.route.snapshot.paramMap.get('id')
-    // this.studentService.getStudent(this.studentId).subscribe({
-    //   next: data => {
-    //     console.log(data)
-    //     this.student.firstMidName = data.firstMidName
-    //     this.student.lastName = data.lastName
-    //   },
-    //   error: err => console.error(err)
-    // })
 
     this.route.data.subscribe(data =>{
       let resolvedData = data['resolvedData']

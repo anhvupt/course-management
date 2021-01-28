@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { StudentService } from "src/app/core/services/student.service";
-import { IStudent, StudentResolved } from "src/app/shared/models/student";
-import { isCallSignatureDeclaration } from "typescript";
+import { StudentService } from "src/app/feature-components/students/student.service";
+import { StudentResolved } from "./student";
 
 
 

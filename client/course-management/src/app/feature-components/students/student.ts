@@ -1,3 +1,5 @@
+import { HttpParams } from "@angular/common/http";
+
 export interface IStudent{
     firstMidName: string;
     lastName: string;
@@ -21,6 +23,15 @@ export class StudentParams{
         this.revert = false
     }
 }
+export const toHttpParams = (params : StudentParams): HttpParams => {
+    let result = new HttpParams()
+    if (params.searchQuery) { result = result.set('searchQuery', params.searchQuery) }
+    if (params.pageSize) { result = result.set('pageSize', `${params.pageSize}`) }
+    if (params.pageIndex) { result = result.set('pageIndex', `${params.pageIndex}`) }
+    if (params.orderBy) { result = result.set('orderBy', params.orderBy) }
+    if (params.revert) { result = result.set('revert', `${params.revert}`) }
+    return result
+}
 
 export interface IStudentDisplay{
     id: number,
@@ -35,4 +46,10 @@ export class StudentResolved{
     id?: number
     student: IStudent
     error?: any
+}
+
+export class StudentState{
+    students: IStudentDisplay[]
+    params: StudentParams
+    loading: boolean
 }
