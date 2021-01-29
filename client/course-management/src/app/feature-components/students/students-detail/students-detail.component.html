@@ -1,15 +1,16 @@
 <h2>Student detail</h2>
-
-<label class="form-control mb-4">First Name: {{student.firstMidName}}</label>
-<label class="form-control mb-4">Last Name: {{student.lastName}}</label>
-<label class="form-control mb-4">Enrollment Date: {{student.enrollmentDate}}</label>
+<div *ngIf = "vm$ | async as vm">
+<label class="form-control mb-4">First Name: {{vm.student.firstMidName}}</label>
+<label class="form-control mb-4">Last Name: {{vm.student.lastName}}</label>
+<label class="form-control mb-4">Enrollment Date: {{vm.student.enrollmentDate}}</label>
 
 <div class="row">
     <div class="col">
         <app-back-button [text]="'Back'"></app-back-button>
     </div>
     <div class="col d-flex justify-content-end">
-        <a [routerLink]="['/students', studentId, 'edit']" class="btn btn-outline-success my-2 my-sm-0 col-2">Edit</a>
-        <a (click)="onRemoveStudent(studentId)" class="btn btn-outline-success mx-1 my-2 my-sm-0 col-2">Remove</a>
+        <a [routerLink]="['/students', vm.studentId, 'edit']" class="btn btn-outline-success my-2 my-sm-0 col-2">Edit</a>
+        <a (click)="onRemoveStudent(vm.studentId)" class="btn btn-outline-success mx-1 my-2 my-sm-0 col-2">Remove</a>
     </div>
+</div>
 </div>

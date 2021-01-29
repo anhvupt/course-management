@@ -41,6 +41,24 @@ export interface IStudentDisplay{
     enrollmentDuration: string,
     enrollmentDate: Date,
 }
+export class StudentDisplay implements IStudentDisplay{
+    id: number;
+    firstMidName: string;
+    lastName: string;
+    name: string;
+    enrollmentDuration: string;
+    enrollmentDate: Date;
+
+    constructor(){
+        this.id = 0
+        this.firstMidName = ''
+        this.lastName = ''
+        this.name = ''
+        this.enrollmentDuration = new Date().toString()
+        this.enrollmentDate = new Date()
+    }
+
+}
 
 export class StudentResolved{
     id?: number

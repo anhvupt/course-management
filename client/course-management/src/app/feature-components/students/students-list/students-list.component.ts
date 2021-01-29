@@ -36,7 +36,6 @@ export class StudentsListComponent {
   }
 
   onSearch(event:any){
-    console.log(event.target.value)
     this.studentService.updateSearch(event.target.value)
   }
 

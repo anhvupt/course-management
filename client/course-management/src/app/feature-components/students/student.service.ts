@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, combineLatest, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subject, throwError } from 'rxjs';
 import { tap, map, catchError, distinctUntilChanged, distinctUntilKeyChanged, last, switchMap, concatMap } from 'rxjs/operators'
 import { ApiUrl } from '../../shared/models/api-url';
-import { IStudent, IStudentDisplay, StudentParams, StudentState, toHttpParams } from './student';
+import { IStudent, IStudentDisplay, StudentDisplay, StudentParams, StudentState, toHttpParams } from './student';
 import { state } from '@angular/animations';
 
 
 let _state: StudentState = {
   students: [],
   params: new StudentParams(),
-  student: null,
-  studentId: 0,
+  student: new StudentDisplay(),
+  studentId: new StudentDisplay().id,
   loading: false
 }
 
@@ -40,21 +40,22 @@ export class StudentService {
         ({ students, params, student, studentId, loading }))
       )
 
-  
-
   constructor(private http: HttpClient) {
     this.params$.pipe(
-        tap(params => console.log(params)),
-        switchMap(params => this.getStudents(toHttpParams(params)))
-      ).subscribe(students => {
-        this.updateState({ ..._state, students, loading: false })
-      })
+      tap(params => console.log('params is changed: ',params)),
+      switchMap(params => this.getStudents(toHttpParams(params)))
+    ).subscribe(students => {
+      this.updateState({ ..._state, students, loading: false })
+    })
 
     this.studentId$.pipe(
-        switchMap(id => this.getStudent(id))
-      ).subscribe(student => {
-        this.updateState({ ..._state, student, loading: false })
-      })
+      tap(id => console.log('student id is changed', id )),
+      switchMap(id => (id >0) ? this.getStudent(id) : EMPTY)
+    ).subscribe(student => {
+      this.updateState({... _state, student, loading: false})
+    })
+
+
   }
 
   updateSearch(searchQuery: string) {
@@ -65,6 +66,11 @@ export class StudentService {
     const params = { ..._state.params, pageIndex }
     this.updateState({ ..._state, params })
   }
+  updateStudentId(studentId: number){
+    if (studentId != _state.studentId) {
+      this.updateState({ ..._state, studentId })
+    }
+  }
 
 
   updateState(state: StudentState) {
@@ -74,6 +80,7 @@ export class StudentService {
   private getStudents(params: HttpParams): Observable<IStudentDisplay[]> {
     return this.http.get<IStudentDisplay[]>(ApiUrl.student, { params: params })
       .pipe(
+        tap(students => console.log('successfully get students: ',students)),
         catchError(this.handleError)
       )
   }
@@ -84,10 +91,11 @@ export class StudentService {
     })
   }
 
-  getStudent(id: number): Observable<IStudentDisplay> {
+  private getStudent(id: number): Observable<IStudentDisplay> {
     let url = `${ApiUrl.student}/${id}`
     return this.http.get<IStudentDisplay>(url)
       .pipe(
+        tap(student => console.log('successfully get student: ',student)),
         catchError(this.handleError)
       )
   }
@@ -95,7 +103,7 @@ export class StudentService {
   createStudent(student: IStudent) {
     return this.http.post(ApiUrl.student, student)
       .pipe(
-        tap(() => this.refetchStudents()),
+        tap(() => console.log("student created")),
         catchError(this.handleError)
       )
   }

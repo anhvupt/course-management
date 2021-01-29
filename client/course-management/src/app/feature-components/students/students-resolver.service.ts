@@ -23,14 +23,16 @@ export class StudentsResolver implements Resolve<StudentResolved>{
             console.error(message)
             return of ({student: null, error: message})
         }
-        return this.studentService.getStudent(+id)
-        .pipe(
-            map(student => ({id: +id, student: student})),
-            catchError(err => {
-                const message = `Retrieval error: ${err}`
-                console.log(err)
-                return of ({student: null, error: message})
-            })
-        )
+        // return this.studentService.getStudent(+id)
+        // .pipe(
+        //     map(student => ({id: +id, student: student})),
+        //     catchError(err => {
+        //         const message = `Retrieval error: ${err}`
+        //         console.log(err)
+        //         return of ({student: null, error: message})
+        //     })
+        
+        // )
+        this.studentService.updateStudentId(+id)
     }
 }

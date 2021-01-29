@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { StudentService } from 'src/app/feature-components/students/student.service';
-import { IStudent } from '../student';
+import { IStudent, StudentState } from '../student';
 
 @Component({
   selector: 'app-students-detail',
@@ -21,17 +22,19 @@ export class StudentsDetailComponent implements OnInit {
     enrollmentDate : new Date(),
   }
   studentId: number
+  vm$ : Observable<StudentState> = this.studentService.vm$
+
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
-      let resolvedData = data['resolvedData']
-      if (resolvedData.student) {
-        this.student = resolvedData.student
-        this.studentId = resolvedData.id
-      }else{
-        console.error(resolvedData.error)
-      }
-    })
+    // this.route.data.subscribe(data => {
+    //   let resolvedData = data['resolvedData']
+    //   if (resolvedData.student) {
+    //     this.student = resolvedData.student
+    //     this.studentId = resolvedData.id
+    //   }else{
+    //     console.error(resolvedData.error)
+    //   }
+    // })
   }
 
   onRemoveStudent(id: number): void {
