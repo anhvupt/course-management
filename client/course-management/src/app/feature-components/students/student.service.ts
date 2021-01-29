@@ -59,20 +59,22 @@ export class StudentService {
   }
 
   updateSearch(searchQuery: string) {
-    const params = { ..._state.params, searchQuery }
-    this.updateState({ ..._state, params })
+    if (searchQuery != _state.params.searchQuery) {
+      const params = { ..._state.params, searchQuery }
+      this.updateState({ ..._state, params })
+    }
   }
   updatePagination(pageIndex: number) {
-    const params = { ..._state.params, pageIndex }
-    this.updateState({ ..._state, params })
+    if (pageIndex != _state.params.pageIndex) {
+      const params = { ..._state.params, pageIndex }
+      this.updateState({ ..._state, params })
+    }
   }
   updateStudentId(studentId: number){
     if (studentId != _state.studentId) {
       this.updateState({ ..._state, studentId })
     }
   }
-
-
   updateState(state: StudentState) {
     this.store.next(_state = state)
   }
@@ -83,12 +85,6 @@ export class StudentService {
         tap(students => console.log('successfully get students: ',students)),
         catchError(this.handleError)
       )
-  }
-  private refetchStudents(){
-    this.getStudents(toHttpParams(_state.params))
-    .subscribe(students => {
-      this.updateState({ ..._state, students, loading: false })
-    })
   }
 
   private getStudent(id: number): Observable<IStudentDisplay> {
@@ -112,7 +108,6 @@ export class StudentService {
     let url = `${ApiUrl.student}/${id}`
     return this.http.put(url, student)
       .pipe(
-        tap(() => this.refetchStudents()),
         catchError(this.handleError)
       )
   }
@@ -121,7 +116,6 @@ export class StudentService {
     let url = `${ApiUrl.student}/${id}`
     return this.http.delete(url)
       .pipe(
-        tap(() => this.refetchStudents()),
         catchError(this.handleError)
       )
   }
