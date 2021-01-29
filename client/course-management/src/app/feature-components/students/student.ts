@@ -51,5 +51,7 @@ export class StudentResolved{
 export class StudentState{
     students: IStudentDisplay[]
     params: StudentParams
+    student: IStudentDisplay
+    studentId: number
     loading: boolean
 }

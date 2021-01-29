@@ -23,7 +23,6 @@ export class StudentsEditComponent implements OnInit {
   studentId: number
 
   ngOnInit(): void {
-
     this.route.data.subscribe(data =>{
       let resolvedData = data['resolvedData']
       if (resolvedData.student) {
@@ -40,9 +39,7 @@ export class StudentsEditComponent implements OnInit {
     console.log('student to submit: ', this.student)
     this.studentService.editStudent(this.studentId, this.student).subscribe({
       next: () => {
-        if (confirm('successfully editted!')) {
           this.router.navigate(['/students'])
-        }
       },
       error: err => console.error(err)
     })

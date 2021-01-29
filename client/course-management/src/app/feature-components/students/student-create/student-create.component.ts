@@ -27,9 +27,7 @@ export class StudentCreateComponent implements OnInit {
     console.log('student to submit: ', this.student)
     this.studentService.createStudent(this.student).subscribe({
       next: () => {
-        if(confirm('successfully created!')){
           this.router.navigate(['/students'])
-        }
       },
       error: err => console.error(err) 
     })
