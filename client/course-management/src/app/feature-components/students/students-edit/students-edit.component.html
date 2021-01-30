@@ -1,5 +1,7 @@
 <p class="h4 mb-4">Edit Student</p>
-<app-students-input-form [student] = 'student'
+<div *ngIf = "vm$ | async as vm">
+<app-students-input-form [student] = 'vm.student'
     (studentSubmitted) = 'onStudentSubmitted($event)'>
 </app-students-input-form>
 <app-back-button [text] = "'Back'"></app-back-button>
+</div>

@@ -16,11 +16,9 @@ export class PaginationComponent implements OnInit {
   set currentPage(value: number){
     if (value) {
       this._currentpage = (value >= 1) ? +value : 1
-      console.log('curr page: ', this.currentPage)
       this.displayPages = (this.currentPage === 1) ?
         [this.currentPage, this.currentPage + 1, this.currentPage + 2] :
         [this.currentPage - 1, this.currentPage, this.currentPage + 1]
-      console.log('pages: ', this.displayPages)
     }
   }
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>() 
@@ -44,7 +42,6 @@ export class PaginationComponent implements OnInit {
         break;
       }
     }
-    console.log('current page after clicked: ', current)
     this.pageChanged.emit(current)
   }
 

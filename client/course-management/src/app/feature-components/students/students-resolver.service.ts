@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { StudentService } from "src/app/feature-components/students/student.service";
-import { StudentResolved } from "./student";
+import { StudentsService } from "src/app/feature-components/students/students.service";
+import { StudentResolved } from "./student-shared";
 
 
 
@@ -12,7 +12,7 @@ import { StudentResolved } from "./student";
 })
 export class StudentsResolver implements Resolve<StudentResolved>{
 
-    constructor (private studentService: StudentService){}
+    constructor (private studentService: StudentsService){}
     
     resolve(route : ActivatedRouteSnapshot, 
             state: RouterStateSnapshot) : Observable<StudentResolved>{
@@ -23,16 +23,6 @@ export class StudentsResolver implements Resolve<StudentResolved>{
             console.error(message)
             return of ({student: null, error: message})
         }
-        // return this.studentService.getStudent(+id)
-        // .pipe(
-        //     map(student => ({id: +id, student: student})),
-        //     catchError(err => {
-        //         const message = `Retrieval error: ${err}`
-        //         console.log(err)
-        //         return of ({student: null, error: message})
-        //     })
-        
-        // )
         this.studentService.updateStudentId(+id)
     }
 }

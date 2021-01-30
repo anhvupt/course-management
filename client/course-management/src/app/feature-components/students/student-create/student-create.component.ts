@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StudentService } from 'src/app/feature-components/students/student.service';
-import { IStudent } from '../student';
+import { StudentsService } from 'src/app/feature-components/students/students.service';
+import { IStudent } from '../student-shared';
 
 @Component({
   selector: 'app-student-create',
@@ -10,7 +10,7 @@ import { IStudent } from '../student';
 })
 export class StudentCreateComponent implements OnInit {
 
-  constructor(private studentService : StudentService, public router: Router) { }
+  constructor(private studentService : StudentsService, public router: Router) { }
 
   student : IStudent
 
@@ -23,14 +23,10 @@ export class StudentCreateComponent implements OnInit {
   }
 
   onStudentSubmitted(data: IStudent){
-    this.student = data
-    console.log('student to submit: ', this.student)
-    this.studentService.createStudent(this.student).subscribe({
-      next: () => {
-          this.router.navigate(['/students'])
-      },
-      error: err => console.error(err) 
-    })
+    this.studentService.createStudent(data)
+    this.studentService.students$.subscribe(
+      () => this.router.navigate(['/students'])
+    )
   }
 
 }
