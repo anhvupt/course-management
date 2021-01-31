@@ -22,6 +22,12 @@ namespace CourseWebAPI.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        public async Task<double> GetTotalPage(int pageSize)
+        {
+            double count = await _context.Students.CountAsync();
+            return count / pageSize;
+        }
+
         public async Task Create(StudentModel model)
         {
             var entity = _mapper.Map<Student>(model);

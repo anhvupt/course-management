@@ -16,13 +16,13 @@ export class StudentsResolver implements Resolve<StudentResolved>{
     
     resolve(route : ActivatedRouteSnapshot, 
             state: RouterStateSnapshot) : Observable<StudentResolved>{
-
+        
         const id = route.paramMap.get('id');
         if(isNaN(+id)) {
             const message = `Student id is not a number: ${id}`
             console.error(message)
             return of ({student: null, error: message})
         }
-        this.studentService.updateStudentId(+id)
+        this.studentService.updateStudentId(+id)        
     }
 }

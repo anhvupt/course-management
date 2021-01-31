@@ -1,7 +1,10 @@
+import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { StudentsService } from 'src/app/feature-components/students/students.service';
-import { IStudent } from '../student-shared';
+import { StudentHttpService } from '../student-http.service';
+import { IStudent, IStudentDisplay } from '../student-shared';
 
 @Component({
   selector: 'app-students-edit',
@@ -9,31 +12,27 @@ import { IStudent } from '../student-shared';
   styleUrls: ['./students-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentsEditComponent implements OnInit {
+export class StudentsEditComponent implements OnInit{
 
-
-  vm$ = this.studentService.vm$
-  student: IStudent = {
-    firstMidName : '',
-    lastName : '',
-    enrollmentDate: null
-  }
+  student: IStudent 
 
   constructor(private studentService: StudentsService,
+    private route: ActivatedRoute,
     private location: Location) {
-    this.vm$.pipe(
-      map(state => state.student)
-    ).subscribe(student => {
-      this.student.firstMidName = student.firstMidName,
-      this.student.lastName = student.lastName,
-      this.student.enrollmentDate = student.enrollmentDate
-    }
-    )
+  }
+  ngOnInit(): void {
+    this.studentService.student$.pipe(
+      map(student => ({
+        firstMidName: student.firstMidName,
+        lastName: student.lastName,
+        enrollmentDate: student.enrollmentDate
+      }))
+    ).subscribe(student => this.student = student)
   }
 
-  onStudentSubmitted(data: IStudentDisplay) {
+  onStudentSubmitted(data: IStudent) {
     this.studentService.editStudent(data)
-    this.location.back()
+    //this.location.back()
   }
 
 }

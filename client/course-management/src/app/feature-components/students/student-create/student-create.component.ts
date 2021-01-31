@@ -24,9 +24,7 @@ export class StudentCreateComponent implements OnInit {
 
   onStudentSubmitted(data: IStudent){
     this.studentService.createStudent(data)
-    this.studentService.students$.subscribe(
-      () => this.router.navigate(['/students'])
-    )
+    this.router.navigate(['/students'])
   }
 
 }

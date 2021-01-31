@@ -21,6 +21,14 @@ export class StudentHttpService {
       )
   }
 
+  getTotalPage(pageSize): Observable<number>{
+    const url = `${ApiUrl.student}/totalPage?pageSize=${pageSize}`
+    return this.http.get<number>(url).pipe(
+      tap(total => console.log('total page: ', total)),
+      catchError(handleError)
+    )
+  }
+
   getStudent(id: number): Observable<IStudentDisplay> {
     let url = `${ApiUrl.student}/${id}`
     return this.http.get<IStudentDisplay>(url)

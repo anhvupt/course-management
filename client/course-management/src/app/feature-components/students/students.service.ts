@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subject, throwError } from 'rxjs';
-import { tap, map, catchError, distinctUntilChanged, distinctUntilKeyChanged, last, switchMap, concatMap } from 'rxjs/operators'
-import { ApiUrl } from '../../shared/models/api-url';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, Subject } from 'rxjs';
+import { tap, map, distinctUntilChanged, switchMap } from 'rxjs/operators'
 import { handleError, IStudent, IStudentDisplay, StudentDisplay, StudentParams, toHttpParams } from './student-shared';
 import { StudentHttpService } from './student-http.service';
 
@@ -48,15 +46,22 @@ export class StudentsService {
       )
 
   private studentCreateSubject = new Subject<IStudent>()
-  private studentCreate$: Observable<IStudent> = this.studentCreateSubject.asObservable()
+  studentCreate$: Observable<IStudent> = this.studentCreateSubject.asObservable()
   private studentEditSubject = new Subject<IStudent>()
-  private studentEdit$: Observable<IStudent> = this.studentEditSubject.asObservable()
+  studentEdit$: Observable<IStudent> = this.studentEditSubject.asObservable()
   private studentDeleteSubject = new Subject<number>()
-  private idToDelete$: Observable<number> = this.studentDeleteSubject.asObservable() 
+  idToDelete$: Observable<number> = this.studentDeleteSubject.asObservable() 
+  private totalPageSubject = new BehaviorSubject(3)
+  totalPage$ = this.totalPageSubject.asObservable()
 
   private onParamsChange = this.params$.pipe(
     tap(params => console.log('params is changed: ', params)),
-    switchMap(params => this.studentHttp.getStudents(toHttpParams(params)))
+    switchMap(params => {
+      this.studentHttp.getTotalPage(params.pageSize).subscribe( 
+        total => this.totalPageSubject.next(total)
+      )
+      return this.studentHttp.getStudents(toHttpParams(params))
+    })
   ).subscribe(students => {
     this.updateState({ ..._state, students })
   })
@@ -77,15 +82,16 @@ export class StudentsService {
   )
     
   private onStudentEdit = this.studentEdit$.pipe(
-    tap(student => console.log(`student to edit: `, student as IStudent),
-    switchMap(student => this.studentHttp.editStudent(_state.studentId, student as IStudent)))
-  ).subscribe({
-    next: () => {
-      // this.refetchStudent()
-      // this.refetchStudents()
-    },
-    error: err => handleError(err)
-  })
+    tap(student => {
+      console.log('student to create: ', student, typeof(student))
+      console.log('id: ', _state.studentId)
+    }),
+    switchMap(student => {
+      console.log(student)
+      console.log(_state.studentId)
+      return this.studentHttp.editStudent(_state.studentId, student)
+    })
+  )
     
   private onStudentDelete = this.idToDelete$.pipe(
     tap(id => console.log('id to delete: ', id)),
@@ -121,6 +127,9 @@ export class StudentsService {
   }
   editStudent(student: IStudent){
     this.studentEditSubject.next(student)
+  }
+  deleteStudent(id: number){
+    this.studentDeleteSubject.next(id)
   }
 
   private refetchStudents(){

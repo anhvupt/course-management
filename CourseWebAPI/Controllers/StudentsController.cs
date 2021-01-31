@@ -40,6 +40,12 @@ namespace CourseWebAPI.Controllers
             var collection = await _studentService.GetList(param);
             return Ok(collection);
         }
+        [HttpGet("totalPage")]
+        public async Task<IActionResult> GetTotalPage(int pageSize)
+        {
+            var totalPage = await _studentService.GetTotalPage(pageSize);
+            return Ok(Math.Ceiling(totalPage));
+        }
 
         [HttpGet("{studentId}", Name = "GetStudent")]
         public async Task<IActionResult> Get(int studentId)

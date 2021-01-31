@@ -12,23 +12,12 @@ import { IStudentDisplay, StudentParams } from '../student-shared';
 export class StudentsListComponent {
 
   params = new StudentParams()
-  students$ : Observable<IStudentDisplay[]> 
+  //students$ : Observable<IStudentDisplay[]> 
   vm$ : Observable<StudentDisplayState> = this.studentService.vm$
+  totalPage$ : Observable<number> = this.studentService.totalPage$
 
   constructor(private studentService: StudentsService) { }
 
-
-  onRemoveStudent(id: number): void {
-    // if (confirm("Are you sure you want to remove this student!")) {
-    //   this.studentService.removeStudent(id)
-    //     .subscribe({
-    //       next: () => {
-    //         location.reload()
-    //       },
-    //       error: err => console.error(err)
-    //     })
-    // }
-  }
 
   onPageChange(pageIndex: number){
     this.studentService.updatePagination(pageIndex)

@@ -7,6 +7,7 @@
     <input [(ngModel)]="student.lastName" name="lastName"
      type="text" id="ip-lastName" class="form-control mb-4"
         placeholder="Last name">
+    <div class="alert alert-danger" *ngIf = "errorMessage$ | async as error">{{error}}</div>
 
     <button (click)="onSubmit()" block="true" class="my-4 btn btn-info" type="submit">submit</button>
 </form>

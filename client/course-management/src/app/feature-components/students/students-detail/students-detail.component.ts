@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,17 +15,12 @@ export class StudentsDetailComponent {
 
   vm$ : Observable<StudentDisplayState> = this.studentService.vm$
 
-  constructor(private studentService: StudentsService) { }
+  constructor(private studentService: StudentsService, 
+    private router : Router) { }
 
   onRemoveStudent(id: number): void {
-    // if (confirm("Are you sure you want to remove this student!")) {
-    //   this.studentService.removeStudent(id).subscribe({
-    //     next: () => {
-    //       history.back()
-    //     },
-    //     error: err => console.error(err)
-    //   })
-    // }
+    this.studentService.deleteStudent(id)
+    this.router.navigate(['/students'])
   }
 
 }

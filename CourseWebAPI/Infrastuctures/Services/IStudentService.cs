@@ -10,6 +10,7 @@ namespace CourseWebAPI.Services
         Task Create(StudentModel model);
         Task Delete(int id);
         Task<StudentListModel> Get(int id);
+        Task<double> GetTotalPage(int pageSize);
         Task<IEnumerable<StudentListModel>> GetList(StudentQueryParamerter param);
         Task Update(int studentId, StudentModel model);
     }

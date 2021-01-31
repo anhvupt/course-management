@@ -14,7 +14,6 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Enrollment Duration</th>
-                <th scope="col">Manipulate</th>
             </tr>
         </thead>
         <tbody>
@@ -25,14 +24,13 @@
                     </a>
                 </th>
                 <td>{{student.enrollmentDuration}}</td>
-                <td>
-                    <a [routerLink]="['/students', student.id, 'edit']" [queryParams]="params" class="mr-1">Edit</a>
-                    <a (click)="onRemoveStudent(student.id)" class="mr-1">Remove</a>
-                </td>
             </tr>
         </tbody>
     </table>
-
-    <app-pagination [currentPage]="vm.params.pageIndex" (pageChanged)="onPageChange($event)">
+<div *ngIf = "totalPage$ | async as totalPage">
+    <app-pagination [currentPage]="vm.params.pageIndex"
+     [totalPage] = "totalPage"
+     (pageChanged)="onPageChange($event)">
     </app-pagination>
+</div>
 </div>
