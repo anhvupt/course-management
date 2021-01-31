@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/shared/models/api-url';
 import { handleError, IStudent, IStudentDisplay } from './student-shared';
@@ -42,6 +42,7 @@ export class StudentHttpService {
     let url = `${ApiUrl.student}/${id}`
     return this.http.put(url, student)
       .pipe(
+        tap (() => console.log("student edited")),
         catchError(handleError)
       )
   }

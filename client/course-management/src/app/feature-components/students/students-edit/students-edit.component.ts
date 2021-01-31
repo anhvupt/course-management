@@ -9,24 +9,31 @@ import { IStudent } from '../student-shared';
   styleUrls: ['./students-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentsEditComponent{
+export class StudentsEditComponent implements OnInit {
 
 
   vm$ = this.studentService.vm$
+  student: IStudent = {
+    firstMidName : '',
+    lastName : '',
+    enrollmentDate: null
+  }
 
   constructor(private studentService: StudentsService,
-    public router: Router,
-    private route: ActivatedRoute) { }
+    private location: Location) {
+    this.vm$.pipe(
+      map(state => state.student)
+    ).subscribe(student => {
+      this.student.firstMidName = student.firstMidName,
+      this.student.lastName = student.lastName,
+      this.student.enrollmentDate = student.enrollmentDate
+    }
+    )
+  }
 
-  onStudentSubmitted(data: IStudent) {
-    // this.student = data
-    // console.log('student to submit: ', this.student)
-    // this.studentService.editStudent(this.studentId, this.student).subscribe({
-    //   next: () => {
-    //       this.router.navigate(['/students'])
-    //   },
-    //   error: err => console.error(err)
-    // })
+  onStudentSubmitted(data: IStudentDisplay) {
+    this.studentService.editStudent(data)
+    this.location.back()
   }
 
 }

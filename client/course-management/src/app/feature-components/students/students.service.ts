@@ -48,56 +48,56 @@ export class StudentsService {
       )
 
   private studentCreateSubject = new Subject<IStudent>()
-  studentCreate$: Observable<IStudent> = this.studentCreateSubject.asObservable()
+  private studentCreate$: Observable<IStudent> = this.studentCreateSubject.asObservable()
   private studentEditSubject = new Subject<IStudent>()
-  studentEdit$: Observable<IStudent> = this.studentEditSubject.asObservable()
+  private studentEdit$: Observable<IStudent> = this.studentEditSubject.asObservable()
   private studentDeleteSubject = new Subject<number>()
-  idToDelete$: Observable<number> = this.studentDeleteSubject.asObservable() 
+  private idToDelete$: Observable<number> = this.studentDeleteSubject.asObservable() 
 
-  onParamsChange = this.params$.pipe(
+  private onParamsChange = this.params$.pipe(
     tap(params => console.log('params is changed: ', params)),
     switchMap(params => this.studentHttp.getStudents(toHttpParams(params)))
   ).subscribe(students => {
     this.updateState({ ..._state, students })
   })
     
-
-  onStudentIdChange = this.studentId$.pipe(
+  private onStudentIdChange = this.studentId$.pipe(
     tap(id => console.log('student id is changed: ', id)),
     switchMap(id => (id > 0) ? this.studentHttp.getStudent(id) : EMPTY)
   ).subscribe(student => {
     this.updateState({ ..._state, student })
   })
     
-
-  onStudentCreate = this.studentCreate$.pipe(
-    tap(student => console.log('student to create: ', student)),
+  private onStudentCreate = this.studentCreate$.pipe(
+    tap(student => console.log(`student to create: `, student)),
     switchMap(student => this.studentHttp.createStudent(student))
-  ).subscribe({ error: err => handleError(err) })
+  ).subscribe({ 
+    next: () => {this.refetchStudents()},
+    error: err => handleError(err) }
+  )
     
-
-  onStudentEdit = this.studentEdit$.pipe(
-    tap(student => console.log('student to edit: ', student),
-      switchMap(student => this.studentHttp.editStudent(
-        _state.studentId, student as IStudent)
-      ))
-  ).subscribe({ error: err => handleError(err) })
-    
-
-  onStudentDelete = this.idToDelete$.pipe(
-    tap(id => console.log('id to delete: ', id)),
-    switchMap(id => this.studentHttp.removeStudent(id))
+  private onStudentEdit = this.studentEdit$.pipe(
+    tap(student => console.log(`student to edit: `, student as IStudent),
+    switchMap(student => this.studentHttp.editStudent(_state.studentId, student as IStudent)))
   ).subscribe({
-    next: () => this.updateState({..._state, studentId: 0, student: null
-    }),
+    next: () => {
+      // this.refetchStudent()
+      // this.refetchStudents()
+    },
     error: err => handleError(err)
   })
     
-  onStudentManipulation =
-    combineLatest([this.studentCreate$, this.studentEdit$, this.idToDelete$]).pipe(
-      switchMap(() => this.studentHttp.getStudents(toHttpParams(_state.params)))
-    ).subscribe(students => this.updateState({ ..._state, students }))
-
+  private onStudentDelete = this.idToDelete$.pipe(
+    tap(id => console.log('id to delete: ', id)),
+    switchMap(id => this.studentHttp.removeStudent(id))
+  ).subscribe({
+    next: () => {
+      this.updateState({..._state, studentId: 0, student: null})
+      this.refetchStudents()
+    },
+    error: err => handleError(err)
+  })
+  
 
   constructor(private studentHttp: StudentHttpService) { }
 
@@ -114,14 +114,25 @@ export class StudentsService {
     }
   }
   updateStudentId(studentId: number) {
-    if (studentId != _state.studentId) {
-      this.updateState({ ..._state, studentId })
-    }
+    this.updateState({ ..._state, studentId })
   }
   createStudent(student: IStudent) {
     this.studentCreateSubject.next(student)
   }
+  editStudent(student: IStudent){
+    this.studentEditSubject.next(student)
+  }
 
+  private refetchStudents(){
+    this.studentHttp.getStudents(toHttpParams(_state.params)).subscribe(
+      students => this.updateState({... _state, students})
+    )
+  }
+  private refetchStudent(){
+    this.studentHttp.getStudent(_state.studentId).subscribe(
+      student => this.updateState({..._state, student})
+    )
+  }
   private updateState(state: StudentDisplayState) {
     this.store.next(_state = state)
   }
