@@ -47,8 +47,8 @@ export class StudentsService {
 
   private studentCreateSubject = new Subject<IStudent>()
   studentCreate$: Observable<IStudent> = this.studentCreateSubject.asObservable()
-  private studentEditSubject = new Subject<IStudent>()
-  studentEdit$: Observable<IStudent> = this.studentEditSubject.asObservable()
+  private studentUpdateSubject = new Subject<IStudent>()
+  studentUpdate$: Observable<IStudent> = this.studentUpdateSubject.asObservable()
   private studentDeleteSubject = new Subject<number>()
   idToDelete$: Observable<number> = this.studentDeleteSubject.asObservable() 
   private totalPageSubject = new BehaviorSubject(3)
@@ -78,20 +78,19 @@ export class StudentsService {
     switchMap(student => this.studentHttp.createStudent(student))
   ).subscribe({ 
     next: () => {this.refetchStudents()},
-    error: err => handleError(err) }
-  )
+    error: err => handleError(err)
+  })
     
-  private onStudentEdit = this.studentEdit$.pipe(
+  private onStudentEdit = this.studentUpdate$.pipe(
     tap(student => {
-      console.log('student to create: ', student, typeof(student))
+      console.log('student to create: ', student)
       console.log('id: ', _state.studentId)
     }),
-    switchMap(student => {
-      console.log(student)
-      console.log(_state.studentId)
-      return this.studentHttp.editStudent(_state.studentId, student)
-    })
-  )
+    switchMap(student => this.studentHttp.editStudent(_state.studentId, student))
+  ).subscribe(()=>{
+    this.refetchStudent()
+    this.refetchStudents()
+  })
     
   private onStudentDelete = this.idToDelete$.pipe(
     tap(id => console.log('id to delete: ', id)),
@@ -103,9 +102,9 @@ export class StudentsService {
     },
     error: err => handleError(err)
   })
-  
 
-  constructor(private studentHttp: StudentHttpService) { }
+  constructor(private studentHttp: StudentHttpService) {
+   }
 
   updateSearch(searchQuery: string) {
     if (searchQuery != _state.params.searchQuery) {
@@ -126,7 +125,7 @@ export class StudentsService {
     this.studentCreateSubject.next(student)
   }
   editStudent(student: IStudent){
-    this.studentEditSubject.next(student)
+    this.studentUpdateSubject.next(student)
   }
   deleteStudent(id: number){
     this.studentDeleteSubject.next(id)

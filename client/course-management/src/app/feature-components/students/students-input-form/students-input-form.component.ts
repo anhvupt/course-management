@@ -24,6 +24,7 @@ export class StudentsInputFormComponent implements OnInit {
   onSubmit(){
     if (this.validate(this.student)) {
       this.studentSubmitted.emit(this.student)
+      this.errorSubject.next(null)
     } else {
       const err = 'Please complete the validation'
       this.errorSubject.next(err)

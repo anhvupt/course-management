@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { StudentsService, StudentDisplayState } from 'src/app/feature-components/students/students.service';
 import { IStudentDisplay, StudentParams } from '../student-shared';
 

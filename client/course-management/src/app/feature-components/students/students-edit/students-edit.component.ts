@@ -12,15 +12,11 @@ import { IStudent, IStudentDisplay } from '../student-shared';
   styleUrls: ['./students-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentsEditComponent implements OnInit{
+export class StudentsEditComponent{
 
   student: IStudent 
 
-  constructor(private studentService: StudentsService,
-    private route: ActivatedRoute,
-    private location: Location) {
-  }
-  ngOnInit(): void {
+  constructor(private studentService: StudentsService, private location: Location) {
     this.studentService.student$.pipe(
       map(student => ({
         firstMidName: student.firstMidName,
@@ -32,7 +28,7 @@ export class StudentsEditComponent implements OnInit{
 
   onStudentSubmitted(data: IStudent) {
     this.studentService.editStudent(data)
-    //this.location.back()
+    this.location.back()
   }
 
 }

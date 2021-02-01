@@ -1,5 +1,5 @@
-import { ConditionalExpr } from '@angular/compiler';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, 
+  EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -7,37 +7,28 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
   styleUrls: ['./pagination.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent{
 
   displayPages: number[] = []
   _currentpage: number
-  @Input() totalPage
+  _totalPage: number
+  @Input() get totalPage(){
+    return this._totalPage
+  }
   @Input() get currentPage(){
     return this._currentpage
   }
   set currentPage(value: number){
-    if (value) {
-      this._currentpage = (value >= 1) ? +value : 1
-      let first, second, third
-      if (value === 1) {
-        first = this.currentPage
-        second = (this.currentPage + 1 < this.totalPage) ? this.currentPage + 1 : 0
-        third = (this.currentPage + 2 < this.totalPage) ? this.currentPage + 2 : 0
-      } else {
-        first = this.currentPage - 1
-        second = this.currentPage
-        third = (this.currentPage + 1 <= this.totalPage) ? this.currentPage + 1 : 0
-      }
-      //this.displayPages = [first, second, third]
-      if(first) this.displayPages.push(first)
-      if(second) this.displayPages.push(second)
-      if(third) this.displayPages.push(third)
-    }
+    this._currentpage = +value      
+    this.generatePager()
+  }
+  set totalPage(value: number){
+    this._totalPage = value
+    this.generatePager()
   }
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>() 
 
-  constructor() {}
-  ngOnInit(): void {console.log(this.currentPage)}
+  constructor() { }
   
   onPageClick(curr: string){
     let current: number
@@ -58,4 +49,21 @@ export class PaginationComponent implements OnInit {
     this.pageChanged.emit(current)
   }
 
+  generatePager() {
+    this.displayPages = []
+    let first, second, third
+    if (this.currentPage === 1) {
+      first = this.currentPage
+      second = (this.currentPage + 1 <= this.totalPage) ? this.currentPage + 1 : 0
+      third = (this.currentPage + 2 <= this.totalPage) ? this.currentPage + 2 : 0
+    } else {
+      first = this.currentPage - 1
+      second = this.currentPage
+      third = (this.currentPage + 1 <= this.totalPage) ? this.currentPage + 1 : 0
+    }
+    if (first) this.displayPages.push(first)
+    if (second) this.displayPages.push(second)
+    if (third) this.displayPages.push(third)
+    console.log('current page: ', this.currentPage), console.log('totalPage: ', this.totalPage)
+  }
 }
