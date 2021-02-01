@@ -10,7 +10,7 @@ import { IStudent, IStudentDisplay } from '../student-shared';
   selector: 'app-students-edit',
   templateUrl: './students-edit.component.html',
   styleUrls: ['./students-edit.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentsEditComponent{
 
