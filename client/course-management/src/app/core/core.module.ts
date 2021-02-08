@@ -1,17 +1,26 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
+import { NgModule } from '@angular/core';
+import { LoginComponent } from './login/login.component';
+import { TokenInterceptor } from './token-interceptor';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [LoginComponent],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   exports: [
-    HttpClientModule,
-  ]
+    HttpClientModule, LoginComponent
+  ],
+  providers: [    
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }
+]
 })
 export class CoreModule { }

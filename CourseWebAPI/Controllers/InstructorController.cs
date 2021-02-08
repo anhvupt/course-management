@@ -2,6 +2,7 @@
 using CourseWebAPI.Infrastuctures.Services;
 using CourseWebAPI.Models;
 using CourseWebAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,8 @@ namespace CourseWebAPI.Controllers
 {
     [Route("api/Instructors")]
     [ApiController]
+    [Authorize]
+
     public class InstructorController : ControllerBase
     {
         private IInstructorService _instructorService;

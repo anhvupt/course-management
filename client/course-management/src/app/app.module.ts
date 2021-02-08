@@ -6,6 +6,8 @@ import { StudentsModule } from './feature-components/students/students.module';
 import { InstructorsModule } from './feature-components/instructors/instructors.module';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor as TokenInterceptor } from './core/token-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
     StudentsModule,
     InstructorsModule,
     AppRoutingModule
+  ],
+  providers: [
   ],
   bootstrap: [AppComponent]
 })

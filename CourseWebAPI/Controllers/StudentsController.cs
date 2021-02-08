@@ -19,7 +19,7 @@ namespace CourseWebAPI.Controllers
 {
     [Route("api/students")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
