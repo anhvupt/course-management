@@ -5,6 +5,7 @@ using CourseWebAPI.Infrastuctures.Services;
 using CourseWebAPI.Models;
 using CourseWebAPI.ResourceParamerters;
 using CourseWebAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,18 +19,16 @@ namespace CourseWebAPI.Controllers
 {
     [Route("api/students")]
     [ApiController]
+    //[Authorize]
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
-        private readonly ICourseService _courseService;
         IEnrollmentService _enrollmentService;
         public StudentsController(IStudentService studentService,
-            ICourseService courseService,
             IEnrollmentService enrollmentService)
         {
             _studentService = studentService ??
                 throw new ArgumentNullException(nameof(studentService));
-            _courseService = courseService;
             _enrollmentService = enrollmentService;
         }
 

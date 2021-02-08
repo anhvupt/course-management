@@ -17,6 +17,7 @@ namespace CourseWebAPI.Data
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public static readonly ILoggerFactory ConsoleLoggerFactory
           = LoggerFactory.Create(builder =>

@@ -12,7 +12,6 @@ import { IStudentDisplay, StudentParams } from '../student-shared';
 export class StudentsListComponent {
 
   params = new StudentParams()
-  //students$ : Observable<IStudentDisplay[]> 
   vm$ : Observable<StudentDisplayState> = this.studentService.vm$
   totalPage$ : Observable<number> = this.studentService.totalPage$
 

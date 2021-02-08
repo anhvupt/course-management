@@ -29,6 +29,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             context.SeedCourse();
             context.SeedCourseAssignment();
             context.SeedEnrollment();
+            context.SeedUser();
         }
         private static void SeedStudent(this CourseContext context)
         {
@@ -407,6 +408,60 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             {
                 context.Database.CloseConnection();
             }
+        }
+        private static void SeedUser(this CourseContext context)
+        {
+            if (context.Users.Any()) { return; }
+            try
+            {
+                context.Database.OpenConnection();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users ON");
+                context.Users.AddRange(new List<User> {
+                    new User
+                    {
+                        Id = 1,
+                        UserName = "user1",
+                        Password = "123",
+                        FirstMidName = Faker.Name.First(),
+                        LastName = Faker.Name.Last()
+                    },
+                    new User
+                    {
+                        Id = 2,
+                        UserName = "user2",
+                        Password = "123",
+                        FirstMidName = Faker.Name.First(),
+                        LastName = Faker.Name.Last()
+                    },
+                    new User
+                    {
+                        Id = 3,
+                        UserName = "user3",
+                        Password = "123",
+                        FirstMidName = Faker.Name.First(),
+                        LastName = Faker.Name.Last()
+                    },
+                    new User
+                    {
+                        Id = 4,
+                        UserName = "user4",
+                        Password = "123",
+                        FirstMidName = Faker.Name.First(),
+                        LastName = Faker.Name.Last()
+                    },
+                    new User
+                    {
+                        Id = 5,
+                        UserName = "user5",
+                        Password = "123",
+                        FirstMidName = Faker.Name.First(),
+                        LastName = Faker.Name.Last()
+                    },
+                });
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users OFF");
+            }
+            finally { context.Database.CloseConnection(); }
         }
 
     }
