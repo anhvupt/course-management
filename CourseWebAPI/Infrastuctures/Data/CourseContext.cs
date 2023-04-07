@@ -74,14 +74,14 @@ namespace CourseWebAPI.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
                 builder.HasMany(i => i.Departments)
-                .WithOne(d => d.Administator)
+                .WithOne(d => d.Administrator)
                 .HasForeignKey(i => i.DepartmentID)
                 .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Department>(builder =>
             {
-                builder.HasOne(d => d.Administator)
+                builder.HasOne(d => d.Administrator)
                 .WithMany(i => i.Departments)
                 .HasForeignKey(d => d.InstructorID)
                 .IsRequired(false);

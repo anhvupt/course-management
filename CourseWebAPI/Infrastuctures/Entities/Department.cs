@@ -11,7 +11,7 @@ namespace CourseWebAPI.Entities
         public double Budget { get;set; }
         public DateTime StartDate { get; set; }
         public int? InstructorID { get; set; }
-        public virtual Instructor Administator { get; set; }
+        public virtual Instructor Administrator { get; set; }
         public virtual IList<Course> Courses { get; set; } = new List<Course>();
     }
 }

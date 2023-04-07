@@ -4,29 +4,31 @@ using CourseWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+#nullable disable
 
 namespace CourseWebAPI.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20210120025214_Init")]
-    partial class Init
+    partial class CourseContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("CourseWebAPI.Entities.Course", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("CourseCredit")
                         .HasColumnType("int");
@@ -63,8 +65,9 @@ namespace CourseWebAPI.Migrations
                 {
                     b.Property<int>("DepartmentID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentID"), 1L, 1);
 
                     b.Property<double>("Budget")
                         .HasColumnType("float");
@@ -89,8 +92,9 @@ namespace CourseWebAPI.Migrations
                 {
                     b.Property<int>("EnrollmentID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnrollmentID"), 1L, 1);
 
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
@@ -115,8 +119,9 @@ namespace CourseWebAPI.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("FirstMidName")
                         .HasColumnType("nvarchar(max)");
@@ -149,8 +154,9 @@ namespace CourseWebAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("EnrollmentDate")
                         .HasColumnType("datetime2");
@@ -164,6 +170,31 @@ namespace CourseWebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("CourseWebAPI.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("FirstMidName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.Course", b =>
@@ -198,12 +229,12 @@ namespace CourseWebAPI.Migrations
 
             modelBuilder.Entity("CourseWebAPI.Entities.Department", b =>
                 {
-                    b.HasOne("CourseWebAPI.Entities.Instructor", "Administator")
+                    b.HasOne("CourseWebAPI.Entities.Instructor", "Administrator")
                         .WithMany("Departments")
                         .HasForeignKey("InstructorID")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Administator");
+                    b.Navigation("Administrator");
                 });
 
             modelBuilder.Entity("CourseWebAPI.Entities.Enrollment", b =>
