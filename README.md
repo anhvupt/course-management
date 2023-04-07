@@ -7,7 +7,7 @@ The case study project that implements basic CRUD operations &amp; JWT authentic
 Run ``` dotnet restore ```
 
 ### 2. Connect to database
-Create your databse and replace the connection string in ```appsettings.json``` file
+Create your database and replace the connection string in ```appsettings.json``` file
 
 ### 3. Update database
 In package manager console, run ```update-database```
