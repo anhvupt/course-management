@@ -37,7 +37,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             try
             {
                 context.Database.OpenConnection();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students ON");
+                context.Database.ExecuteSqlRaw("ALTER TABLE Students AUTO_INCREMENT = 1");
                 context.Students.AddRange(new List<Student>
                 {
                     new Student
@@ -77,7 +77,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                     }
                 });
                 context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students OFF");
+                //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Students OFF");
             }
             finally { context.Database.CloseConnection(); }
         }
@@ -87,7 +87,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             try
             {
                 context.Database.OpenConnection();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors ON");
+                context.Database.ExecuteSqlRaw("ALTER TABLE Instructors AUTO_INCREMENT = 1");
                 context.Instructors.AddRange(new List<Instructor>
                 {
                     new Instructor
@@ -127,7 +127,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                     }
                 });
                 context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors OFF");
+                //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Instructors OFF");
             }
             finally { context.Database.CloseConnection(); }
         }
@@ -173,7 +173,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             try
             {
                 context.Database.OpenConnection();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON");
+                context.Database.ExecuteSqlRaw("ALTER TABLE Departments AUTO_INCREMENT = 1");
                 context.Departments.AddRange(new List<Department> {
                     new Department
                     {
@@ -217,7 +217,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                     }
                 });
                 context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF");
+                //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF");
             }
             finally { context.Database.CloseConnection(); }
         }
@@ -227,7 +227,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             try
             {
                 context.Database.OpenConnection();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses ON");
+                context.Database.ExecuteSqlRaw("ALTER TABLE Courses AUTO_INCREMENT = 1");
                 context.Courses.AddRange(new List<Course> {
                     new Course
                     {
@@ -301,7 +301,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                     }
                 });
                 context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses OFF");
+                //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Courses OFF");
             }
             finally { context.Database.CloseConnection(); }
         }
@@ -328,7 +328,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             try
             {
                 context.Database.OpenConnection();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments ON");
+                context.Database.ExecuteSqlRaw("ALTER TABLE Enrollments AUTO_INCREMENT = 1");
                 context.Enrollments.AddRange(new List<Enrollment> {
                     new Enrollment
                     {
@@ -402,7 +402,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                     }
                 });
                 context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments OFF");
+                //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Enrollments OFF");
             }
             finally
             {
@@ -415,7 +415,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
             try
             {
                 context.Database.OpenConnection();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users ON");
+                context.Database.ExecuteSqlRaw("ALTER TABLE Users AUTO_INCREMENT = 1");
                 context.Users.AddRange(new List<User> {
                     new User
                     {
@@ -459,7 +459,7 @@ namespace CourseWebAPI.Infrastuctures.Extensions
                     },
                 });
                 context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users OFF");
+                //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users OFF");
             }
             finally { context.Database.CloseConnection(); }
         }

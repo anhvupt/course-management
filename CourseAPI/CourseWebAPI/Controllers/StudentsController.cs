@@ -1,25 +1,16 @@
-﻿using AutoMapper;
-using CourseWebAPI.Entities;
-using CourseWebAPI.Infrastuctures.Models;
-using CourseWebAPI.Infrastuctures.Services;
+﻿using CourseWebAPI.Infrastuctures.Services;
 using CourseWebAPI.Models;
 using CourseWebAPI.ResourceParamerters;
 using CourseWebAPI.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CourseWebAPI.Controllers
 {
     [Route("api/students")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
