@@ -52,7 +52,7 @@ namespace CourseWebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<CourseContext>(option =>
-                option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                option.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IInstructorService, InstructorService>();
