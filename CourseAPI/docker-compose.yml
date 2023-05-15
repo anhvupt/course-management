@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  db:
+      image: mysql:8.0
+      environment:
+        MYSQL_DATABASE: course_data
+        MYSQL_ROOT_PASSWORD: admin
+      networks: 
+        - course-network
+
   web:
     build: .
     ports:
@@ -8,11 +16,11 @@ services:
     depends_on:
       - db
     environment:
-      ConnectionStrings__Default: "server=127.0.0.1;uid=root;pwd=admin;database=course-data"
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: course-data
-      MYSQL_USER: root
-      MYSQL_PASSWORD: admin
-      MYSQL_ROOT_PASSWORD: admin
+      ConnectionStrings__Default: "server=db;port=3306;uid=root;pwd=admin;database=course_data"
+    networks:
+      - course-network
+        
+networks:
+  course-network:
+    driver: bridge
+

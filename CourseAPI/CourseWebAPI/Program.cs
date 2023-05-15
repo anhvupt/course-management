@@ -1,5 +1,8 @@
+using CourseWebAPI.Data;
 using CourseWebAPI.Infrastuctures.Extensions;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -21,6 +24,12 @@ namespace CourseWebAPI
                 .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
             IHost host = CreateHostBuilder(args).Build();
+
+            using (var context = (CourseContext)host.Services.GetService(typeof(CourseContext)))
+            {
+                context.Database.EnsureCreated();
+            }
+
             host.Initialize();
             host.Run();
         }

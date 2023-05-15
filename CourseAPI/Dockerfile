@@ -13,6 +13,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /
 COPY --from=build /out .
-ENV ConnectionStrings__Default=server=127.0.0.1;uid=root;pwd=admin;database=course-data
 
 ENTRYPOINT ["dotnet", "CourseWebAPI.dll"]
