@@ -52,7 +52,7 @@ namespace CourseWebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<CourseContext>(option =>
-                option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                option.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IInstructorService, InstructorService>();
@@ -80,8 +80,8 @@ namespace CourseWebAPI
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseCors(x => x
             .AllowAnyMethod()

@@ -1,69 +1,76 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace CourseWebAPI.Migrations
 {
-    public partial class initial : Migration
+    public partial class mysqlinit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "Instructors",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    LastName = table.Column<string>(type: "longtext", nullable: true),
+                    FirstMidName = table.Column<string>(type: "longtext", nullable: true),
+                    HireDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Instructors", x => x.ID);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EnrollmentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    LastName = table.Column<string>(type: "longtext", nullable: true),
+                    FirstMidName = table.Column<string>(type: "longtext", nullable: true),
+                    EnrollmentDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(type: "longtext", nullable: true),
+                    Password = table.Column<string>(type: "longtext", nullable: true),
+                    FirstMidName = table.Column<string>(type: "longtext", nullable: true),
+                    LastName = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
                     DepartmentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Budget = table.Column<double>(type: "float", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true),
+                    Budget = table.Column<double>(type: "double", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     InstructorID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -75,14 +82,15 @@ namespace CourseWebAPI.Migrations
                         principalTable: "Instructors",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.SetNull);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "OfficeAssignments",
                 columns: table => new
                 {
                     InstructorID = table.Column<int>(type: "int", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Location = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -93,15 +101,16 @@ namespace CourseWebAPI.Migrations
                         principalTable: "Instructors",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(type: "longtext", nullable: true),
                     CourseCredit = table.Column<int>(type: "int", nullable: false),
                     DepartmentID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -114,7 +123,8 @@ namespace CourseWebAPI.Migrations
                         principalTable: "Departments",
                         principalColumn: "DepartmentID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "CourseAssignments",
@@ -138,17 +148,18 @@ namespace CourseWebAPI.Migrations
                         principalTable: "Instructors",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Enrollments",
                 columns: table => new
                 {
                     EnrollmentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     CourseID = table.Column<int>(type: "int", nullable: false),
                     StudentID = table.Column<int>(type: "int", nullable: false),
-                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Grade = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,7 +176,8 @@ namespace CourseWebAPI.Migrations
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseAssignments_InstructorID",

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      ConnectionStrings__Default: "server=127.0.0.1;uid=root;pwd=admin;database=course-data"
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: course-data
+      MYSQL_USER: root
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
