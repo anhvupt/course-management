@@ -11,7 +11,7 @@ import { LoginComponent } from './core/login/login.component';
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: 'students', pathMatch: 'full' },
     { path: '**', redirectTo: 'students', pathMatch: 'full' }
-])
+    ])
   ],
   exports: [
     RouterModule
