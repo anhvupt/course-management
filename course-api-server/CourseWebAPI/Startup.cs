@@ -80,8 +80,8 @@ namespace CourseWebAPI
 
             app.UseRouting();
 
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors(x => x
             .AllowAnyMethod()
