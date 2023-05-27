@@ -25,10 +25,13 @@ namespace CourseWebAPI
                 .CreateLogger();
             IHost host = CreateHostBuilder(args).Build();
 
+#if DEBUG
+#else
             using (var context = (CourseContext)host.Services.GetService(typeof(CourseContext)))
             {
                 context.Database.EnsureCreated();
             }
+#endif
 
             host.Initialize();
             host.Run();
