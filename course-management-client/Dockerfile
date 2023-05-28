@@ -8,6 +8,6 @@ RUN npm run build
 
 # Stage 2: Serve the built app with Nginx
 FROM nginx:alpine
-COPY --from=build /app/dist/course-management-client /usr/share/nginx/html
+COPY --from=build /app/dist/course-management /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
