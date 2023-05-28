@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: course_data
+      MYSQL_ROOT_PASSWORD: admin
+    networks:
+      - course-network
+
+  web:
+    build:
+      context: ./course-api-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      ConnectionStrings__Default: "server=db;port=3306;uid=root;pwd=admin;database=course_data"
+    networks:
+      - course-network
+
+  client:
+    build:
+      context: ./course-management-client
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    networks:
+      - course-network
+
+networks:
+  course-network:
+    driver: bridge
