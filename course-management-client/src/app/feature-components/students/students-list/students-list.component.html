@@ -1,15 +1,24 @@
-<div class="mb-3 row">
-    <a [routerLink]="['/students/create']" [queryParams]="params" class="btn btn-outline-success my-2 my-sm-0 col-2">Add
-        Student</a>
-    <div class="col-9 mr-0">
-        <form class="form-inline my-2 my-lg-0 float-right">
-            <input (keyup)="onSearch($event)" class="form-control mr-sm-2" name="search" placeholder="Search"
-                aria-label="Search">
-        </form>
-    </div>
+<div class="d-flex mb-3 row">
+  <a
+    [routerLink]="['/students/create']"
+    [queryParams]="params"
+    class="btn btn-outline-success my-2 my-sm-0 col-2"
+    >Add Student</a
+  >
+  <div class="col-9 mr-0">
+    <form class="form-inline my-2 my-lg-0 float-right">
+      <input
+        (keyup)="onSearch($event)"
+        class="form-control mr-sm-2"
+        name="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+    </form>
+  </div>
 </div>
 <div *ngIf="vm$ | async as vm">
-    <table class="table mt-3">
+  <!-- <table class="table mt-3">
         <thead>
             <tr>
                 <th scope="col">Name</th>
@@ -26,11 +35,38 @@
                 <td>{{student.enrollmentDuration}}</td>
             </tr>
         </tbody>
-    </table>
-<div *ngIf = "totalPage$ | async as totalPage">
-    <app-pagination [currentPage]="vm.params.pageIndex"
-     [totalPage] = "totalPage"
-     (pageChanged)="onPageChange($event)">
+    </table> -->
+  <table mat-table [dataSource]="vm.students" class="mat-elevation-z8 demo-table">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- enrollmentDuration Column -->
+    <ng-container matColumnDef="enrollmentDuration">
+      <th mat-header-cell *matHeaderCellDef>enrollmentDuration</th>
+      <td mat-cell *matCellDef="let element">{{ element.enrollmentDuration }}</td>
+    </ng-container>
+
+    <!-- enrollmentDate Column -->
+    <ng-container matColumnDef="enrollmentDate">
+      <th mat-header-cell *matHeaderCellDef>enrollmentDate</th>
+      <td mat-cell *matCellDef="let element">{{ element.enrollmentDate }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columns"
+    ></tr>
+  </table>
+  <div *ngIf="totalPage$ | async as totalPage">
+    <app-pagination
+      [currentPage]="vm.params.pageIndex"
+      [totalPage]="totalPage"
+      (pageChanged)="onPageChange($event)"
+    >
     </app-pagination>
-</div>
+  </div>
 </div>

@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { StudentsService, StudentDisplayState } from 'src/app/feature-components/students/students.service';
+import {
+  StudentsService,
+  StudentDisplayState
+} from 'src/app/feature-components/students/students.service';
 import { IStudentDisplay, StudentParams } from '../student-shared';
 
 @Component({
@@ -10,20 +13,19 @@ import { IStudentDisplay, StudentParams } from '../student-shared';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentsListComponent {
+  params = new StudentParams();
+  vm$: Observable<StudentDisplayState> = this.studentService.vm$;
+  totalPage$: Observable<number> = this.studentService.totalPage$;
 
-  params = new StudentParams()
-  vm$ : Observable<StudentDisplayState> = this.studentService.vm$
-  totalPage$ : Observable<number> = this.studentService.totalPage$
+  columns = ['name', 'enrollmentDuration', 'enrollmentDate'];
 
-  constructor(private studentService: StudentsService) { }
+  constructor(private studentService: StudentsService) {}
 
-
-  onPageChange(pageIndex: number){
-    this.studentService.updatePagination(pageIndex)
+  onPageChange(pageIndex: number) {
+    this.studentService.updatePagination(pageIndex);
   }
 
-  onSearch(event:any){
-    this.studentService.updateSearch(event.target.value)
+  onSearch(event: any) {
+    this.studentService.updateSearch(event.target.value);
   }
-
 }
