@@ -1,6 +1,11 @@
 # Course-web-api
 The case study project that implements basic CRUD operations &amp; JWT authentication using .net core &amp; angular.
 
+# With Docker
++ Ensure that you have Docker on your computer
++ Run ```docker-compose up``` from the root directory
+
+# Without Docker
 ## Backend set up
 
 ### 1. Restore packages
