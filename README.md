@@ -1,7 +1,10 @@
 # Course-web-api
-The case study project that implements basic CRUD operations &amp; JWT authentication using .net core &amp; angular.
+The case study project that implements basic CRUD operations &amp; JWT authentication using .NET &amp; Angular.
 ### TODO
-+ Add tests for both .Net and Angular projects
++ Add tests for both .NET and Angular projects
+✅ Update to .NET6
+✅ Update to Angular v16
+✅ Build with Docker
 
 # With Docker
 + Ensure that you have Docker on your computer
