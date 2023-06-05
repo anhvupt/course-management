@@ -2,6 +2,8 @@
 The case study project that implements basic CRUD operations &amp; JWT authentication using .NET &amp; Angular.
 ### TODO
 + Add tests for both .NET and Angular projects
++ Implement state management using ngrx (currently using services with Subjects)
++ Fix Auth bugs :p
 
 ✅ Update to .NET6
 
