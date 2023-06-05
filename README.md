@@ -2,8 +2,11 @@
 The case study project that implements basic CRUD operations &amp; JWT authentication using .NET &amp; Angular.
 ### TODO
 + Add tests for both .NET and Angular projects
+
 ✅ Update to .NET6
+
 ✅ Update to Angular v16
+
 ✅ Build with Docker
 
 # With Docker
