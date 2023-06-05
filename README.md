@@ -1,12 +1,14 @@
 # Course-web-api
 The case study project that implements basic CRUD operations &amp; JWT authentication using .net core &amp; angular.
+### TODO
++ Add tests for both .Net and Angular projects
 
 # With Docker
 + Ensure that you have Docker on your computer
 + Run ```docker-compose up``` from the root directory
 
 # Without Docker
-## Backend set up
+## -> Backend set up
 
 ### 1. Restore packages
 Run ``` dotnet restore ```
@@ -17,7 +19,7 @@ Create your database and replace the connection string in ```appsettings.json```
 ### 3. Update database
 In package manager console, run ```update-database```
 
-## Frontend set up
+## -> Frontend set up
 
 ### Development server
 
