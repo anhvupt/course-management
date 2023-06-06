@@ -1,9 +1,15 @@
 # Course-web-api
-The case study project that implements basic CRUD operations &amp; JWT authentication using .NET &amp; Angular.
+A course management system is a study project implements basic CRUD operations & JWT authentication, built with Angular, .NET, MySql and containerized by Docker.
+
+The system allows instructors to create and manage courses and students to enroll in courses. Key features include:
+
++ Instructor can create, update and delete courses
++ Students can enroll and drop courses
+
 ### TODO
 + Add tests for both .NET and Angular projects
 + Implement state management using ngrx (currently using services with Subjects)
-+ Fix Auth bugs :p
++ Fix Auth bugs :P
 
 ✅ Update to .NET6
 
