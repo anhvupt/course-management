@@ -1,12 +1,12 @@
-<div class="d-flex mb-3 row">
+<div class="d-flex gap-4 flex-row-reverse">
   <a
     [routerLink]="['/students/create']"
     [queryParams]="params"
-    class="btn btn-outline-success my-2 my-sm-0 col-2"
+    class="btn btn-outline-success my-2 my-sm-0"
     >Add Student</a
   >
-  <div class="col-9 mr-0">
-    <form class="form-inline my-2 my-lg-0 float-right">
+  <div class="flex-fill">
+    <form class="form-inline my-2 my-lg-0">
       <input
         (keyup)="onSearch($event)"
         class="form-control mr-sm-2"
@@ -17,26 +17,8 @@
     </form>
   </div>
 </div>
-<div *ngIf="vm$ | async as vm">
-  <!-- <table class="table mt-3">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Enrollment Duration</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor='let student of vm.students'>
-                <th scope="row">
-                    <a [routerLink]="['/students', student.id]" [queryParams]="params">
-                        {{student.name}}
-                    </a>
-                </th>
-                <td>{{student.enrollmentDuration}}</td>
-            </tr>
-        </tbody>
-    </table> -->
-  <table mat-table [dataSource]="vm.students" class="mat-elevation-z8 demo-table">
+<div *ngIf="vm$ | async as vm" class="overflow-auto">
+  <table mat-table [dataSource]="vm.students" class="mat-elevation-z8 demo-table w-full">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>name</th>
@@ -52,16 +34,13 @@
     <!-- enrollmentDate Column -->
     <ng-container matColumnDef="enrollmentDate">
       <th mat-header-cell *matHeaderCellDef>enrollmentDate</th>
-      <td mat-cell *matCellDef="let element">{{ element.enrollmentDate }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.enrollmentDate | date }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: columns"
-    ></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
   </table>
-  <div *ngIf="totalPage$ | async as totalPage">
+  <div class="mt-4" *ngIf="totalPage$ | async as totalPage">
     <app-pagination
       [currentPage]="vm.params.pageIndex"
       [totalPage]="totalPage"
