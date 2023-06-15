@@ -1,5 +1,5 @@
 # Course-web-api
-A course management system is a study project implements basic CRUD operations & JWT authentication, built with Angular, .NET, MySql and containerized by Docker.
+The course management system is a study project implements basic CRUD operations & JWT authentication, built with Angular, .NET, MySql and containerized by Docker.
 
 The system allows instructors to create and manage courses and students to enroll in courses. Key features include:
 
