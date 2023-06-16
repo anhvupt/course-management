@@ -3,9 +3,10 @@ import { Router } from "@angular/router";
 import { LocalStorageService } from "../local-storage.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: true
 })
 export class LoginComponent implements OnInit {
 

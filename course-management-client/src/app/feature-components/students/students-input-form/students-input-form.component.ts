@@ -2,12 +2,16 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IStudent } from '../student-shared';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-students-input-form',
-  templateUrl: './students-input-form.component.html',
-  styleUrls: ['./students-input-form.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-students-input-form',
+    templateUrl: './students-input-form.component.html',
+    styleUrls: ['./students-input-form.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FormsModule, NgIf, AsyncPipe]
 })
 export class StudentsInputFormComponent implements OnInit {
 

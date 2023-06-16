@@ -6,14 +6,12 @@ import { InstructorsListComponent } from './instructors-list/instructors-list.co
 
 
 @NgModule({
-  declarations: [
-    InstructorsListComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild([
-      {path: 'instructors', component: InstructorsListComponent}
-    ])
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild([
+            { path: 'instructors', component: InstructorsListComponent }
+        ]),
+        InstructorsListComponent
+    ]
 })
 export class InstructorsModule { }
