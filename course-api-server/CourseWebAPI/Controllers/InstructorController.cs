@@ -14,7 +14,7 @@ namespace CourseWebAPI.Controllers
 {
     [Route("api/Instructors")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
 
     public class InstructorController : ControllerBase
     {

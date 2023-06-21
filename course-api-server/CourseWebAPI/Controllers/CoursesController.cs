@@ -12,7 +12,7 @@ namespace CourseWebAPI.Controllers
 {
     [Route("api/Courses")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     public class CoursesController : ControllerBase
     {
         private ICourseService _courseService;

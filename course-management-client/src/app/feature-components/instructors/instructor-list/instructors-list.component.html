@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Office Location</th>
+      <th>Courses</th>
+      <th>Id</th>
+      <th>Last Name</th>
+      <th>First Mid Name</th>
+      <th>Hire Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let instructor of instructors">
+      <td>{{ instructor.officeLocation }}</td>
+      <td>{{ instructor.courses }}</td>
+      <td>{{ instructor.id }}</td>
+      <td>{{ instructor.lastName }}</td>
+      <td>{{ instructor.firstMidName }}</td>
+      <td>{{ instructor.hireDate }}</td>
+    </tr>
+  </tbody>
+</table>
